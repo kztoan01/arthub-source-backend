@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "Account")
 public class Account {
     //ahihi2
+    //ban đêm tối thui
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int accountId;
