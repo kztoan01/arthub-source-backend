@@ -2,6 +2,7 @@ package com.example.ArtHub.Account;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.web.multipart.MultipartFile;
 
 // Validation
 
@@ -15,10 +16,12 @@ public class CreateAccountDTO {
     private String password;
 
     private String last_name;
-
+    @NotNull(message = "Firstname cannot be null")
+    @NotBlank(message = "Firstname cannot be empty")
     private String first_name;
 
-    private String image;
+    private String  image;
+
 
     private String address;
 
@@ -26,12 +29,25 @@ public class CreateAccountDTO {
 
     private String email;
 
-    private Integer role;
+    private Integer role_id;
 
     private String twitter;
 
     private String facebook;
 
+//    public CreateAccountDTO(String username, String password, String last_name, String first_name, String image, String address, String phone, String email, Integer role, String twitter, String facebook) {
+//        this.username = username;
+//        this.password = password;
+//        this.last_name = last_name;
+//        this.first_name = first_name;
+//        this.image = image;
+//        this.address = address;
+//        this.phone = phone;
+//        this.email = email;
+//        this.role = role;
+//        this.twitter = twitter;
+//        this.facebook = facebook;
+//    }
 
     public String getImage() {
         return image;
@@ -65,12 +81,12 @@ public class CreateAccountDTO {
         this.email = email;
     }
 
-    public Integer getRole() {
-        return role;
+    public Integer getRole_id() {
+        return role_id;
     }
 
-    public void setRole(Integer role) {
-        this.role = role;
+    public void setRole_id(Integer role_id) {
+        this.role_id = role_id;
     }
 
     public String getTwitter() {

@@ -5,8 +5,6 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "Account")
 public class Account {
-    //ahihi2
-    //ban đêm tối thui
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int accountId;
@@ -29,14 +27,14 @@ public class Account {
     @Column(nullable = false)
     private String phone;
 
-    @Column(nullable = false)
-    private String Image;
+    @Column(nullable = false , length = 10000)
+    private String image;
 
     @Column(nullable = false)
     private String email;
 
     @Column(nullable = false)
-    private String role;
+    private String role_id;
 
     @Column(nullable = false)
     private String twitter;
@@ -66,6 +64,18 @@ public class Account {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getAddress() {
@@ -100,13 +110,6 @@ public class Account {
         this.phone = phone;
     }
 
-    public String getImage() {
-        return Image;
-    }
-
-    public void setImage(String image) {
-        Image = image;
-    }
 
     public String getEmail() {
         return email;
@@ -116,12 +119,12 @@ public class Account {
         this.email = email;
     }
 
-    public String getRole() {
-        return role;
+    public String getRole_id() {
+        return role_id;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRole_id(String role_id) {
+        this.role_id = role_id;
     }
 
     public String getTwitter() {

@@ -3,7 +3,14 @@ package com.example.ArtHub.Account;
 import com.example.ArtHub.AppServiceExeption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import  java.io.IOException;
+import java.util.Optional;
 import java.util.List;
 
 @Service
@@ -19,6 +26,7 @@ public class AccountService  implements InterfaceOfAccountService{
         }
         Account account = new Account();
         account.setUsername(dto.getUsername());
+        account.setImage(dto.getImage());
         account.setPassword(dto.getPassword());
         account.setFirstName(dto.getFirst_name());
         account.setLastName(dto.getLast_name());
@@ -34,5 +42,6 @@ public class AccountService  implements InterfaceOfAccountService{
         return accountListFrommDatabase;
 
     }
+
 
 }
