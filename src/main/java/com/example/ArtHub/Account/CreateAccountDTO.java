@@ -14,7 +14,8 @@ public class CreateAccountDTO {
     @NotNull(message = "password cannot be null")
     @NotBlank(message = "password cannot be empty")
     private String password;
-
+    @NotNull(message = "Lastname cannot be null")
+    @NotBlank(message = "Lastname cannot be empty")
     private String last_name;
     @NotNull(message = "Firstname cannot be null")
     @NotBlank(message = "Firstname cannot be empty")
