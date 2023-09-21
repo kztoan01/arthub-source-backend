@@ -1,14 +1,12 @@
 package com.example.ArtHub.Controller;
 
 import com.example.ArtHub.AppServiceExeption;
-import com.example.ArtHub.DTO.CreateCourseDTO;
-import com.example.ArtHub.DTO.CreateSectionDTO;
-import com.example.ArtHub.DTO.ResponeCourseDTO;
-import com.example.ArtHub.DTO.ResponeSectionDTO;
+import com.example.ArtHub.DTO.*;
 import com.example.ArtHub.Entity.Course;
 import com.example.ArtHub.Repository.CourseRepository;
-import com.example.ArtHub.Service.CourseService;
-import com.example.ArtHub.Service.SectionService;
+import com.example.ArtHub.Service.ServiceOfCourse;
+import com.example.ArtHub.Service.ServiceOfLearningObjective;
+import com.example.ArtHub.Service.ServiceOfSection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,17 +15,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-public class CourseController implements InterfaceOfCourseController {
+public class ControllerOfCourse implements InterfaceOfCourseController {
 
     @Autowired
-    CourseService courseService;
+    ServiceOfCourse courseService;
     @Autowired
     CourseRepository courseRepository;
 
 
 
     @Autowired
-    SectionService sectionService;
+    ServiceOfSection sectionService;
+
+    @Autowired
+    ServiceOfLearningObjective serviceOfLearningObjective;
 
 
 
@@ -61,8 +62,13 @@ public class CourseController implements InterfaceOfCourseController {
         courseDTO.setIs_approved(course.getIs_approved());
         courseDTO.setIs_passed(course.isIs_passed());
         courseDTO.setCourse_introduction(course.getCourse_introduction());
-        List<ResponeSectionDTO> responeSectionDTOList = ResponeSectionDTO.fromSectionListToResponeSectionDTOList(sectionService.getSectionList(Integer.parseInt(course.getCourse_id())));
+
+        List<ResponeSectionDTO> responeSectionDTOList = ResponeSectionDTO.fromSectionListToResponeSectionDTOList(sectionService.getSectionList(course.getCourse_id()));
         courseDTO.setCourseSection(responeSectionDTOList);
+
+        ResponeLearningObjectiveDTO responeLearningObjectiveDTO = ResponeLearningObjectiveDTO.fromLearningOjToResponeLearningOjDTO(serviceOfLearningObjective.getLearningObjectiveByCourseId(course.getCourse_id()));
+        courseDTO.setResponeLearningObjectiveDTO(responeLearningObjectiveDTO);
+
         return courseDTO;
     }
 
@@ -71,11 +77,16 @@ public class CourseController implements InterfaceOfCourseController {
     @Override
     public ResponeCourseDTO createCourse(CreateCourseDTO dto) throws AppServiceExeption, IOException {
         Course cousre = courseService.createCourse(dto);
-        ResponeCourseDTO savedCourse = fromCourseToResponeCourseDTO(cousre);
+
+
         List<CreateSectionDTO> Sections = dto.getSections();
         for (CreateSectionDTO CreatesectionDTO: Sections) {
-            sectionService.createSection(CreatesectionDTO,Integer.parseInt(savedCourse.getCourse_id()));
+            sectionService.createSection(CreatesectionDTO,cousre.getCourse_id());
         }
+
+        CreateLearningObjectiveDTO learningObjects = dto.getLearningObjective();
+        serviceOfLearningObjective.createLearningObjective(learningObjects,cousre.getCourse_id());
+
         return fromCourseToResponeCourseDTO(cousre);
     }
     @Override

@@ -9,7 +9,7 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="course_id")
-    private String course_id;
+    private Integer course_id;
     @Column(nullable = false,name="course_name")
     private String  course_name;
     @Column(nullable = false,name = "course_description")
@@ -39,13 +39,11 @@ public class Course {
     private Integer category_id;
 
 
-
-
-    public String getCourse_id() {
+    public Integer getCourse_id() {
         return course_id;
     }
 
-    public void setCourse_id(String course_id) {
+    public void setCourse_id(Integer course_id) {
         this.course_id = course_id;
     }
 

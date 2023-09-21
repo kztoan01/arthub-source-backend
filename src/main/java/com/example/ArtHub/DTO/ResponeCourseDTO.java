@@ -1,12 +1,11 @@
 package com.example.ArtHub.DTO;
 
-import com.example.ArtHub.DTO.ResponeSectionDTO;
-import com.example.ArtHub.Service.SectionService;
+import com.example.ArtHub.Service.ServiceOfSection;
 
 import java.util.List;
 
 public class ResponeCourseDTO {
-    SectionService sectionService = new SectionService();
+    ServiceOfSection sectionService = new ServiceOfSection();
 
 
 
@@ -20,10 +19,19 @@ public class ResponeCourseDTO {
         this.courseSection = courseSection;
     }
 
-    private String course_id;
+    private int course_id;
 
     private String  course_name;
 
+    private ResponeLearningObjectiveDTO responeLearningObjectiveDTO;
+
+    public ResponeLearningObjectiveDTO getResponeLearningObjectiveDTO() {
+        return responeLearningObjectiveDTO;
+    }
+
+    public void setResponeLearningObjectiveDTO(ResponeLearningObjectiveDTO responeLearningObjectiveDTO) {
+        this.responeLearningObjectiveDTO = responeLearningObjectiveDTO;
+    }
 
     private String course_description;
 
@@ -49,11 +57,11 @@ public class ResponeCourseDTO {
     private Integer category_id;
 
 
-    public String getCourse_id() {
+    public int getCourse_id() {
         return course_id;
     }
 
-    public void setCourse_id(String course_id) {
+    public void setCourse_id(int course_id) {
         this.course_id = course_id;
     }
 

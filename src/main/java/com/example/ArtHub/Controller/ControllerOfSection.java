@@ -3,7 +3,7 @@ package com.example.ArtHub.Controller;
 import com.example.ArtHub.AppServiceExeption;
 import com.example.ArtHub.DTO.CreateSectionDTO;
 import com.example.ArtHub.DTO.ResponeSectionDTO;
-import com.example.ArtHub.Service.SectionService;
+import com.example.ArtHub.Service.ServiceOfSection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,10 +11,10 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-public class SectionController implements InterafceOfSectionController {
+public class ControllerOfSection implements InterafceOfSectionController {
 
     @Autowired
-    SectionService sectionService;
+    ServiceOfSection sectionService;
     @Override
     public ResponeSectionDTO createSection(CreateSectionDTO dto) throws AppServiceExeption, IOException {
 //        Section section = sectionService.createSection(dto);

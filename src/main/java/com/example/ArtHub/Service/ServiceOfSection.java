@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class SectionService implements InterfaceOfSectionService {
+public class ServiceOfSection implements InterfaceOfSectionService {
     @Autowired
     SectionRepository sectionRepository ;
 

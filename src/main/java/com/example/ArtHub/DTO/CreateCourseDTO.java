@@ -2,6 +2,7 @@ package com.example.ArtHub.DTO;
 
 
 import com.example.ArtHub.DTO.CreateSectionDTO;
+import com.example.ArtHub.Entity.LearningObjective;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -53,6 +54,15 @@ public class CreateCourseDTO {
 
     private Integer category_id;
 
+    private CreateLearningObjectiveDTO learningObjective;
+
+    public CreateLearningObjectiveDTO getLearningObjective() {
+        return learningObjective;
+    }
+
+    public void setLearningObjective(CreateLearningObjectiveDTO learningObjective) {
+        this.learningObjective = learningObjective;
+    }
 
     private List<CreateSectionDTO> sections;
 

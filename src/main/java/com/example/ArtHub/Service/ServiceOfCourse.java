@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CourseService implements InterfaceOfCourseService {
+public class ServiceOfCourse implements InterfaceOfCourseService {
 
     @Autowired
     CourseRepository courseRepository;

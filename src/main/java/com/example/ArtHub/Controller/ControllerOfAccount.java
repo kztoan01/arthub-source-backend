@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
-public class AccountController implements InterfaceOfAccountController {
+public class ControllerOfAccount implements InterfaceOfAccountController {
     private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
     @Autowired
     InterfaceOfAccountService accountsService;
