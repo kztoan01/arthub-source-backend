@@ -22,8 +22,8 @@ public class SectionService implements InterfaceOfSectionService {
     }
 
     @Override
-    public List<Section> getSectionList() {
-        List<Section> sectionList = sectionRepository.findAll();
+    public List<Section> getSectionList(int ID) {
+        List<Section> sectionList = sectionRepository.findByCourse(ID);
         return sectionList;
     }
 

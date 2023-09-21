@@ -11,7 +11,7 @@ public interface InterfaceOfSectionService {
 
     Section createSection(CreateSectionDTO dto) throws AppServiceExeption;
 
-    List<Section> getSectionList();
+    List<Section> getSectionList(int ID);
 
     List<Section> getSectionListByCourseID(int ID);
 

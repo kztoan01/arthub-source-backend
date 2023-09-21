@@ -12,7 +12,7 @@ public class CourseService implements InterfaceOfCourseService {
     @Autowired
     CourseRepository courseRepository;
 
-    CourseController courseController = new CourseController();
+
 
 
 
@@ -35,9 +35,10 @@ public class CourseService implements InterfaceOfCourseService {
 
     @Override
     public List<ResponeCourseDTO> getCourseList() {
-        List<Course> courseListFromDB = courseRepository.findAll();
-        ResponeCourseDTO responeCourseDTO = new ResponeCourseDTO();
-        List<ResponeCourseDTO> responeCourseDTOList = courseController.fromCourseListToResponeCourseDTOList(courseListFromDB);
-        return responeCourseDTOList;
+//        List<Course> courseListFromDB = courseRepository.findAll();
+//        ResponeCourseDTO responeCourseDTO = new ResponeCourseDTO();
+//        List<ResponeCourseDTO> responeCourseDTOList = courseController.fromCourseListToResponeCourseDTOList(courseListFromDB);
+//        return responeCourseDTOList;
+        return null;
     }
 }

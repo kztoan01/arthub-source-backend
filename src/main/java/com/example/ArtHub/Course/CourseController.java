@@ -14,6 +14,8 @@ public class CourseController implements InterfaceOfCourseController {
 
     @Autowired
     CourseService courseService;
+    @Autowired
+    CourseRepository courseRepository;
 
     @Autowired
     SectionRepository sectionRepository;
@@ -40,7 +42,7 @@ public class CourseController implements InterfaceOfCourseController {
         courseDTO.setIs_approved(course.getIs_approved());
         courseDTO.setIs_passed(course.isIs_passed());
         courseDTO.setCourse_introduction(course.getCourse_introduction());
-        List<ResponeSectionDTO> responeSectionDTOList = ResponeSectionDTO.fromSectionListToResponeSectionDTOList(sectionService.getSectionList());
+        List<ResponeSectionDTO> responeSectionDTOList = ResponeSectionDTO.fromSectionListToResponeSectionDTOList(sectionService.getSectionList(Integer.parseInt(course.getCourse_id())));
         courseDTO.setCourseSection(responeSectionDTOList);
         return courseDTO;
     }
@@ -52,6 +54,13 @@ public class CourseController implements InterfaceOfCourseController {
             ResponeCourseDTOList.add(fromCourseToResponeCourseDTO(course));
         }
         return ResponeCourseDTOList;
+    }
+
+    public List<ResponeCourseDTO> getCourseList() {
+        List<Course> courseListFromDB = courseRepository.findAll();
+        ResponeCourseDTO responeCourseDTO = new ResponeCourseDTO();
+        List<ResponeCourseDTO> responeCourseDTOList = fromCourseListToResponeCourseDTOList(courseListFromDB);
+        return responeCourseDTOList;
     }
 
     @Override
@@ -66,7 +75,7 @@ public class CourseController implements InterfaceOfCourseController {
     }
     @Override
     public List<ResponeCourseDTO> getCourses() {
-        List<ResponeCourseDTO> courseList =  courseService.getCourseList();
+        List<ResponeCourseDTO> courseList =  getCourseList();
         return courseList;
     }
 }
