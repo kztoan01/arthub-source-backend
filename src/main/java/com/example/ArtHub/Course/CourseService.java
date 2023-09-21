@@ -12,6 +12,9 @@ public class CourseService implements InterfaceOfCourseService {
     @Autowired
     CourseRepository courseRepository;
 
+    CourseController courseController = new CourseController();
+
+
 
     @Override
     public Course createCourse(CreateCourseDTO dto) throws AppServiceExeption {
@@ -31,8 +34,10 @@ public class CourseService implements InterfaceOfCourseService {
     }
 
     @Override
-    public List<Course> getCourseList() {
+    public List<ResponeCourseDTO> getCourseList() {
         List<Course> courseListFromDB = courseRepository.findAll();
-        return courseListFromDB;
+        ResponeCourseDTO responeCourseDTO = new ResponeCourseDTO();
+        List<ResponeCourseDTO> responeCourseDTOList = courseController.fromCourseListToResponeCourseDTOList(courseListFromDB);
+        return responeCourseDTOList;
     }
 }

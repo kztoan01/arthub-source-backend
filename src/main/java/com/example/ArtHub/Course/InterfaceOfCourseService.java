@@ -7,5 +7,5 @@ import java.util.List;
 public interface InterfaceOfCourseService {
     Course createCourse(CreateCourseDTO dto) throws AppServiceExeption;
 
-    List<Course> getCourseList();
+    List<ResponeCourseDTO> getCourseList();
 }

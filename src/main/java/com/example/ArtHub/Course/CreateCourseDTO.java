@@ -1,8 +1,12 @@
 package com.example.ArtHub.Course;
 
 
+import com.example.ArtHub.Section.CreateSectionDTO;
+import com.example.ArtHub.Section.Section;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
+import java.util.List;
 
 public class CreateCourseDTO {
 
@@ -40,7 +44,16 @@ public class CreateCourseDTO {
     private Integer category_id;
 
 
+    private List<CreateSectionDTO> sections;
 
+
+    public List<CreateSectionDTO> getSections() {
+        return sections;
+    }
+
+    public void setSections(List<CreateSectionDTO> sections) {
+        this.sections = sections;
+    }
 
     public String getCourse_name() {
         return course_name;

@@ -39,6 +39,8 @@ public class Course {
     private Integer category_id;
 
 
+
+
     public String getCourse_id() {
         return course_id;
     }

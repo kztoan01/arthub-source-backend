@@ -2,41 +2,30 @@ package com.example.ArtHub.Course;
 
 import com.example.ArtHub.Account.Account;
 import com.example.ArtHub.Account.AccountResponeDTO;
+import com.example.ArtHub.Section.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ResponeCourseDTO {
+    SectionService sectionService = new SectionService();
 
-    public static ResponeCourseDTO fromCourseToResponeCourseDTO(Course course) {
-        ResponeCourseDTO courseDTO = new ResponeCourseDTO();
-        courseDTO.setCourse_name(course.getCourse_name());
-        courseDTO.setCourse_description(course.getCourse_description());
-        courseDTO.setCourse_price(course.getCourse_price());
-        courseDTO.setCourse_coupon(course.getCourse_coupon());
-        courseDTO.setCourse_id(course.getCourse_id());
-        courseDTO.setCourse_language(course.getCourse_language());
-        courseDTO.setCourse_level(course.getCourse_level());
-        courseDTO.setAccount_id(course.getAccount_id());
-        courseDTO.setCategory_id(course.getCategory_id());
-        courseDTO.setIs_approved(course.getIs_approved());
-        courseDTO.setIs_passed(course.isIs_passed());
-        courseDTO.setCourse_introduction(course.getCourse_introduction());
-        return courseDTO;
+
+
+    private List<ResponeSectionDTO> courseSection;
+
+    public List<ResponeSectionDTO> getCourseSection() {
+        return courseSection;
     }
 
-    public static List<ResponeCourseDTO> fromCourseListToResponeCourseDTOList(List<Course> CourseList) {
-        List<ResponeCourseDTO> ResponeCourseDTOList = new ArrayList<>();
-        for (Course course : CourseList) {
-            ResponeCourseDTOList.add(fromCourseToResponeCourseDTO(course));
-        }
-        return ResponeCourseDTOList;
+    public void setCourseSection(List<ResponeSectionDTO> courseSection) {
+        this.courseSection = courseSection;
     }
 
-
-   private String course_id;
+    private String course_id;
 
     private String  course_name;
 
