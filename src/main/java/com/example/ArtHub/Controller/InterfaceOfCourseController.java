@@ -1,11 +1,11 @@
-package com.example.ArtHub.Course;
+package com.example.ArtHub.Controller;
 
-import com.example.ArtHub.Account.AccountResponeDTO;
 import com.example.ArtHub.AppServiceExeption;
+import com.example.ArtHub.DTO.CreateCourseDTO;
+import com.example.ArtHub.DTO.ResponeCourseDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;

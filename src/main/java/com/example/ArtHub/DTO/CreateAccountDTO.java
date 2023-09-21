@@ -1,4 +1,4 @@
-package com.example.ArtHub.Account;
+package com.example.ArtHub.DTO;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

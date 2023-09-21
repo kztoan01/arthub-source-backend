@@ -1,6 +1,6 @@
-package com.example.ArtHub.Course;
+package com.example.ArtHub.Repository;
 
-import com.example.ArtHub.Course.Course;
+import com.example.ArtHub.Entity.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

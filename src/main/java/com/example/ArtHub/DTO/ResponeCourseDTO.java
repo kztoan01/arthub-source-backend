@@ -1,13 +1,8 @@
-package com.example.ArtHub.Course;
+package com.example.ArtHub.DTO;
 
-import com.example.ArtHub.Account.Account;
-import com.example.ArtHub.Account.AccountResponeDTO;
-import com.example.ArtHub.Section.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.ArtHub.DTO.ResponeSectionDTO;
+import com.example.ArtHub.Service.SectionService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ResponeCourseDTO {

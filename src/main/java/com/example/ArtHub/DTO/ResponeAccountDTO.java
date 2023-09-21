@@ -1,11 +1,13 @@
-package com.example.ArtHub.Account;
+package com.example.ArtHub.DTO;
+
+import com.example.ArtHub.Entity.Account;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountResponeDTO {
-    public static AccountResponeDTO fromAccount(Account account) {
-        AccountResponeDTO accountResponseDTO = new AccountResponeDTO();
+public class ResponeAccountDTO {
+    public static ResponeAccountDTO fromAccount(Account account) {
+        ResponeAccountDTO accountResponseDTO = new ResponeAccountDTO();
         accountResponseDTO.setAccountId(account.getAccountId());
         accountResponseDTO.setImage(account.getImage());
         accountResponseDTO.setUsername(account.getUsername());
@@ -20,8 +22,8 @@ public class AccountResponeDTO {
         return accountResponseDTO;
     }
 
-    public static List<AccountResponeDTO> fromAccountList(List<Account> accountList) {
-        List<AccountResponeDTO> accountResponseDTOList = new ArrayList<>();
+    public static List<ResponeAccountDTO> fromAccountList(List<Account> accountList) {
+        List<ResponeAccountDTO> accountResponseDTOList = new ArrayList<>();
         for (Account account : accountList) {
             accountResponseDTOList.add(fromAccount(account));
         }

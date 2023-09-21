@@ -1,7 +1,6 @@
-package com.example.ArtHub.Section;
+package com.example.ArtHub.DTO;
 
-import com.example.ArtHub.Course.Course;
-import com.example.ArtHub.Course.ResponeCourseDTO;
+import com.example.ArtHub.Entity.Section;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,20 +1,16 @@
-package com.example.ArtHub.Account;
+package com.example.ArtHub.Service;
 
+import com.example.ArtHub.DTO.CreateAccountDTO;
 import com.example.ArtHub.AppServiceExeption;
+import com.example.ArtHub.Entity.Account;
+import com.example.ArtHub.Repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import  java.io.IOException;
-import java.util.Optional;
 import java.util.List;
 
 @Service
-public class AccountService  implements InterfaceOfAccountService{
+public class AccountService  implements InterfaceOfAccountService {
     @Autowired
     AccountRepository accountRepository;
 

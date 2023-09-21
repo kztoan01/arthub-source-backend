@@ -1,7 +1,10 @@
-package com.example.ArtHub.Account;
+package com.example.ArtHub.Controller;
 
+import com.example.ArtHub.DTO.ResponeAccountDTO;
+import com.example.ArtHub.DTO.CreateAccountDTO;
+import com.example.ArtHub.Service.InterfaceOfAccountService;
 import com.example.ArtHub.AppServiceExeption;
-import jakarta.validation.Valid;
+import com.example.ArtHub.Entity.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,14 +17,14 @@ import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
-public class AccountController implements IAccountController {
+public class AccountController implements InterfaceOfAccountController {
     private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
     @Autowired
     InterfaceOfAccountService accountsService;
 
 
     @Override
-    public AccountResponeDTO createAccount(@RequestParam String username,
+    public ResponeAccountDTO createAccount(@RequestParam String username,
                                            @RequestParam String first_name,
                                            @RequestParam String last_name,
                                            @RequestParam MultipartFile image,
@@ -45,12 +48,12 @@ public class AccountController implements IAccountController {
         account.setLast_name(last_name);
         account.setImage(image.getOriginalFilename());
         Account accountEntity = accountsService.createAccount(account);
-        return AccountResponeDTO.fromAccount(accountEntity);
+        return ResponeAccountDTO.fromAccount(accountEntity);
     }
 
     @Override
-    public List<AccountResponeDTO> getAccounts() {
+    public List<ResponeAccountDTO> getAccounts() {
         List<Account> accountList = accountsService.getAccounts();
-        return AccountResponeDTO.fromAccountList(accountList);
+        return ResponeAccountDTO.fromAccountList(accountList);
     }
 }

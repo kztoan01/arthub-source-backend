@@ -1,8 +1,9 @@
-package com.example.ArtHub.Section;
+package com.example.ArtHub.Controller;
 
 import com.example.ArtHub.AppServiceExeption;
-import com.example.ArtHub.Course.Course;
-import com.example.ArtHub.Course.ResponeCourseDTO;
+import com.example.ArtHub.DTO.CreateSectionDTO;
+import com.example.ArtHub.DTO.ResponeSectionDTO;
+import com.example.ArtHub.Service.SectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,8 +17,9 @@ public class SectionController implements InterafceOfSectionController {
     SectionService sectionService;
     @Override
     public ResponeSectionDTO createSection(CreateSectionDTO dto) throws AppServiceExeption, IOException {
-        Section section = sectionService.createSection(dto);
-        return ResponeSectionDTO.FromSectionIntoResponeSectionDTO(section);
+//        Section section = sectionService.createSection(dto);
+//        return ResponeSectionDTO.FromSectionIntoResponeSectionDTO(section);
+        return null;
     }
 
     @Override

@@ -1,7 +1,14 @@
-package com.example.ArtHub.Course;
+package com.example.ArtHub.Controller;
 
 import com.example.ArtHub.AppServiceExeption;
-import com.example.ArtHub.Section.*;
+import com.example.ArtHub.DTO.CreateCourseDTO;
+import com.example.ArtHub.DTO.CreateSectionDTO;
+import com.example.ArtHub.DTO.ResponeCourseDTO;
+import com.example.ArtHub.DTO.ResponeSectionDTO;
+import com.example.ArtHub.Entity.Course;
+import com.example.ArtHub.Repository.CourseRepository;
+import com.example.ArtHub.Service.CourseService;
+import com.example.ArtHub.Service.SectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,18 +24,30 @@ public class CourseController implements InterfaceOfCourseController {
     @Autowired
     CourseRepository courseRepository;
 
-    @Autowired
-    SectionRepository sectionRepository;
+
 
     @Autowired
     SectionService sectionService;
 
-    public List<Section> getSectionList() {
-        List<Section> sectionList = sectionRepository.findAll();
-        return sectionList;
+
+
+    public  List<ResponeCourseDTO> fromCourseListToResponeCourseDTOList(List<Course> CourseList) { //This fucntion use to convert courseList into ResponeCourseDTO list
+        List<ResponeCourseDTO> ResponeCourseDTOList = new ArrayList<>();
+        for (Course course : CourseList) {
+
+            ResponeCourseDTOList.add(fromCourseToResponeCourseDTO(course));
+        }
+        return ResponeCourseDTOList;
     }
 
-    public  ResponeCourseDTO fromCourseToResponeCourseDTO(Course course) {
+    public List<ResponeCourseDTO> getCourseList() {
+        List<Course> courseListFromDB = courseRepository.findAll();
+        List<ResponeCourseDTO> responeCourseDTOList = fromCourseListToResponeCourseDTOList(courseListFromDB);
+        return responeCourseDTOList;
+    }
+
+
+    public  ResponeCourseDTO fromCourseToResponeCourseDTO(Course course) { //This function use to convert courseEntity to ResponeCourseDTO
         ResponeCourseDTO courseDTO = new ResponeCourseDTO();
         courseDTO.setCourse_name(course.getCourse_name());
         courseDTO.setCourse_description(course.getCourse_description());
@@ -47,30 +66,16 @@ public class CourseController implements InterfaceOfCourseController {
         return courseDTO;
     }
 
-    public  List<ResponeCourseDTO> fromCourseListToResponeCourseDTOList(List<Course> CourseList) {
-        List<ResponeCourseDTO> ResponeCourseDTOList = new ArrayList<>();
-        for (Course course : CourseList) {
 
-            ResponeCourseDTOList.add(fromCourseToResponeCourseDTO(course));
-        }
-        return ResponeCourseDTOList;
-    }
-
-    public List<ResponeCourseDTO> getCourseList() {
-        List<Course> courseListFromDB = courseRepository.findAll();
-        ResponeCourseDTO responeCourseDTO = new ResponeCourseDTO();
-        List<ResponeCourseDTO> responeCourseDTOList = fromCourseListToResponeCourseDTOList(courseListFromDB);
-        return responeCourseDTOList;
-    }
 
     @Override
     public ResponeCourseDTO createCourse(CreateCourseDTO dto) throws AppServiceExeption, IOException {
         Course cousre = courseService.createCourse(dto);
+        ResponeCourseDTO savedCourse = fromCourseToResponeCourseDTO(cousre);
         List<CreateSectionDTO> Sections = dto.getSections();
         for (CreateSectionDTO CreatesectionDTO: Sections) {
-            sectionService.createSection(CreatesectionDTO);
+            sectionService.createSection(CreatesectionDTO,Integer.parseInt(savedCourse.getCourse_id()));
         }
-        ResponeCourseDTO responeCourseDTO = new ResponeCourseDTO();
         return fromCourseToResponeCourseDTO(cousre);
     }
     @Override

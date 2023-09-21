@@ -1,6 +1,9 @@
-package com.example.ArtHub.Section;
+package com.example.ArtHub.Service;
 
 import com.example.ArtHub.AppServiceExeption;
+import com.example.ArtHub.Entity.Section;
+import com.example.ArtHub.Repository.SectionRepository;
+import com.example.ArtHub.DTO.CreateSectionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +16,11 @@ public class SectionService implements InterfaceOfSectionService {
 
 
     @Override
-    public Section createSection(CreateSectionDTO dto) throws AppServiceExeption {
+    public Section createSection(CreateSectionDTO dto, int courseID) throws AppServiceExeption {
         Section section = new Section();
         section.setSection_name(dto.getSection_name());
         section.setAccount_id(dto.getAccount_id());
-        section.setCourse(dto.getCourse());
+        section.setCourse(courseID);
         return sectionRepository.save(section);
     }
 

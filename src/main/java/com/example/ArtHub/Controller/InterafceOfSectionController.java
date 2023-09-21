@@ -1,9 +1,9 @@
-package com.example.ArtHub.Section;
+package com.example.ArtHub.Controller;
 
 
 import com.example.ArtHub.AppServiceExeption;
-import com.example.ArtHub.Course.CreateCourseDTO;
-import com.example.ArtHub.Course.ResponeCourseDTO;
+import com.example.ArtHub.DTO.CreateSectionDTO;
+import com.example.ArtHub.DTO.ResponeSectionDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

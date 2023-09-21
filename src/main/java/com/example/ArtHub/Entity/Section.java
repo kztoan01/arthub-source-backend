@@ -1,4 +1,4 @@
-package com.example.ArtHub.Section;
+package com.example.ArtHub.Entity;
 
 import jakarta.persistence.*;
 

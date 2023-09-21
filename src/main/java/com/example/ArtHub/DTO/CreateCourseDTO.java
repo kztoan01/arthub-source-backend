@@ -1,14 +1,16 @@
-package com.example.ArtHub.Course;
+package com.example.ArtHub.DTO;
 
 
-import com.example.ArtHub.Section.CreateSectionDTO;
-import com.example.ArtHub.Section.Section;
+import com.example.ArtHub.DTO.CreateSectionDTO;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
 public class CreateCourseDTO {
+
+    private int course_id;
+
 
 
     @NotNull(message = "course_name cannot be null")
@@ -30,6 +32,14 @@ public class CreateCourseDTO {
 
     private Float course_price;
 
+
+    public int getCourse_id() {
+        return course_id;
+    }
+
+    public void setCourse_id(int course_id) {
+        this.course_id = course_id;
+    }
 
     private Float course_coupon;
 

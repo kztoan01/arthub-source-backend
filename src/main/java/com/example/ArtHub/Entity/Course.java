@@ -1,4 +1,4 @@
-package com.example.ArtHub.Course;
+package com.example.ArtHub.Entity;
 
 import jakarta.persistence.*;
 
