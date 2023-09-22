@@ -8,14 +8,14 @@ import java.util.List;
 public class ResponeAccountDTO {
     public static ResponeAccountDTO fromAccount(Account account) {
         ResponeAccountDTO accountResponseDTO = new ResponeAccountDTO();
-        accountResponseDTO.setAccountId(account.getAccountId());
+        accountResponseDTO.setAccountId(account.getId());
         accountResponseDTO.setImage(account.getImage());
         accountResponseDTO.setUsername(account.getUsername());
         accountResponseDTO.setAddress(account.getAddress());
         accountResponseDTO.setLast_name(account.getLastName());
         accountResponseDTO.setFirst_name(account.getFirstName());
         accountResponseDTO.setEmail(account.getEmail());
-        accountResponseDTO.setRole_id(account.getRole_id());
+        accountResponseDTO.setRole_id(account.getRoleId());
         accountResponseDTO.setTwitter(account.getTwitter());
         accountResponseDTO.setFacebook(account.getFacebook());
         accountResponseDTO.setPassword(account.getPassword());

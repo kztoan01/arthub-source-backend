@@ -7,45 +7,45 @@ public class Section {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer section_id;
-    @Column(nullable = false,name = "section_name")
-    private String section_name;
+    private Integer id;
+    @Column(nullable = false,name = "name")
+    private String name;
 
-    @Column(name = "account_id")
-    private Integer account_id;
+    @Column(name = "accountId")
+    private Integer accountId;
 
-    @Column(name = "course")
-    private Integer course;
+    @Column(name = "courseId")
+    private Integer courseId;
 
-    public Integer getSection_id() {
-        return section_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setSection_id(Integer section_id) {
-        this.section_id = section_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getSection_name() {
-        return section_name;
+    public String getName() {
+        return name;
     }
 
-    public void setSection_name(String section_name) {
-        this.section_name = section_name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Integer getAccount_id() {
-        return account_id;
+    public Integer getAccountId() {
+        return accountId;
     }
 
-    public void setAccount_id(Integer account_id) {
-        this.account_id = account_id;
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
     }
 
-    public Integer getCourse() {
-        return course;
+    public Integer getCourseId() {
+        return courseId;
     }
 
-    public void setCourse(Integer course) {
-        this.course = course;
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
     }
 }

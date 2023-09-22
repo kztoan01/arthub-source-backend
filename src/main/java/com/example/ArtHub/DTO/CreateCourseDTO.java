@@ -3,6 +3,10 @@ package com.example.ArtHub.DTO;
 
 import com.example.ArtHub.DTO.CreateSectionDTO;
 import com.example.ArtHub.Entity.LearningObjective;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -10,51 +14,145 @@ import java.util.List;
 
 public class CreateCourseDTO {
 
-    private int course_id;
+
+    private Integer id;
+
+    private String  name;
+
+
+    private String description;
+
+
+    private String introduction;
+
+
+    private String level;
 
 
 
-    @NotNull(message = "course_name cannot be null")
-    @NotBlank(message = "course_name cannot be empty")
-    private String  course_name;
-
-    @NotNull(message = "course_description cannot be null")
-    @NotBlank(message = "course_description cannot be empty")
-    private String course_description;
-    @NotNull(message = "course_introduction cannot be null")
-    @NotBlank(message = "course_introduction cannot be empty")
-    private String course_introduction;
-    @NotNull(message = "course_level cannot be null")
-    @NotBlank(message = "course_level cannot be empty")
-    private String course_level;
-    @NotNull(message = "course_language cannot be null")
-    @NotBlank(message = "course_language cannot be empty")
-    private String course_language;
-
-    private Float course_price;
+    private String language;
 
 
-    public int getCourse_id() {
-        return course_id;
-    }
 
-    public void setCourse_id(int course_id) {
-        this.course_id = course_id;
-    }
-
-    private Float course_coupon;
+    private Float price;
 
 
-    private boolean is_passed;
-    @NotNull(message = "is_approved cannot be null")
-    @NotBlank(message = "is_approved cannot be empty")
-    private String is_approved;
 
-    private Integer account_id;
+    private Float coupon;
 
-    private Integer category_id;
 
+
+    private boolean isPassed;
+
+
+
+    private boolean isApproved;
+
+
+    private Integer accountId;
+
+
+    private Integer categoryId;
+
+    private List<CreateSectionDTO> sections;
     private CreateLearningObjectiveDTO learningObjective;
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
+    }
+
+    public Float getCoupon() {
+        return coupon;
+    }
+
+    public void setCoupon(Float coupon) {
+        this.coupon = coupon;
+    }
+
+    public boolean isPassed() {
+        return isPassed;
+    }
+
+    public void setPassed(boolean passed) {
+        isPassed = passed;
+    }
+
+    public boolean getApproved() {
+        return isApproved;
+    }
+
+    public void setApproved(boolean approved) {
+        isApproved = approved;
+    }
+
+    public Integer getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
+    }
+
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
+    }
 
     public CreateLearningObjectiveDTO getLearningObjective() {
         return learningObjective;
@@ -64,9 +162,6 @@ public class CreateCourseDTO {
         this.learningObjective = learningObjective;
     }
 
-    private List<CreateSectionDTO> sections;
-
-
     public List<CreateSectionDTO> getSections() {
         return sections;
     }
@@ -75,91 +170,5 @@ public class CreateCourseDTO {
         this.sections = sections;
     }
 
-    public String getCourse_name() {
-        return course_name;
-    }
 
-    public void setCourse_name(String course_name) {
-        this.course_name = course_name;
-    }
-
-    public String getCourse_description() {
-        return course_description;
-    }
-
-    public void setCourse_description(String course_description) {
-        this.course_description = course_description;
-    }
-
-    public String getCourse_introduction() {
-        return course_introduction;
-    }
-
-    public void setCourse_introduction(String course_introduction) {
-        this.course_introduction = course_introduction;
-    }
-
-    public String getCourse_level() {
-        return course_level;
-    }
-
-    public void setCourse_level(String course_level) {
-        this.course_level = course_level;
-    }
-
-    public String getCourse_language() {
-        return course_language;
-    }
-
-    public void setCourse_language(String course_language) {
-        this.course_language = course_language;
-    }
-
-    public Float getCourse_price() {
-        return course_price;
-    }
-
-    public void setCourse_price(Float course_price) {
-        this.course_price = course_price;
-    }
-
-    public Float getCourse_coupon() {
-        return course_coupon;
-    }
-
-    public void setCourse_coupon(Float course_coupon) {
-        this.course_coupon = course_coupon;
-    }
-
-    public boolean isIs_passed() {
-        return is_passed;
-    }
-
-    public void setIs_passed(boolean is_passed) {
-        this.is_passed = is_passed;
-    }
-
-    public String getIs_approved() {
-        return is_approved;
-    }
-
-    public void setIs_approved(String is_approved) {
-        this.is_approved = is_approved;
-    }
-
-    public Integer getAccount_id() {
-        return account_id;
-    }
-
-    public void setAccount_id(Integer account_id) {
-        this.account_id = account_id;
-    }
-
-    public Integer getCategory_id() {
-        return category_id;
-    }
-
-    public void setCategory_id(Integer category_id) {
-        this.category_id = category_id;
-    }
 }

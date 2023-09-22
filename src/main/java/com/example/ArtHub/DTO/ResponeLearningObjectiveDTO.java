@@ -8,26 +8,6 @@ import java.util.List;
 
 public class ResponeLearningObjectiveDTO {
 
-    public static ResponeLearningObjectiveDTO fromLearningOjToResponeLearningOjDTO(LearningObjective learningObjective) {
-        ResponeLearningObjectiveDTO responeLearningObjectiveDTO = new ResponeLearningObjectiveDTO();
-        responeLearningObjectiveDTO.setId(learningObjective.getLearningObjective_id());
-        responeLearningObjectiveDTO.setCourse(learningObjective.getCourse());
-        responeLearningObjectiveDTO.setOne(learningObjective.getOne());
-        responeLearningObjectiveDTO.setTwo(learningObjective.getTwo());
-        responeLearningObjectiveDTO.setThree(learningObjective.getThree());
-        responeLearningObjectiveDTO.setFour(learningObjective.getFour());
-        responeLearningObjectiveDTO.setFive(learningObjective.getFive());
-        responeLearningObjectiveDTO.setSix(learningObjective.getSix());
-        return responeLearningObjectiveDTO;
-    }
-
-    public static List<ResponeLearningObjectiveDTO> fromLearningOjListIntoLearningOjDTOList(List<LearningObjective> learningOjList) {
-        List<ResponeLearningObjectiveDTO> learningOjResponseDTOList = new ArrayList<>();
-        for (LearningObjective learningObjective : learningOjList) {
-            learningOjResponseDTOList.add(fromLearningOjToResponeLearningOjDTO(learningObjective));
-        }
-        return learningOjResponseDTOList;
-    }
 
     private int id;
     private String one;

@@ -3,8 +3,11 @@ package com.example.ArtHub.Controller;
 import com.example.ArtHub.AppServiceExeption;
 import com.example.ArtHub.DTO.CreateSectionDTO;
 import com.example.ArtHub.DTO.ResponeSectionDTO;
+import com.example.ArtHub.Repository.SectionRepository;
+import com.example.ArtHub.ResponeObject.ResponeObject;
 import com.example.ArtHub.Service.ServiceOfSection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -27,5 +30,12 @@ public class ControllerOfSection implements InterafceOfSectionController {
 //        List<Section> SectionList =  sectionService.getSectionList();
 //        return ResponeSectionDTO.fromSectionListToResponeSectionDTOList(SectionList);
         return null;
+    }
+
+    @Override
+    public ResponseEntity<ResponeObject> getSectionByID(Integer id) {
+
+        return sectionService.getSectionByID(id);
+
     }
 }

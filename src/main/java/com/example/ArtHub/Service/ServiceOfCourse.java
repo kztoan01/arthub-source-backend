@@ -22,17 +22,17 @@ public class ServiceOfCourse implements InterfaceOfCourseService {
     @Override
     public Course createCourse(CreateCourseDTO dto) throws AppServiceExeption {
         Course course = new Course();
-        course.setCourse_coupon(dto.getCourse_coupon());
-        course.setCourse_description(dto.getCourse_description());
-        course.setCourse_introduction(dto.getCourse_introduction());
-        course.setCourse_language(dto.getCourse_language());
-        course.setCourse_level(dto.getCourse_level());
-        course.setCourse_price(dto.getCourse_price());
-        course.setAccount_id(dto.getAccount_id());
-        course.setCourse_name(dto.getCourse_name());
-        course.setCategory_id(dto.getCategory_id());
-        course.setIs_approved(dto.getIs_approved());
-        course.setIs_passed(dto.isIs_passed());
+        course.setCoupon(dto.getCoupon());
+        course.setDescription(dto.getDescription());
+        course.setIntroduction(dto.getIntroduction());
+        course.setLanguage(dto.getLanguage());
+        course.setLevel(dto.getLevel());
+        course.setPrice(dto.getPrice());
+        course.setAccountId(dto.getAccountId());
+        course.setName(dto.getName());
+        course.setCategoryId(dto.getCategoryId());
+        course.setApproved(dto.getApproved());
+        course.setPassed(dto.isPassed());
         return courseRepository.save(course);
     }
 

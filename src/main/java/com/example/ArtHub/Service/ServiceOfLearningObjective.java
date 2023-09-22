@@ -1,10 +1,13 @@
 package com.example.ArtHub.Service;
 
 import com.example.ArtHub.AppServiceExeption;
+import com.example.ArtHub.Controller.ControllerOfCourse;
 import com.example.ArtHub.DTO.CreateLearningObjectiveDTO;
 import com.example.ArtHub.DTO.ResponeLearningObjectiveDTO;
 import com.example.ArtHub.Entity.LearningObjective;
 import com.example.ArtHub.Repository.LearningObjectiveRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,19 +16,20 @@ import java.util.Optional;
 
 @Service
 public class ServiceOfLearningObjective implements InterfaceOfLearningObjectiveService {
-
+    private static final Logger logger = LoggerFactory.getLogger(ControllerOfCourse.class);
     @Autowired
     LearningObjectiveRepository learningObjectiveRepository;
     @Override
     public LearningObjective createLearningObjective(CreateLearningObjectiveDTO dto,int ID) throws AppServiceExeption {
         LearningObjective learningObjective = new LearningObjective();
-        learningObjective.setCourse(ID);
+        learningObjective.setCourseId(ID);
         learningObjective.setOne(dto.getOne());
         learningObjective.setTwo(dto.getTwo());
         learningObjective.setThree(dto.getThree());
         learningObjective.setFour(dto.getFour());
         learningObjective.setFive(dto.getFive());
         learningObjective.setSix(dto.getSix());
+        logger.info("Inserted learning object:"+learningObjective.getOne());
         return learningObjectiveRepository.save(learningObjective);
     }
 
@@ -37,7 +41,7 @@ public class ServiceOfLearningObjective implements InterfaceOfLearningObjectiveS
 
     @Override
     public LearningObjective getLearningObjectiveByCourseId(int ID) {
-        LearningObjective learningObjective = learningObjectiveRepository.findByCourse(ID);
+        LearningObjective learningObjective = learningObjectiveRepository.findBycourseId(ID);
         return learningObjective;
     }
 

@@ -20,8 +20,8 @@ public class ControllerOfLearningObjective implements InterfaceOfLearningObjecti
 
     @Override
     public ResponeLearningObjectiveDTO createLearningObjective(CreateLearningObjectiveDTO dto) throws AppServiceExeption, IOException {
-        LearningObjective learningObjective = serviceOfLearningObjective.createLearningObjective(dto,1);
-        return ResponeLearningObjectiveDTO.fromLearningOjToResponeLearningOjDTO(learningObjective) ;
+
+        return null;
     }
 
     @Override

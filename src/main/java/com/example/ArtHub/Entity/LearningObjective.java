@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class LearningObjective {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer LearningObjective_id;
+    private Integer id;
     @Column(name = "one")
     private String one;
     @Column(name = "two")
@@ -20,17 +20,11 @@ public class LearningObjective {
     private String five;
     @Column(name = "six")
     private String six;
-    @Column(name = "course")
-    private Integer course;
+    @Column(name = "courseId")
+    private Integer courseId;
 
 
-    public Integer getLearningObjective_id() {
-        return LearningObjective_id;
-    }
 
-    public void setLearningObjective_id(Integer learningObjective_id) {
-        LearningObjective_id = learningObjective_id;
-    }
 
     public String getOne() {
         return one;
@@ -80,11 +74,19 @@ public class LearningObjective {
         this.six = six;
     }
 
-    public Integer getCourse() {
-        return course;
+    public Integer getId() {
+        return id;
     }
 
-    public void setCourse(Integer course) {
-        this.course = course;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
     }
 }

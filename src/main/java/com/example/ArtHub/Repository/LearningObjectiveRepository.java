@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LearningObjectiveRepository extends JpaRepository<LearningObjective,Integer> {
 
-    LearningObjective findByCourse(int course);
+    LearningObjective findBycourseId(int course);
 
 }

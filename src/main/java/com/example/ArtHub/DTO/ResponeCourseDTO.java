@@ -1,5 +1,7 @@
 package com.example.ArtHub.DTO;
 
+import com.example.ArtHub.Entity.LearningObjective;
+import com.example.ArtHub.Entity.Section;
 import com.example.ArtHub.Service.ServiceOfSection;
 
 import java.util.List;
@@ -8,148 +10,157 @@ public class ResponeCourseDTO {
     ServiceOfSection sectionService = new ServiceOfSection();
 
 
+    private Integer id;
 
-    private List<ResponeSectionDTO> courseSection;
+    private String  name;
 
-    public List<ResponeSectionDTO> getCourseSection() {
-        return courseSection;
+
+    private String description;
+
+
+    private String introduction;
+
+
+    private String level;
+
+
+
+    private String language;
+
+
+
+    private Float price;
+
+
+
+    private Float coupon;
+
+
+
+    private boolean isPassed;
+
+
+
+    private Boolean isApproved;
+
+
+    private Integer accountId;
+
+
+    private Integer categoryId;
+
+    private List<Section> sections;
+    private LearningObjective learningObjective;
+
+    public Integer getId() {
+        return id;
     }
 
-    public void setCourseSection(List<ResponeSectionDTO> courseSection) {
-        this.courseSection = courseSection;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    private int course_id;
-
-    private String  course_name;
-
-    private ResponeLearningObjectiveDTO responeLearningObjectiveDTO;
-
-    public ResponeLearningObjectiveDTO getResponeLearningObjectiveDTO() {
-        return responeLearningObjectiveDTO;
+    public String getName() {
+        return name;
     }
 
-    public void setResponeLearningObjectiveDTO(ResponeLearningObjectiveDTO responeLearningObjectiveDTO) {
-        this.responeLearningObjectiveDTO = responeLearningObjectiveDTO;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    private String course_description;
-
-    private String course_introduction;
-
-    private String course_level;
-
-    private String course_language;
-
-
-    private Float course_price;
-
-
-    private Float course_coupon;
-
-
-    private boolean is_passed;
-
-    private String is_approved;
-
-    private Integer account_id;
-
-    private Integer category_id;
-
-
-    public int getCourse_id() {
-        return course_id;
+    public String getDescription() {
+        return description;
     }
 
-    public void setCourse_id(int course_id) {
-        this.course_id = course_id;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getCourse_name() {
-        return course_name;
+    public String getIntroduction() {
+        return introduction;
     }
 
-    public void setCourse_name(String course_name) {
-        this.course_name = course_name;
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
     }
 
-    public String getCourse_description() {
-        return course_description;
+    public String getLevel() {
+        return level;
     }
 
-    public void setCourse_description(String course_description) {
-        this.course_description = course_description;
+    public void setLevel(String level) {
+        this.level = level;
     }
 
-    public String getCourse_introduction() {
-        return course_introduction;
+    public String getLanguage() {
+        return language;
     }
 
-    public void setCourse_introduction(String course_introduction) {
-        this.course_introduction = course_introduction;
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
-    public String getCourse_level() {
-        return course_level;
+    public Float getPrice() {
+        return price;
     }
 
-    public void setCourse_level(String course_level) {
-        this.course_level = course_level;
+    public void setPrice(Float price) {
+        this.price = price;
     }
 
-    public String getCourse_language() {
-        return course_language;
+    public Float getCoupon() {
+        return coupon;
     }
 
-    public void setCourse_language(String course_language) {
-        this.course_language = course_language;
+    public void setCoupon(Float coupon) {
+        this.coupon = coupon;
     }
 
-    public Float getCourse_price() {
-        return course_price;
+    public boolean isPassed() {
+        return isPassed;
     }
 
-    public void setCourse_price(Float course_price) {
-        this.course_price = course_price;
+    public void setPassed(boolean passed) {
+        isPassed = passed;
     }
 
-    public Float getCourse_coupon() {
-        return course_coupon;
+    public Boolean getApproved() {
+        return isApproved;
     }
 
-    public void setCourse_coupon(Float course_coupon) {
-        this.course_coupon = course_coupon;
+    public void setApproved(Boolean approved) {
+        isApproved = approved;
     }
 
-    public boolean isIs_passed() {
-        return is_passed;
+    public Integer getAccountId() {
+        return accountId;
     }
 
-    public void setIs_passed(boolean is_passed) {
-        this.is_passed = is_passed;
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
     }
 
-    public String getIs_approved() {
-        return is_approved;
+    public Integer getCategoryId() {
+        return categoryId;
     }
 
-    public void setIs_approved(String is_approved) {
-        this.is_approved = is_approved;
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
     }
 
-    public Integer getAccount_id() {
-        return account_id;
+    public List<Section> getSections() {
+        return sections;
     }
 
-    public void setAccount_id(Integer account_id) {
-        this.account_id = account_id;
+    public void setSections(List<Section> sections) {
+        this.sections = sections;
     }
 
-    public Integer getCategory_id() {
-        return category_id;
+    public LearningObjective getLearningObjective() {
+        return learningObjective;
     }
 
-    public void setCategory_id(Integer category_id) {
-        this.category_id = category_id;
+    public void setLearningObjective(LearningObjective learningObjective) {
+        this.learningObjective = learningObjective;
     }
 }

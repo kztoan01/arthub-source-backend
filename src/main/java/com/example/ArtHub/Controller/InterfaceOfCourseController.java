@@ -19,4 +19,10 @@ public interface InterfaceOfCourseController {
 
     @GetMapping("/getCourses")
     List<ResponeCourseDTO> getCourses();
+
+
+    @GetMapping("/getCourse/{name}")
+    List<ResponeCourseDTO> getCourses(@PathVariable String name);
+
+
 }

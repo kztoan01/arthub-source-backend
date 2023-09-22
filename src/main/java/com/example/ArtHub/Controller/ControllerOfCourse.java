@@ -7,6 +7,8 @@ import com.example.ArtHub.Repository.CourseRepository;
 import com.example.ArtHub.Service.ServiceOfCourse;
 import com.example.ArtHub.Service.ServiceOfLearningObjective;
 import com.example.ArtHub.Service.ServiceOfSection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,6 +18,9 @@ import java.util.List;
 
 @RestController
 public class ControllerOfCourse implements InterfaceOfCourseController {
+
+
+    private static final Logger logger = LoggerFactory.getLogger(ControllerOfCourse.class);
 
     @Autowired
     ServiceOfCourse courseService;
@@ -50,24 +55,22 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
 
     public  ResponeCourseDTO fromCourseToResponeCourseDTO(Course course) { //This function use to convert courseEntity to ResponeCourseDTO
         ResponeCourseDTO courseDTO = new ResponeCourseDTO();
-        courseDTO.setCourse_name(course.getCourse_name());
-        courseDTO.setCourse_description(course.getCourse_description());
-        courseDTO.setCourse_price(course.getCourse_price());
-        courseDTO.setCourse_coupon(course.getCourse_coupon());
-        courseDTO.setCourse_id(course.getCourse_id());
-        courseDTO.setCourse_language(course.getCourse_language());
-        courseDTO.setCourse_level(course.getCourse_level());
-        courseDTO.setAccount_id(course.getAccount_id());
-        courseDTO.setCategory_id(course.getCategory_id());
-        courseDTO.setIs_approved(course.getIs_approved());
-        courseDTO.setIs_passed(course.isIs_passed());
-        courseDTO.setCourse_introduction(course.getCourse_introduction());
+        courseDTO.setName(course.getName());
+        courseDTO.setDescription(course.getDescription());
+        courseDTO.setPrice(course.getPrice());
+        courseDTO.setCoupon(course.getCoupon());
+        courseDTO.setId(course.getId());
+        courseDTO.setLanguage(course.getLanguage());
+        courseDTO.setLevel(course.getLevel());
+        courseDTO.setAccountId(course.getAccountId());
+        courseDTO.setCategoryId(course.getCategoryId());
+        courseDTO.setApproved(course.getApproved());
+        courseDTO.setPassed(course.isPassed());
+        courseDTO.setIntroduction(course.getIntroduction());
 
-        List<ResponeSectionDTO> responeSectionDTOList = ResponeSectionDTO.fromSectionListToResponeSectionDTOList(sectionService.getSectionList(course.getCourse_id()));
-        courseDTO.setCourseSection(responeSectionDTOList);
+        courseDTO.setSections(sectionService.getSectionList(course.getId()));
 
-        ResponeLearningObjectiveDTO responeLearningObjectiveDTO = ResponeLearningObjectiveDTO.fromLearningOjToResponeLearningOjDTO(serviceOfLearningObjective.getLearningObjectiveByCourseId(course.getCourse_id()));
-        courseDTO.setResponeLearningObjectiveDTO(responeLearningObjectiveDTO);
+        courseDTO.setLearningObjective(serviceOfLearningObjective.getLearningObjectiveByCourseId(course.getId()));
 
         return courseDTO;
     }
@@ -81,11 +84,11 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
 
         List<CreateSectionDTO> Sections = dto.getSections();
         for (CreateSectionDTO CreatesectionDTO: Sections) {
-            sectionService.createSection(CreatesectionDTO,cousre.getCourse_id());
+            sectionService.createSection(CreatesectionDTO,cousre.getId());
         }
 
         CreateLearningObjectiveDTO learningObjects = dto.getLearningObjective();
-        serviceOfLearningObjective.createLearningObjective(learningObjects,cousre.getCourse_id());
+        serviceOfLearningObjective.createLearningObjective(learningObjects,cousre.getId());
 
         return fromCourseToResponeCourseDTO(cousre);
     }
@@ -93,5 +96,11 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     public List<ResponeCourseDTO> getCourses() {
         List<ResponeCourseDTO> courseList =  getCourseList();
         return courseList;
+    }
+
+    @Override
+    public List<ResponeCourseDTO> getCourses(String name) {
+
+        return null;
     }
 }

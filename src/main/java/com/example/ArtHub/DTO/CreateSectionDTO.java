@@ -1,39 +1,54 @@
 package com.example.ArtHub.DTO;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 
 public class CreateSectionDTO {
 
 
-    @NotNull(message = "Section name can not be null")
-    private String section_name;
-    private Integer account_id;
-    private Integer course;
+
+    private Integer id;
+
+    private String name;
 
 
+    private Integer accountId;
 
 
-    public String getSection_name() {
-        return section_name;
+    private Integer courseId;
+
+    public Integer getId() {
+        return id;
     }
 
-    public void setSection_name(String section_name) {
-        this.section_name = section_name;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getAccount_id() {
-        return account_id;
+    public String getName() {
+        return name;
     }
 
-    public void setAccount_id(Integer account_id) {
-        this.account_id = account_id;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Integer getCourse() {
-        return course;
+    public Integer getAccountId() {
+        return accountId;
     }
 
-    public void setCourse(Integer course) {
-        this.course = course;
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
+    }
+
+    public Integer getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
     }
 }

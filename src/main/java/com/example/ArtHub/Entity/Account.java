@@ -7,47 +7,48 @@ import jakarta.persistence.*;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int accountId;
+    @Column(nullable = false,unique = true,name = "id")
+    private int id;
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false,unique = true,name = "username")
     private String username;
 
-    @Column(nullable = false)
+    @Column(nullable = false,name = "password")
     private String password;
 
-    @Column(nullable = false)
+    @Column(nullable = false,name = "address")
     private String address;
 
-    @Column(nullable = false)
+    @Column(nullable = false,name = "lastName")
     private String lastName;
 
-    @Column(nullable = false)
+    @Column(nullable = false,name = "firstName")
     private String firstName;
 
-    @Column(nullable = false)
+    @Column(nullable = false,name = "phone")
     private String phone;
 
-    @Column(nullable = false , length = 10000)
+    @Column(nullable = false , length = 10000,name = "image")
     private String image;
 
-    @Column(nullable = false)
+    @Column(nullable = false,name = "email")
     private String email;
 
-    @Column(nullable = false)
-    private String role_id;
+    @Column(nullable = false,name = "roleId")
+    private String roleId;
 
-    @Column(nullable = false)
+    @Column(nullable = false,name = "twitter")
     private String twitter;
 
-    @Column(nullable = false)
+    @Column(nullable = false,name = "facebook")
     private String facebook;
 
-    public Integer getAccountId() {
-        return accountId;
+    public int getId() {
+        return id;
     }
 
-    public void setAccountId(Integer accountId) {
-        this.accountId = accountId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -66,9 +67,6 @@ public class Account {
         this.password = password;
     }
 
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
-    }
 
     public String getImage() {
         return image;
@@ -119,12 +117,12 @@ public class Account {
         this.email = email;
     }
 
-    public String getRole_id() {
-        return role_id;
+    public String getRoleId() {
+        return roleId;
     }
 
-    public void setRole_id(String role_id) {
-        this.role_id = role_id;
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
     }
 
     public String getTwitter() {

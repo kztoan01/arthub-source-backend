@@ -3,6 +3,8 @@ package com.example.ArtHub.Service;
 import com.example.ArtHub.AppServiceExeption;
 import com.example.ArtHub.Entity.Section;
 import com.example.ArtHub.DTO.CreateSectionDTO;
+import com.example.ArtHub.ResponeObject.ResponeObject;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -13,7 +15,9 @@ public interface InterfaceOfSectionService {
 
     List<Section> getSectionList(int ID);
 
-    List<Section> getSectionListByCourseID(int ID);
+    List<Section> getSections();
+
+    ResponseEntity<ResponeObject> getSectionByID(int id);
 
 
 

@@ -4,6 +4,7 @@ import com.example.ArtHub.Entity.Section;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ResponeSectionDTO {
 
@@ -11,10 +12,10 @@ public class ResponeSectionDTO {
     public static ResponeSectionDTO FromSectionIntoResponeSectionDTO(Section section)
     {
         ResponeSectionDTO sectionDTO = new ResponeSectionDTO();
-        sectionDTO.setSection_id(section.getSection_id());
-        sectionDTO.setSection_name(section.getSection_name());
-        sectionDTO.setCourse(section.getCourse());
-        sectionDTO.setAccount_id(section.getAccount_id());
+        sectionDTO.setSection_id(section.getId());
+        sectionDTO.setSection_name(section.getName());
+        sectionDTO.setCourse(section.getCourseId());
+        sectionDTO.setAccount_id(section.getAccountId());
         return sectionDTO;
     }
 
