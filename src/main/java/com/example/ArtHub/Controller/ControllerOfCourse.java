@@ -4,6 +4,7 @@ import com.example.ArtHub.AppServiceExeption;
 import com.example.ArtHub.DTO.*;
 import com.example.ArtHub.Entity.Course;
 import com.example.ArtHub.Repository.CourseRepository;
+import com.example.ArtHub.Service.ServiceOfCategoryCourse;
 import com.example.ArtHub.Service.ServiceOfCourse;
 import com.example.ArtHub.Service.ServiceOfLearningObjective;
 import com.example.ArtHub.Service.ServiceOfSection;
@@ -31,6 +32,9 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
 
     @Autowired
     ServiceOfSection sectionService;
+
+    @Autowired
+    ServiceOfCategoryCourse serviceOfCategory;
 
     @Autowired
     ServiceOfLearningObjective serviceOfLearningObjective;
@@ -70,6 +74,8 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
 
         courseDTO.setSections(sectionService.getSectionList(course.getId()));
 
+        courseDTO.setCategories(serviceOfCategory.getCategoriesByCourseID(course.getId()));
+
         courseDTO.setLearningObjective(serviceOfLearningObjective.getLearningObjectiveByCourseId(course.getId()));
 
         return courseDTO;
@@ -89,6 +95,13 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
 
         CreateLearningObjectiveDTO learningObjects = dto.getLearningObjective();
         serviceOfLearningObjective.createLearningObjective(learningObjects,cousre.getId());
+
+        List<CreateCategoryCourseDTO> Categoris = dto.getCategories();
+        for(CreateCategoryCourseDTO categoryDTO : Categoris )
+        {
+            serviceOfCategory.createCategoryCourse(categoryDTO,cousre.getId());
+        }
+
 
         return fromCourseToResponeCourseDTO(cousre);
     }

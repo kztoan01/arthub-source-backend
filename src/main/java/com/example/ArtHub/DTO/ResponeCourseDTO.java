@@ -1,5 +1,6 @@
 package com.example.ArtHub.DTO;
 
+import com.example.ArtHub.Entity.CategoryCourse;
 import com.example.ArtHub.Entity.LearningObjective;
 import com.example.ArtHub.Entity.Section;
 import com.example.ArtHub.Service.ServiceOfSection;
@@ -51,6 +52,16 @@ public class ResponeCourseDTO {
 
     private List<Section> sections;
     private LearningObjective learningObjective;
+
+    private List<CategoryCourse> categories;
+
+    public List<CategoryCourse> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<CategoryCourse> categories) {
+        this.categories = categories;
+    }
 
     public Integer getId() {
         return id;

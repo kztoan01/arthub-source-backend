@@ -30,7 +30,6 @@ public class ServiceOfCourse implements InterfaceOfCourseService {
         course.setPrice(dto.getPrice());
         course.setAccountId(dto.getAccountId());
         course.setName(dto.getName());
-        course.setCategoryId(dto.getCategoryId());
         course.setApproved(dto.getApproved());
         course.setPassed(dto.isPassed());
         return courseRepository.save(course);

@@ -1,14 +1,7 @@
 package com.example.ArtHub.DTO;
 
 
-import com.example.ArtHub.DTO.CreateSectionDTO;
-import com.example.ArtHub.Entity.LearningObjective;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import com.example.ArtHub.Entity.CategoryCourse;
 
 import java.util.List;
 
@@ -52,7 +45,7 @@ public class CreateCourseDTO {
     private Integer accountId;
 
 
-    private Integer categoryId;
+    private List<CreateCategoryCourseDTO> categories;
 
     private List<CreateSectionDTO> sections;
     private CreateLearningObjectiveDTO learningObjective;
@@ -146,12 +139,12 @@ public class CreateCourseDTO {
         this.accountId = accountId;
     }
 
-    public Integer getCategoryId() {
-        return categoryId;
+    public List<CreateCategoryCourseDTO> getCategories() {
+        return categories;
     }
 
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
+    public void setCategories(List<CreateCategoryCourseDTO> categories) {
+        this.categories = categories;
     }
 
     public CreateLearningObjectiveDTO getLearningObjective() {
