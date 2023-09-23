@@ -146,8 +146,13 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     }
 
     @Override
-    public List<ResponeCourseDTO> getCourses(String name) {
+    public List<ResponeCourseDTO> getCoursesByName(String name) {
+        List<Course> courses = courseRepository.findByNameContains(name);
+        return fromCourseListToResponeCourseDTOList(courses);
+    }
 
+    @Override
+    public List<ResponeCourseDTO> getCoursesByCategory(String category) {
         return null;
     }
 }

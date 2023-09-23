@@ -7,12 +7,24 @@ import jakarta.persistence.*;
 public class CategoryCourse {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
+
     @Column(name = "categoryId")
     private int categoryId;
 
     @Column(name = "courseId")
     private int courseId;
 
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public int getCategoryId() {
         return categoryId;
@@ -29,4 +41,6 @@ public class CategoryCourse {
     public void setCourseId(int courseId) {
         this.courseId = courseId;
     }
+
+
 }

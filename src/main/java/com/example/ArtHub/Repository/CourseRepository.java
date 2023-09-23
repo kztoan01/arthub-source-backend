@@ -10,7 +10,8 @@ import java.util.List;
 @Repository
 public interface CourseRepository extends JpaRepository<Course,Integer> {
 
-    List<Course> findByName(String name);
+    List<Course> findByNameContains(String name);
+
 
     @Query("SELECT c FROM Course c WHERE c.language LIKE %?1% AND c.price <= ?2 ")
     List<Course> findByLanguageAndPrice(String language, float price);
