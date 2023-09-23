@@ -13,7 +13,7 @@ import java.util.List;
 
 @RequestMapping("/course")
 public interface InterfaceOfCourseController {
-
+    
     @GetMapping("/{language}/{price}")
     List<ResponeCourseDTO> findAllCourseByLanguageAndPrice(@PathVariable String language, @PathVariable float price);
 
