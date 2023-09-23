@@ -2,7 +2,9 @@ package com.example.ArtHub.Controller;
 
 import com.example.ArtHub.AppServiceExeption;
 import com.example.ArtHub.DTO.*;
+import com.example.ArtHub.Entity.CategoryCourse;
 import com.example.ArtHub.Entity.Course;
+import com.example.ArtHub.Repository.CategoryRepository;
 import com.example.ArtHub.Repository.CourseRepository;
 import com.example.ArtHub.Service.ServiceOfCategoryCourse;
 import com.example.ArtHub.Service.ServiceOfCourse;
@@ -38,6 +40,32 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
 
     @Autowired
     ServiceOfLearningObjective serviceOfLearningObjective;
+    @Autowired
+    CategoryRepository categoryRepository;
+
+
+
+    ResponeCategoryNameDTO fromCategoryToCategotyResponeNameDTO(CategoryCourse categoryCourse)
+    {
+        ResponeCategoryNameDTO responeCategoryNameDTO = new ResponeCategoryNameDTO();
+
+        responeCategoryNameDTO.setName(categoryRepository.findById(categoryCourse.getCategoryId()).get().getName());
+
+        return responeCategoryNameDTO;
+    }
+
+
+     List<ResponeCategoryNameDTO> fromCategoryListToCategoryDTOList(List<CategoryCourse> CategoryCourseList)
+    {
+        List<ResponeCategoryNameDTO> responeCategoryNameDTOS = new ArrayList<>();
+        for (CategoryCourse category : CategoryCourseList) {
+            responeCategoryNameDTOS.add(fromCategoryToCategotyResponeNameDTO(category));
+        }
+        return responeCategoryNameDTOS;
+    }
+
+
+
 
 
 
@@ -74,7 +102,7 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
 
         courseDTO.setSections(sectionService.getSectionList(course.getId()));
 
-        courseDTO.setCategories(serviceOfCategory.getCategoriesByCourseID(course.getId()));
+        courseDTO.setCategories(fromCategoryListToCategoryDTOList(serviceOfCategory.getCategoriesByCourseID(course.getId())));
 
         courseDTO.setLearningObjective(serviceOfLearningObjective.getLearningObjectiveByCourseId(course.getId()));
 

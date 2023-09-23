@@ -1,30 +1,14 @@
 package com.example.ArtHub.DTO;
 
 import com.example.ArtHub.Entity.CategoryCourse;
+import com.example.ArtHub.Repository.CategoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ResponeCategoryNameDTO {
 
-    ResponeCategoryNameDTO fromCategoryToCategotyResponeDTO(CategoryCourse category)
-    {
-//        ResponeCategoryDTO responeCategoryDTO = new ResponeCategoryDTO();
-//
-//        responeCategoryDTO.setId(category.getId());
-//        responeCategoryDTO.setName(category.getCategoryId());
-
-        return null;
-    }
-
-
-    List<ResponeCategoryNameDTO> fromCategoryListToCategoryDTOList(List<CategoryCourse> CategoryList)
-    {
-//        List<ResponeCategoryDTO> responeCategoryDTOS = new ArrayList<>();
-//        for (Category category : CategoryList) {
-//            responeCategoryDTOS.add(fromCategoryToCategotyResponeDTO(category));
-//        }
-        return null;
-    }
 
 
     private int id;

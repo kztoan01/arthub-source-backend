@@ -53,13 +53,13 @@ public class ResponeCourseDTO {
     private List<Section> sections;
     private LearningObjective learningObjective;
 
-    private List<CategoryCourse> categories;
+    private List<ResponeCategoryNameDTO> categories;
 
-    public List<CategoryCourse> getCategories() {
+    public List<ResponeCategoryNameDTO> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<CategoryCourse> categories) {
+    public void setCategories(List<ResponeCategoryNameDTO> categories) {
         this.categories = categories;
     }
 
