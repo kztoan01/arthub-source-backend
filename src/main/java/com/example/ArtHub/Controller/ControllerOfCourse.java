@@ -98,8 +98,8 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         courseDTO.setApproved(course.getApproved());
         courseDTO.setPassed(course.isPassed());
         courseDTO.setIntroduction(course.getIntroduction());
-        courseDTO.setImage(courseDTO.getImage());
-
+        courseDTO.setImage(course.getImage());
+        courseDTO.setDate(course.getDate());
         courseDTO.setSections(sectionService.getSectionList(course.getId()));
 
         courseDTO.setCategories(fromCategoryListToCategoryDTOList(serviceOfCategory.getCategoriesByCourseID(course.getId())));

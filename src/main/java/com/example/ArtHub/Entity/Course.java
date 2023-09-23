@@ -1,6 +1,10 @@
 package com.example.ArtHub.Entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.util.Date;
 
 @Entity
 @Table(name = "Course")
@@ -48,8 +52,18 @@ public class Course {
     @Column(name = "image")
     private String image;
 
+    @Column(name = "date")
+    @CreationTimestamp
+    private Date date;
 
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public Integer getId() {
         return id;

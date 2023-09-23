@@ -3,6 +3,7 @@ package com.example.ArtHub.DTO;
 
 import com.example.ArtHub.Entity.CategoryCourse;
 
+import java.util.Date;
 import java.util.List;
 
 public class CreateCourseDTO {
@@ -45,6 +46,17 @@ public class CreateCourseDTO {
     private Integer accountId;
 
     private String image;
+
+    private Date date;
+
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
 
     private List<CreateCategoryCourseDTO> categories;
