@@ -5,6 +5,7 @@ import com.example.ArtHub.Entity.LearningObjective;
 import com.example.ArtHub.Entity.Section;
 import com.example.ArtHub.Service.ServiceOfSection;
 
+import java.util.Date;
 import java.util.List;
 
 public class ResponeCourseDTO {
@@ -56,6 +57,17 @@ public class ResponeCourseDTO {
     private LearningObjective learningObjective;
 
     private List<ResponeCategoryNameDTO> categories;
+
+    private Date date;
+
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public List<ResponeCategoryNameDTO> getCategories() {
         return categories;
