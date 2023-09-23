@@ -14,10 +14,8 @@ import java.util.List;
 @RequestMapping("/course")
 public interface InterfaceOfCourseController {
 
-//    @GetMapping
-//    public List<Course> getCourseWithLanguageAndPrice(@RequestParam String language, @RequestParam float price) {
-//        return courseRepository.findByLanguageAndPrice(language, price);
-//    }
+    @GetMapping("/{language}/{price}")
+    List<ResponeCourseDTO> findAllCourseByLanguageAndPrice(@PathVariable String language, @PathVariable float price);
 
     @PostMapping("/addCourse")
     @ResponseStatus(HttpStatus.CREATED)

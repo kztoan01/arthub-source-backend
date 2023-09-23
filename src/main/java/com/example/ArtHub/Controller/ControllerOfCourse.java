@@ -111,6 +111,11 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     }
 
 
+    @Override
+    public List<ResponeCourseDTO> findAllCourseByLanguageAndPrice(String language, float price) {
+        List<Course> courseList = courseRepository.findByLanguageAndPrice(language, price);
+        return fromCourseListToResponeCourseDTOList(courseList);
+    }
 
     @Override
     public ResponeCourseDTO createCourse(CreateCourseDTO dto) throws AppServiceExeption, IOException {

@@ -14,39 +14,39 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id;
-    @Column(nullable = false,name="name")
+    @Column(name="name")
     private String  name;
     
-    @Column(nullable = false,name = "description")
+    @Column(name = "description")
     private String description;
     
-    @Column(nullable = false,name = "introduction")
+    @Column(name = "introduction")
     private String introduction;
 
-    @Column(nullable = false,name = "level")
+    @Column(name = "level")
     private String level;
 
 
-    @Column(nullable = false,name = "language")
+    @Column(name = "language")
     private String language;
 
 
-    @Column(nullable = false,name = "price")
+    @Column(name = "price")
     private Float price;
 
 
-    @Column(nullable = false,name = "coupon")
+    @Column(name = "coupon")
     private Float coupon;
 
 
-    @Column(nullable = false,name = "isPassed")
+    @Column(name = "isPassed")
     private boolean isPassed;
 
 
-    @Column(nullable = false,name = "isApproved")
+    @Column(name = "isApproved")
     private Boolean isApproved;
 
-    @Column(nullable = false,name = "accountId")
+    @Column(name = "accountId")
     private Integer accountId;
 
     @Column(name = "image")
