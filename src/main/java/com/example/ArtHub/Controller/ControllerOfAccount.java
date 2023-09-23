@@ -15,7 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class ControllerOfAccount implements InterfaceOfAccountController {
     private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
