@@ -15,6 +15,8 @@ public class ResponeCourseDTO {
 
     private String  name;
 
+    private String image;
+
 
     private String description;
 
@@ -67,6 +69,8 @@ public class ResponeCourseDTO {
         return id;
     }
 
+
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -81,6 +85,14 @@ public class ResponeCourseDTO {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public void setDescription(String description) {

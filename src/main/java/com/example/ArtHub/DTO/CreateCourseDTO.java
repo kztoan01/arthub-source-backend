@@ -44,6 +44,8 @@ public class CreateCourseDTO {
 
     private Integer accountId;
 
+    private String image;
+
 
     private List<CreateCategoryCourseDTO> categories;
 
@@ -121,6 +123,14 @@ public class CreateCourseDTO {
 
     public void setPassed(boolean passed) {
         isPassed = passed;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public boolean getApproved() {

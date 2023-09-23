@@ -45,6 +45,9 @@ public class Course {
     @Column(nullable = false,name = "accountId")
     private Integer accountId;
 
+    @Column(name = "image")
+    private String image;
+
 
 
 
@@ -136,4 +139,11 @@ public class Course {
         this.accountId = accountId;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 }

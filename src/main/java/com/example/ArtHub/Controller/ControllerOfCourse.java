@@ -98,6 +98,7 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         courseDTO.setApproved(course.getApproved());
         courseDTO.setPassed(course.isPassed());
         courseDTO.setIntroduction(course.getIntroduction());
+        courseDTO.setImage(courseDTO.getImage());
 
         courseDTO.setSections(sectionService.getSectionList(course.getId()));
 
