@@ -19,11 +19,11 @@ public class Account {
     @Column(nullable = false,name = "address")
     private String address;
 
-    @Column(nullable = false,name = "lastName")
-    private String lastName;
+    @Column(nullable = false,name = "lastname")
+    private String lastname;
 
-    @Column(nullable = false,name = "firstName")
-    private String firstName;
+    @Column(nullable = false,name = "firstname")
+    private String firstname;
 
     @Column(nullable = false,name = "phone")
     private String phone;
@@ -84,20 +84,20 @@ public class Account {
         this.address = address;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public String getPhone() {

@@ -45,8 +45,7 @@ public class Course {
     @Column(nullable = false,name = "accountId")
     private Integer accountId;
 
-    @Column(nullable = false,name = "categoryId")
-    private Integer categoryId;
+
 
 
     public Integer getId() {
@@ -137,11 +136,4 @@ public class Course {
         this.accountId = accountId;
     }
 
-    public Integer getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
-    }
 }

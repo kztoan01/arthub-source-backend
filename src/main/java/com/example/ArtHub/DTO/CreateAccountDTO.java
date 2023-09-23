@@ -16,10 +16,10 @@ public class CreateAccountDTO {
     private String password;
     @NotNull(message = "Lastname cannot be null")
     @NotBlank(message = "Lastname cannot be empty")
-    private String last_name;
+    private String lastname;
     @NotNull(message = "Firstname cannot be null")
     @NotBlank(message = "Firstname cannot be empty")
-    private String first_name;
+    private String firstname;
 
     private String  image;
 
@@ -123,19 +123,19 @@ public class CreateAccountDTO {
     }
 
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 }

@@ -12,8 +12,8 @@ public class ResponeAccountDTO {
         accountResponseDTO.setImage(account.getImage());
         accountResponseDTO.setUsername(account.getUsername());
         accountResponseDTO.setAddress(account.getAddress());
-        accountResponseDTO.setLast_name(account.getLastName());
-        accountResponseDTO.setFirst_name(account.getFirstName());
+        accountResponseDTO.setLast_name(account.getLastname());
+        accountResponseDTO.setFirst_name(account.getFirstname());
         accountResponseDTO.setEmail(account.getEmail());
         accountResponseDTO.setRole_id(account.getRoleId());
         accountResponseDTO.setTwitter(account.getTwitter());

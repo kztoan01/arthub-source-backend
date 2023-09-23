@@ -24,8 +24,8 @@ public class ServiceOfAccount implements InterfaceOfAccountService {
         account.setUsername(dto.getUsername());
         account.setImage(dto.getImage());
         account.setPassword(dto.getPassword());
-        account.setFirstName(dto.getFirst_name());
-        account.setLastName(dto.getLast_name());
+        account.setFirstname(dto.getFirstname());
+        account.setLastname(dto.getLastname());
         account.setAddress(dto.getAddress());
         account.setFacebook(dto.getFacebook());
         return  accountRepository.save(account);

@@ -25,8 +25,8 @@ public class ControllerOfAccount implements InterfaceOfAccountController {
 
     @Override
     public ResponeAccountDTO createAccount(@RequestParam String username,
-                                           @RequestParam String first_name,
-                                           @RequestParam String last_name,
+                                           @RequestParam String firstname,
+                                           @RequestParam String lastname,
                                            @RequestParam MultipartFile image,
                                            @RequestParam String password) throws AppServiceExeption, IOException {
         Path staticPath = Paths.get("static");
@@ -40,12 +40,12 @@ public class ControllerOfAccount implements InterfaceOfAccountController {
 
             os.write(image.getBytes());
         }
-        //http://localhost:8080\\images\\test.jpg
+        //save image can be access via :http://localhost:8080\\images\\test.jpg
         CreateAccountDTO account = new CreateAccountDTO();
         account.setUsername(username);
         account.setPassword(password);
-        account.setFirst_name(first_name);
-        account.setLast_name(last_name);
+        account.setFirstname(firstname);
+        account.setLastname(lastname);
         account.setImage(image.getOriginalFilename());
         Account accountEntity = accountsService.createAccount(account);
         return ResponeAccountDTO.fromAccount(accountEntity);
