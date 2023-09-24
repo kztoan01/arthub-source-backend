@@ -9,12 +9,20 @@ import java.util.List;
 
 @Repository
 public interface CourseRepository extends JpaRepository<Course,Integer> {
-
-    List<Course> findByNameContains(String name);
+    @Query("SELECT c FROM Course c WHERE c.name LIKE CONCAT('%', ?1, '%') OR c.introduction LIKE CONCAT('%', ?1, '%') OR c.description LIKE CONCAT('%', ?1, '%') ORDER BY \n" +
+            "CASE \n" +
+            "    WHEN c.name LIKE CONCAT(?1, '%') THEN 1 \n" +
+            "    WHEN c.introduction LIKE CONCAT(?1, '%') THEN 2 \n" +
+            "    WHEN c.description LIKE CONCAT(?1, '%') THEN 3 \n" +
+            "    ELSE 4 \n" +
+            "END ")
+    List<Course> findCourseThatContainsKeyword(String keyword);
 
 
     @Query("SELECT c FROM Course c WHERE c.language LIKE %?1% AND c.price <= ?2 ")
     List<Course> findByLanguageAndPrice(String language, float price);
+
+
 
 
 }

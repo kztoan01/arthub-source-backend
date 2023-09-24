@@ -27,8 +27,8 @@ public interface InterfaceOfCourseController {
     List<ResponeCourseDTO> getCourses();
 
 
-    @GetMapping("/getCourse/{name}")//search course by LIKE name
-    List<ResponeCourseDTO> getCoursesByName(@PathVariable String name);
+    @GetMapping("/getCourse/{keyword}")//search course by keyword
+    List<ResponeCourseDTO> findCourseThatContainsKeyword(@PathVariable String keyword);
 
     @GetMapping("/getCourse/category/{category}")//search course by LIKE category
     List<ResponeCourseDTO> getCoursesByCategory(@PathVariable String category);
