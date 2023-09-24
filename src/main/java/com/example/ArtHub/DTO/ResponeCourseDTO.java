@@ -60,6 +60,75 @@ public class ResponeCourseDTO {
 
     private Date date;
 
+    private String instructorName;
+
+    private String intructorImage;
+
+    private String instructorPhone;
+
+    private String intructorAddress;
+
+    private String instrutorEmail;
+
+    private String instructorTwitter;
+
+    private String instructorFacebook;
+
+    public String getIntructorImage() {
+        return intructorImage;
+    }
+
+    public void setIntructorImage(String intructorImage) {
+        this.intructorImage = intructorImage;
+    }
+
+    public String getInstructorPhone() {
+        return instructorPhone;
+    }
+
+    public void setInstructorPhone(String instructorPhone) {
+        this.instructorPhone = instructorPhone;
+    }
+
+    public String getIntructorAddress() {
+        return intructorAddress;
+    }
+
+    public void setIntructorAddress(String intructorAddress) {
+        this.intructorAddress = intructorAddress;
+    }
+
+    public String getInstrutorEmail() {
+        return instrutorEmail;
+    }
+
+    public void setInstrutorEmail(String instrutorEmail) {
+        this.instrutorEmail = instrutorEmail;
+    }
+
+    public String getInstructorTwitter() {
+        return instructorTwitter;
+    }
+
+    public void setInstructorTwitter(String instructorTwitter) {
+        this.instructorTwitter = instructorTwitter;
+    }
+
+    public String getInstructorFacebook() {
+        return instructorFacebook;
+    }
+
+    public void setInstructorFacebook(String instructorFacebook) {
+        this.instructorFacebook = instructorFacebook;
+    }
+
+    public String getInstructorName() {
+        return instructorName;
+    }
+
+    public void setInstructorName(String instructorName) {
+        this.instructorName = instructorName;
+    }
 
     public Date getDate() {
         return date;

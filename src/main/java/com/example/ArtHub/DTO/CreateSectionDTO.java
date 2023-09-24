@@ -9,7 +9,6 @@ import jakarta.validation.constraints.NotNull;
 public class CreateSectionDTO {
 
 
-
     private Integer id;
 
     private String name;

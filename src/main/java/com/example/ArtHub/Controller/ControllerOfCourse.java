@@ -4,6 +4,7 @@ import com.example.ArtHub.AppServiceExeption;
 import com.example.ArtHub.DTO.*;
 import com.example.ArtHub.Entity.CategoryCourse;
 import com.example.ArtHub.Entity.Course;
+import com.example.ArtHub.Repository.AccountRepository;
 import com.example.ArtHub.Repository.CategoryRepository;
 import com.example.ArtHub.Repository.CourseRepository;
 import com.example.ArtHub.Service.ServiceOfCategoryCourse;
@@ -43,6 +44,9 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     ServiceOfLearningObjective serviceOfLearningObjective;
     @Autowired
     CategoryRepository categoryRepository;
+
+    @Autowired
+    AccountRepository accountRepository;
 
 
 
@@ -102,6 +106,22 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         courseDTO.setImage(course.getImage());
         courseDTO.setDate(course.getDate());
         courseDTO.setSections(sectionService.getSectionList(course.getId()));
+
+
+        if(course.getAccountId() == null)
+        {
+            logger.info("Id is null;");
+        }
+
+
+
+        courseDTO.setInstructorName(accountRepository.findById(course.getAccountId()).get().getFirstname()+" "+accountRepository.findById(course.getAccountId()).get().getLastname());
+        courseDTO.setIntructorImage(accountRepository.findById(course.getAccountId()).get().getImage());
+        courseDTO.setIntructorAddress(accountRepository.findById(course.getAccountId()).get().getAddress());
+        courseDTO.setInstrutorEmail(accountRepository.findById(course.getAccountId()).get().getEmail());
+        courseDTO.setInstructorFacebook(accountRepository.findById(course.getAccountId()).get().getFacebook());
+        courseDTO.setInstructorPhone(accountRepository.findById(course.getAccountId()).get().getPhone());
+        courseDTO.setInstructorTwitter(accountRepository.findById(course.getAccountId()).get().getTwitter());
 
         courseDTO.setCategories(fromCategoryListToCategoryDTOList(serviceOfCategory.getCategoriesByCourseID(course.getId())));
 
