@@ -105,6 +105,7 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         courseDTO.setIntroduction(course.getIntroduction());
         courseDTO.setImage(course.getImage());
         courseDTO.setDate(course.getDate());
+
         courseDTO.setSections(sectionService.getSectionList(course.getId()));
 
 
@@ -114,7 +115,7 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         }
 
 
-
+        courseDTO.setBio(accountRepository.findById(course.getAccountId()).get().getBio());
         courseDTO.setInstructorName(accountRepository.findById(course.getAccountId()).get().getFirstname()+" "+accountRepository.findById(course.getAccountId()).get().getLastname());
         courseDTO.setIntructorImage(accountRepository.findById(course.getAccountId()).get().getImage());
         courseDTO.setIntructorAddress(accountRepository.findById(course.getAccountId()).get().getAddress());

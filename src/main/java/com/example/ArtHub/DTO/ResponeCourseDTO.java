@@ -78,6 +78,16 @@ public class ResponeCourseDTO {
         return intructorImage;
     }
 
+    private String bio;
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
     public void setIntructorImage(String intructorImage) {
         this.intructorImage = intructorImage;
     }

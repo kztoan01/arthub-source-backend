@@ -42,6 +42,16 @@ public class Account {
 
     @Column(nullable = false,name = "facebook")
     private String facebook;
+    @Column(nullable = false,name = "bio")
+    private  String bio;
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
 
     public int getId() {
         return id;
