@@ -33,6 +33,16 @@ public interface InterfaceOfCourseController {
     @GetMapping("/getCourse/category/{category}")//search course by LIKE category
     List<ResponeCourseDTO> getCoursesByCategory(@PathVariable String category);
 
+    @GetMapping("/getCourseSort1")
+    public List<ResponeCourseDTO> getCoursesByPriceHigher();
+    @GetMapping("/getCourseSort2")
+    public List<ResponeCourseDTO> getCoursesByPriceLower();
+
+    @GetMapping("/getCourseSort3")
+    public  List<ResponeCourseDTO> getCoursesByDateNew();
+
+    @GetMapping("/getCourseSort4")
+    public  List<ResponeCourseDTO> getCoursesByDateOld();
 
 
 

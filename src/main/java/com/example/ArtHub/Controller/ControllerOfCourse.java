@@ -7,10 +7,7 @@ import com.example.ArtHub.Entity.Course;
 import com.example.ArtHub.Repository.AccountRepository;
 import com.example.ArtHub.Repository.CategoryRepository;
 import com.example.ArtHub.Repository.CourseRepository;
-import com.example.ArtHub.Service.ServiceOfCategoryCourse;
-import com.example.ArtHub.Service.ServiceOfCourse;
-import com.example.ArtHub.Service.ServiceOfLearningObjective;
-import com.example.ArtHub.Service.ServiceOfSection;
+import com.example.ArtHub.Service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -176,4 +173,33 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     public List<ResponeCourseDTO> getCoursesByCategory(String category) {
         return null;
     }
+    @Autowired
+    public ControllerOfCourse(InterfaceOfCourseSort courseSort) {
+        this.courseSort = courseSort;
+    }
+    private final InterfaceOfCourseSort courseSort;
+    @Override
+    public List<ResponeCourseDTO> getCoursesByPriceHigher(){
+        List<Course> courses=courseRepository.findAllByOrderByPriceDesc();
+        return  fromCourseListToResponeCourseDTOList(courses);
+    }
+    @Override
+    public List<ResponeCourseDTO> getCoursesByPriceLower(){
+        List<Course> courses=courseRepository.findAllByOrderByPriceAsc();
+        return  fromCourseListToResponeCourseDTOList(courses);
+    }
+
+    @Override
+    public List<ResponeCourseDTO> getCoursesByDateNew(){
+        List<Course> courses=courseRepository.findAllByOrderByDateDesc();
+        return  fromCourseListToResponeCourseDTOList(courses);
+    }
+
+    @Override
+    public List<ResponeCourseDTO> getCoursesByDateOld(){
+        List<Course> courses=courseRepository.findAllByOrderByDateAsc();
+        return  fromCourseListToResponeCourseDTOList(courses);
+
+    }
+
 }
