@@ -5,7 +5,9 @@ import com.example.ArtHub.DTO.CreateLearnerDTO;
 import com.example.ArtHub.Entity.Learner;
 import com.example.ArtHub.Repository.LearnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ServiceOfLearner implements InterfaceOfLearnerService{
     @Autowired
     LearnerRepository learnerRepository;
