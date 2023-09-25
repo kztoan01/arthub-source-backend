@@ -1,8 +1,9 @@
 package com.example.ArtHub.Entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
-import java.sql.Date;
+import java.util.Date;
 
 
 @Entity
@@ -19,6 +20,7 @@ public class Learner {
     @Column(name = "ownerCourse")
     private Integer ownerCourse;
     @Column(name = "date")
+    @CreationTimestamp
     private Date date;
     @Column(name = "price")
     private Double price;

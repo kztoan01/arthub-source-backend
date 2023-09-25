@@ -1,6 +1,7 @@
 package com.example.ArtHub.DTO;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 public class ResponseLearnerDTO {
     private Integer id;
