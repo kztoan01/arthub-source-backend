@@ -1,28 +1,14 @@
-package com.example.ArtHub.Entity;
-
-import jakarta.persistence.*;
+package com.example.ArtHub.DTO;
 
 import java.sql.Date;
 
-
-@Entity
-@Table (name = "Learner")
-public class Learner {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+public class ResponseLearnerDTO {
     private Integer id;
-    @Column(name = "accountId")
     private Integer accountId;
-    @Column(name = "courseId")
     private Integer courseId;
-    @Column(name = "ownerCourse")
     private Integer ownerCourse;
-    @Column(name = "date")
     private Date date;
-    @Column(name = "price")
     private Double price;
-
 
     public Integer getId() {
         return id;
