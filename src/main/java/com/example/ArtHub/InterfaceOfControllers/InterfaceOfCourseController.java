@@ -36,6 +36,13 @@ public interface InterfaceOfCourseController {
     @GetMapping("/getCourse/category/{category}")//search course by LIKE category
     List<ResponeCourseDTO> getCoursesByCategory(@PathVariable String category);
 
+    @PostMapping("/updateCourseStatus")
+    @ResponseStatus(HttpStatus.CREATED)
+    ResponseEntity<ResponeObject> updateStatusOfCourse(int courseId) throws AppServiceExeption, IOException;
+
+
+
+
 
     @PostMapping("/updateMainImage")
     @ResponseStatus(HttpStatus.CREATED)

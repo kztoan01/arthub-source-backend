@@ -9,5 +9,4 @@ public interface InterfaceOfCourseSort {
     List<Course> findAllByOrderByPriceAsc();
     List<Course> findAllByOrderByDateDesc();
     List<Course> findAllByOrderByDateAsc();
-
 }

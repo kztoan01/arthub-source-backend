@@ -33,7 +33,7 @@ import java.util.Optional;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class ControllerOfCourse implements InterfaceOfCourseController {
-
+//123
     private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
 
 
@@ -180,27 +180,23 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     }
 
     @Override
-    public ResponeCourseDTO createCourse(CreateCourseDTO dto) throws AppServiceExeption, IOException {
-        Course cousre = courseService.createCourse(dto);
+    public ResponeCourseDTO createCourse(CreateCourseDTO dto) throws AppServiceExeption {
+        Course course = courseService.createCourse(dto);
 
-
-        List<CreateSectionDTO> Sections = dto.getSections();
-        for (CreateSectionDTO CreatesectionDTO: Sections) {
-            sectionService.createSection(CreatesectionDTO,cousre.getId());
+        List<CreateSectionDTO> sections = dto.getSections();
+        for (CreateSectionDTO createSectionDTO: sections) {
+            sectionService.createSection(createSectionDTO, course.getId());
         }
 
-        CreateLearningObjectiveDTO learningObjects = dto.getLearningObjective();
-        serviceOfLearningObjective.createLearningObjective(learningObjects,cousre.getId());
+        serviceOfLearningObjective.createLearningObjective(dto.getLearningObjective(), course.getId());
 
-        List<CreateCategoryCourseDTO> Categoris = dto.getCategories();
-        for(CreateCategoryCourseDTO categoryDTO : Categoris )
-        {
-            serviceOfCategory.createCategoryCourse(categoryDTO,cousre.getId());
+        for(CreateCategoryCourseDTO categoryDTO : dto.getCategories()) {
+            serviceOfCategory.createCategoryCourse(categoryDTO, course.getId());
         }
 
-
-        return fromCourseToResponeCourseDTO(cousre);
+        return fromCourseToResponeCourseDTO(course);
     }
+
     @Override
     public List<ResponeCourseDTO> getCourses() {
         List<ResponeCourseDTO> courseList =  getCourseList();
@@ -216,6 +212,21 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     @Override
     public List<ResponeCourseDTO> getCoursesByCategory(String category) {
         return null;
+    }
+
+    @Override
+    public ResponseEntity<ResponeObject> updateStatusOfCourse(int courseId) throws AppServiceExeption, IOException {
+        int rs = courseRepository.updateCourseStatus(courseId);
+
+        if(rs!=0)
+        {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponeObject("ok","update status successfully!","")
+            );
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponeObject("ok","update status failed!","")
+        );
     }
 
     @Override
@@ -241,7 +252,7 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
             );
         }
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponeObject("ok","update main image falied!","")
+                new ResponeObject("ok","update main image failed!","")
         );
     }
     @Autowired

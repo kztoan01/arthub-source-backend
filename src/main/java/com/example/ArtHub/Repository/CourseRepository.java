@@ -30,6 +30,7 @@ public interface CourseRepository extends JpaRepository<Course,Integer> {
     @Query("UPDATE Course c SET c.image = ?2 WHERE c.id = ?1 ")
     int  updateMainImage(int courseId, String imageName);
 
+
     @Query("SELECT c from Course c ORDER BY c.price DESC ")
     List<Course> findAllByOrderByPriceDesc();
     @Query("SELECT c from Course c ORDER BY c.price Asc ")
@@ -40,6 +41,14 @@ public interface CourseRepository extends JpaRepository<Course,Integer> {
 
     @Query("SELECT c from Course c ORDER BY c.date ASC ")
     List<Course> findAllByOrderByDateAsc();
+
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE Course c SET c.isApproved = true WHERE c.id = ?1 ")
+    int updateCourseStatus(int courseId);
+
+
 }
 
 
