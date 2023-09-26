@@ -5,19 +5,14 @@ import com.example.ArtHub.DTO.*;
 import com.example.ArtHub.Entity.Category;
 import com.example.ArtHub.Entity.CategoryCourse;
 import com.example.ArtHub.Entity.Course;
+import com.example.ArtHub.Entity.Section;
 import com.example.ArtHub.InterfaceOfControllers.InterfaceOfCourseController;
-import com.example.ArtHub.Repository.AccountRepository;
-import com.example.ArtHub.Repository.CategoryRepository;
-import com.example.ArtHub.Repository.CourseRepository;
-//<<<<<<< HEAD
+import com.example.ArtHub.Repository.*;
 import com.example.ArtHub.ResponeObject.ResponeObject;
 import com.example.ArtHub.Service.ServiceOfCategoryCourse;
 import com.example.ArtHub.Service.ServiceOfCourse;
 import com.example.ArtHub.Service.ServiceOfLearningObjective;
 import com.example.ArtHub.Service.ServiceOfSection;
-//=======
-import com.example.ArtHub.Service.*;
-//>>>>>>> 48e575675ffe2c457a7aa96cf902668d1212d7e1
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +31,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -67,16 +63,33 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     @Autowired
     AccountRepository accountRepository;
 
+    @Autowired
+    VideoRepository videoRepository;
+
+    @Autowired
+    ImageRepository imageRepository;
 
 
-//    ResponeCategoryNameDTO fromCategoryToCategotyResponeNameDTO(CategoryCourse categoryCourse)
-//    {
-//        ResponeCategoryNameDTO responeCategoryNameDTO = new ResponeCategoryNameDTO();
-//
-//        responeCategoryNameDTO.setName(categoryRepository.findById(categoryCourse.getCategoryId()).get().getName());
-//
-//        return responeCategoryNameDTO;
-//    }
+    public ResponeSectionDTO FromSectionIntoResponeSectionDTO(Section section)
+    {
+        ResponeSectionDTO sectionDTO = new ResponeSectionDTO();
+        sectionDTO.setSection_id(section.getId());
+        sectionDTO.setSection_name(section.getName());
+        sectionDTO.setCourse(section.getCourseId());
+        sectionDTO.setAccount_id(section.getAccountId());
+        sectionDTO.setVideos(videoRepository.findAllBySectionId(section.getId()));
+        return sectionDTO;
+    }
+
+    public List<ResponeSectionDTO> fromSectionListToResponeSectionDTOList(List<Section> SectionList) {
+        List<ResponeSectionDTO> ResponeSectionDTOList = new ArrayList<>();
+        for (Section section : SectionList) {
+            ResponeSectionDTOList.add(FromSectionIntoResponeSectionDTO(section));
+        }
+        return ResponeSectionDTOList;
+    }
+
+
 
     ResponeCategoryNameDTO fromCategoryToCategotyResponeNameDTO(CategoryCourse categoryCourse) {
         ResponeCategoryNameDTO responeCategoryNameDTO = new ResponeCategoryNameDTO();
@@ -134,7 +147,10 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         courseDTO.setImage(course.getImage());
         courseDTO.setDate(course.getDate());
 
-        courseDTO.setSections(sectionService.getSectionList(course.getId()));
+        courseDTO.setSections(fromSectionListToResponeSectionDTOList(sectionService.getSectionList(course.getId())));
+
+
+        courseDTO.setImages(imageRepository.findByCourseId(course.getId()));
 
 
         if(course.getAccountId() == null)
@@ -204,7 +220,6 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     public List<ResponeCourseDTO> getCoursesByCategory(String category) {
         return null;
     }
-//<<<<<<< HEAD
 
     @Override
     public ResponseEntity<ResponeObject> updateMainImageOfCourse(@RequestParam int courseId, @RequestParam MultipartFile image) throws AppServiceExeption, IOException {
@@ -232,35 +247,4 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
                 new ResponeObject("ok","update main image falied!","")
         );
     }
-//=======
-    @Autowired
-    public ControllerOfCourse(InterfaceOfCourseSort courseSort) {
-        this.courseSort = courseSort;
-    }
-    private final InterfaceOfCourseSort courseSort;
-    @Override
-    public List<ResponeCourseDTO> getCoursesByPriceHigher(){
-        List<Course> courses=courseRepository.findAllByOrderByPriceDesc();
-        return  fromCourseListToResponeCourseDTOList(courses);
-    }
-    @Override
-    public List<ResponeCourseDTO> getCoursesByPriceLower(){
-        List<Course> courses=courseRepository.findAllByOrderByPriceAsc();
-        return  fromCourseListToResponeCourseDTOList(courses);
-    }
-
-    @Override
-    public List<ResponeCourseDTO> getCoursesByDateNew(){
-        List<Course> courses=courseRepository.findAllByOrderByDateDesc();
-        return  fromCourseListToResponeCourseDTOList(courses);
-    }
-
-    @Override
-    public List<ResponeCourseDTO> getCoursesByDateOld(){
-        List<Course> courses=courseRepository.findAllByOrderByDateAsc();
-        return  fromCourseListToResponeCourseDTOList(courses);
-
-    }
-
-//>>>>>>> 48e575675ffe2c457a7aa96cf902668d1212d7e1
 }

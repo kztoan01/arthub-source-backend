@@ -1,6 +1,9 @@
 package com.example.ArtHub.DTO;
 
 import com.example.ArtHub.Entity.Section;
+import com.example.ArtHub.Entity.Video;
+import com.example.ArtHub.Repository.VideoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,23 +12,6 @@ import java.util.Optional;
 public class ResponeSectionDTO {
 
 
-    public static ResponeSectionDTO FromSectionIntoResponeSectionDTO(Section section)
-    {
-        ResponeSectionDTO sectionDTO = new ResponeSectionDTO();
-        sectionDTO.setSection_id(section.getId());
-        sectionDTO.setSection_name(section.getName());
-        sectionDTO.setCourse(section.getCourseId());
-        sectionDTO.setAccount_id(section.getAccountId());
-        return sectionDTO;
-    }
-
-    public static List<ResponeSectionDTO> fromSectionListToResponeSectionDTOList(List<Section> SectionList) {
-        List<ResponeSectionDTO> ResponeSectionDTOList = new ArrayList<>();
-        for (Section section : SectionList) {
-            ResponeSectionDTOList.add(FromSectionIntoResponeSectionDTO(section));
-        }
-        return ResponeSectionDTOList;
-    }
 
 
 
@@ -33,6 +19,16 @@ public class ResponeSectionDTO {
     private String section_name;
     private Integer account_id;
     private Integer course;
+
+    private List<Video> videos ;
+
+    public List<Video> getVideos() {
+        return videos;
+    }
+
+    public void setVideos(List<Video> videos) {
+        this.videos = videos;
+    }
 
     public Integer getSection_id() {
         return section_id;

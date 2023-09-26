@@ -1,6 +1,7 @@
 package com.example.ArtHub.DTO;
 
 import com.example.ArtHub.Entity.CategoryCourse;
+import com.example.ArtHub.Entity.Image;
 import com.example.ArtHub.Entity.LearningObjective;
 import com.example.ArtHub.Entity.Section;
 import com.example.ArtHub.Service.ServiceOfSection;
@@ -53,7 +54,7 @@ public class ResponeCourseDTO {
 
     private Integer categoryId;
 
-    private List<Section> sections;
+    private List<ResponeSectionDTO> sections;
     private LearningObjective learningObjective;
 
     private List<ResponeCategoryNameDTO> categories;
@@ -73,6 +74,16 @@ public class ResponeCourseDTO {
     private String instructorTwitter;
 
     private String instructorFacebook;
+
+    private Image images;
+
+    public Image getImages() {
+        return images;
+    }
+
+    public void setImages(Image images) {
+        this.images = images;
+    }
 
     public String getIntructorImage() {
         return intructorImage;
@@ -262,11 +273,11 @@ public class ResponeCourseDTO {
         this.categoryId = categoryId;
     }
 
-    public List<Section> getSections() {
+    public List<ResponeSectionDTO> getSections() {
         return sections;
     }
 
-    public void setSections(List<Section> sections) {
+    public void setSections(List<ResponeSectionDTO> sections) {
         this.sections = sections;
     }
 

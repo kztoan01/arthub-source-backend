@@ -8,8 +8,8 @@ public class CategoryCourse {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "id")
-//    private Integer id;
+    @Column(name = "id")
+    private Integer id;
 
     @Column(name = "categoryId")
     private int categoryId;
@@ -18,13 +18,13 @@ public class CategoryCourse {
     private int courseId;
 
 
-//    public Integer getId() {
-//        return id;
-//    }
-//
-//    public void setId(Integer id) {
-//        this.id = id;
-//    }
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public int getCategoryId() {
         return categoryId;

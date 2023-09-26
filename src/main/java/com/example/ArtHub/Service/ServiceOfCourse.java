@@ -37,10 +37,6 @@ public class ServiceOfCourse implements InterfaceOfCourseService {
 
     @Override
     public List<ResponeCourseDTO> getCourseList() {
-//        List<Course> courseListFromDB = courseRepository.findAll();
-//        ResponeCourseDTO responeCourseDTO = new ResponeCourseDTO();
-//        List<ResponeCourseDTO> responeCourseDTOList = courseController.fromCourseListToResponeCourseDTOList(courseListFromDB);
-//        return responeCourseDTOList;
         return null;
     }
 }
