@@ -30,6 +30,12 @@ public interface CourseRepository extends JpaRepository<Course,Integer> {
     @Query("UPDATE Course c SET c.image = ?2 WHERE c.id = ?1 ")
     int  updateMainImage(int courseId, String imageName);
 
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE Course c SET c.isApproved = true WHERE c.id = ?1 ")
+    int updateCourseStatus(int courseId);
+
 }
 
 
