@@ -3,7 +3,7 @@ package com.example.ArtHub.Controller;
 import com.example.ArtHub.AppServiceExeption;
 import com.example.ArtHub.DTO.CreateLearningObjectiveDTO;
 import com.example.ArtHub.DTO.ResponeLearningObjectiveDTO;
-import com.example.ArtHub.Entity.LearningObjective;
+import com.example.ArtHub.InterfaceOfControllers.InterfaceOfLearningObjectiveController;
 import com.example.ArtHub.Service.ServiceOfLearningObjective;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;

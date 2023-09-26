@@ -3,7 +3,7 @@ package com.example.ArtHub.Controller;
 import com.example.ArtHub.AppServiceExeption;
 import com.example.ArtHub.DTO.CreateSectionDTO;
 import com.example.ArtHub.DTO.ResponeSectionDTO;
-import com.example.ArtHub.Repository.SectionRepository;
+import com.example.ArtHub.InterfaceOfControllers.InterafceOfSectionController;
 import com.example.ArtHub.ResponeObject.ResponeObject;
 import com.example.ArtHub.Service.ServiceOfSection;
 import org.springframework.beans.factory.annotation.Autowired;

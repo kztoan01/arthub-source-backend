@@ -2,8 +2,10 @@ package com.example.ArtHub.Repository;
 
 import com.example.ArtHub.Entity.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,7 +25,10 @@ public interface CourseRepository extends JpaRepository<Course,Integer> {
     List<Course> findByLanguageAndPrice(String language, float price);
 
 
-
+    @Modifying
+    @Transactional
+    @Query("UPDATE Course c SET c.image = ?2 WHERE c.id = ?1 ")
+    int  updateMainImage(int courseId, String imageName);
 
 }
 

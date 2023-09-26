@@ -36,19 +36,6 @@ public class CreateAccountDTO {
 
     private String facebook;
 
-//    public CreateAccountDTO(String username, String password, String last_name, String first_name, String image, String address, String phone, String email, Integer role, String twitter, String facebook) {
-//        this.username = username;
-//        this.password = password;
-//        this.last_name = last_name;
-//        this.first_name = first_name;
-//        this.image = image;
-//        this.address = address;
-//        this.phone = phone;
-//        this.email = email;
-//        this.role = role;
-//        this.twitter = twitter;
-//        this.facebook = facebook;
-//    }
 
     public String getImage() {
         return image;

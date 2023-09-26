@@ -2,6 +2,7 @@ package com.example.ArtHub.Controller;
 
 import com.example.ArtHub.DTO.ResponeAccountDTO;
 import com.example.ArtHub.DTO.CreateAccountDTO;
+import com.example.ArtHub.InterfaceOfControllers.InterfaceOfAccountController;
 import com.example.ArtHub.Service.InterfaceOfAccountService;
 import com.example.ArtHub.AppServiceExeption;
 import com.example.ArtHub.Entity.Account;

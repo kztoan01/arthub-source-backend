@@ -2,11 +2,14 @@ package com.example.ArtHub.Controller;
 
 import com.example.ArtHub.AppServiceExeption;
 import com.example.ArtHub.DTO.*;
+import com.example.ArtHub.Entity.Category;
 import com.example.ArtHub.Entity.CategoryCourse;
 import com.example.ArtHub.Entity.Course;
+import com.example.ArtHub.InterfaceOfControllers.InterfaceOfCourseController;
 import com.example.ArtHub.Repository.AccountRepository;
 import com.example.ArtHub.Repository.CategoryRepository;
 import com.example.ArtHub.Repository.CourseRepository;
+import com.example.ArtHub.ResponeObject.ResponeObject;
 import com.example.ArtHub.Service.ServiceOfCategoryCourse;
 import com.example.ArtHub.Service.ServiceOfCourse;
 import com.example.ArtHub.Service.ServiceOfLearningObjective;
@@ -14,15 +17,28 @@ import com.example.ArtHub.Service.ServiceOfSection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class ControllerOfCourse implements InterfaceOfCourseController {
+
+    private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
 
 
     private static final Logger logger = LoggerFactory.getLogger(ControllerOfCourse.class);
@@ -50,12 +66,21 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
 
 
 
-    ResponeCategoryNameDTO fromCategoryToCategotyResponeNameDTO(CategoryCourse categoryCourse)
-    {
+//    ResponeCategoryNameDTO fromCategoryToCategotyResponeNameDTO(CategoryCourse categoryCourse)
+//    {
+//        ResponeCategoryNameDTO responeCategoryNameDTO = new ResponeCategoryNameDTO();
+//
+//        responeCategoryNameDTO.setName(categoryRepository.findById(categoryCourse.getCategoryId()).get().getName());
+//
+//        return responeCategoryNameDTO;
+//    }
+
+    ResponeCategoryNameDTO fromCategoryToCategotyResponeNameDTO(CategoryCourse categoryCourse) {
         ResponeCategoryNameDTO responeCategoryNameDTO = new ResponeCategoryNameDTO();
-
-        responeCategoryNameDTO.setName(categoryRepository.findById(categoryCourse.getCategoryId()).get().getName());
-
+        Category category = categoryRepository.findAllById(Collections.singleton(categoryCourse.getCategoryId())).stream().findFirst().orElse(null);
+        if (category != null) {
+            responeCategoryNameDTO.setName(category.getName());
+        }
         return responeCategoryNameDTO;
     }
 
@@ -175,5 +200,32 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     @Override
     public List<ResponeCourseDTO> getCoursesByCategory(String category) {
         return null;
+    }
+
+    @Override
+    public ResponseEntity<ResponeObject> updateMainImageOfCourse(@RequestParam int courseId, @RequestParam MultipartFile image) throws AppServiceExeption, IOException {
+        Path staticPath = Paths.get("static");
+        Path imagePath = Paths.get("images");
+        if (!Files.exists(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath))) {
+            Files.createDirectories(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath));
+        }
+        Path file = CURRENT_FOLDER.resolve(staticPath)
+                .resolve(imagePath).resolve(image.getOriginalFilename());
+        try (OutputStream os = Files.newOutputStream(file)) {
+
+            os.write(image.getBytes());
+        }
+
+       int rs = courseRepository.updateMainImage(courseId,image.getOriginalFilename());
+
+        if(rs!=0)
+        {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponeObject("ok","update main image successfully!","")
+            );
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponeObject("ok","update main image falied!","")
+        );
     }
 }
