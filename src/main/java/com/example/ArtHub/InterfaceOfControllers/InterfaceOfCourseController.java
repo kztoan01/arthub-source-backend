@@ -41,7 +41,16 @@ public interface InterfaceOfCourseController {
     @ResponseStatus(HttpStatus.CREATED)
     ResponseEntity<ResponeObject> updateMainImageOfCourse(int courseId, MultipartFile image) throws AppServiceExeption, IOException;
 
+    @GetMapping("/getCourseSort1")
+    public List<ResponeCourseDTO> getCoursesByPriceHigher();
+    @GetMapping("/getCourseSort2")
+    public List<ResponeCourseDTO> getCoursesByPriceLower();
 
+    @GetMapping("/getCourseSort3")
+    public  List<ResponeCourseDTO> getCoursesByDateNew();
+
+    @GetMapping("/getCourseSort4")
+    public  List<ResponeCourseDTO> getCoursesByDateOld();
 
 
 
