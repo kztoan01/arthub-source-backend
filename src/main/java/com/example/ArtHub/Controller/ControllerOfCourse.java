@@ -36,7 +36,7 @@ import java.util.Optional;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class ControllerOfCourse implements InterfaceOfCourseController {
-
+//123
     private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
 
 
