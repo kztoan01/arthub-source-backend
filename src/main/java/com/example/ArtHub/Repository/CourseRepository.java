@@ -25,10 +25,27 @@ public interface CourseRepository extends JpaRepository<Course,Integer> {
     List<Course> findByLanguageAndPrice(String language, float price);
 
 
+//<<<<<<< HEAD
     @Modifying
     @Transactional
     @Query("UPDATE Course c SET c.image = ?2 WHERE c.id = ?1 ")
     int  updateMainImage(int courseId, String imageName);
+//=======
+
+    @Query("SELECT c from Course c ORDER BY c.price DESC ")
+    List<Course> findAllByOrderByPriceDesc();
+    @Query("SELECT c from Course c ORDER BY c.price Asc ")
+    List<Course> findAllByOrderByPriceAsc();
+
+    @Query("SELECT c from Course c ORDER BY c.date DESC ")
+    List<Course> findAllByOrderByDateDesc();
+
+    @Query("SELECT c from Course c ORDER BY c.date ASC ")
+    List<Course> findAllByOrderByDateAsc();
+
+
+
+//>>>>>>> 48e575675ffe2c457a7aa96cf902668d1212d7e1
 
 }
 

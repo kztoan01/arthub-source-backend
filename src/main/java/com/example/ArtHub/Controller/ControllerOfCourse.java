@@ -9,11 +9,15 @@ import com.example.ArtHub.InterfaceOfControllers.InterfaceOfCourseController;
 import com.example.ArtHub.Repository.AccountRepository;
 import com.example.ArtHub.Repository.CategoryRepository;
 import com.example.ArtHub.Repository.CourseRepository;
+//<<<<<<< HEAD
 import com.example.ArtHub.ResponeObject.ResponeObject;
 import com.example.ArtHub.Service.ServiceOfCategoryCourse;
 import com.example.ArtHub.Service.ServiceOfCourse;
 import com.example.ArtHub.Service.ServiceOfLearningObjective;
 import com.example.ArtHub.Service.ServiceOfSection;
+//=======
+import com.example.ArtHub.Service.*;
+//>>>>>>> 48e575675ffe2c457a7aa96cf902668d1212d7e1
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +36,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -201,6 +204,7 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     public List<ResponeCourseDTO> getCoursesByCategory(String category) {
         return null;
     }
+//<<<<<<< HEAD
 
     @Override
     public ResponseEntity<ResponeObject> updateMainImageOfCourse(@RequestParam int courseId, @RequestParam MultipartFile image) throws AppServiceExeption, IOException {
@@ -228,4 +232,35 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
                 new ResponeObject("ok","update main image falied!","")
         );
     }
+//=======
+    @Autowired
+    public ControllerOfCourse(InterfaceOfCourseSort courseSort) {
+        this.courseSort = courseSort;
+    }
+    private final InterfaceOfCourseSort courseSort;
+    @Override
+    public List<ResponeCourseDTO> getCoursesByPriceHigher(){
+        List<Course> courses=courseRepository.findAllByOrderByPriceDesc();
+        return  fromCourseListToResponeCourseDTOList(courses);
+    }
+    @Override
+    public List<ResponeCourseDTO> getCoursesByPriceLower(){
+        List<Course> courses=courseRepository.findAllByOrderByPriceAsc();
+        return  fromCourseListToResponeCourseDTOList(courses);
+    }
+
+    @Override
+    public List<ResponeCourseDTO> getCoursesByDateNew(){
+        List<Course> courses=courseRepository.findAllByOrderByDateDesc();
+        return  fromCourseListToResponeCourseDTOList(courses);
+    }
+
+    @Override
+    public List<ResponeCourseDTO> getCoursesByDateOld(){
+        List<Course> courses=courseRepository.findAllByOrderByDateAsc();
+        return  fromCourseListToResponeCourseDTOList(courses);
+
+    }
+
+//>>>>>>> 48e575675ffe2c457a7aa96cf902668d1212d7e1
 }
