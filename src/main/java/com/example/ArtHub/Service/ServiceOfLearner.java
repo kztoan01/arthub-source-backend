@@ -21,7 +21,7 @@ public class ServiceOfLearner implements InterfaceOfLearnerService{
         Learner learner = new Learner();
         learner.setAccountId(dto.getAccountId());
         learner.setCourseId(dto.getCourseId());
-        learner.setOwnerCourse(dto.getOwnerCourse());
+        learner.setOwnerCourse(courseRepository.findById(dto.getCourseId()).get().getAccountId());
         learner.setPrice(dto.getPrice());
         return learnerRepository.save(learner);
 
