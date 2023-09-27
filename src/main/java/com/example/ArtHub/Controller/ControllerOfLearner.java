@@ -5,6 +5,7 @@
         import com.example.ArtHub.DTO.CreateLearnerDTO;
         import com.example.ArtHub.DTO.ResponseLearnerDTO;
         import com.example.ArtHub.Entity.Learner;
+        import com.example.ArtHub.InterfaceOfControllers.InterfaceOfLearnerController;
         import com.example.ArtHub.Repository.CourseRepository;
         import com.example.ArtHub.Repository.LearnerRepository;
         import com.example.ArtHub.Service.ServiceOfCourse;
@@ -18,7 +19,7 @@
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-public class ControllerOfLearner implements com.example.ArtHub.Controller.InterfaceOfLearnerController {
+public class ControllerOfLearner implements InterfaceOfLearnerController {
     @Autowired
     LearnerRepository learnerRepository;
 
@@ -47,6 +48,18 @@ public class ControllerOfLearner implements com.example.ArtHub.Controller.Interf
 
         return fromLearnerToResponseLearnerDTO(learner);
 
+    }
+
+    @Override
+    public int countLearner(int owner) throws AppServiceExeption, IOException {
+
+
+        return learnerRepository.countDistinctAccountIdByOwner(owner);
+    }
+
+    @Override
+    public double getProfitByOwner(int owner) throws AppServiceExeption, IOException {
+        return learnerRepository.sumOfProfit(owner);
     }
 
 

@@ -1,4 +1,4 @@
-package com.example.ArtHub.Controller;
+package com.example.ArtHub.InterfaceOfControllers;
 
 
 import com.example.ArtHub.AppServiceExeption;
@@ -15,6 +15,17 @@ public interface InterfaceOfLearnerController {
     @PostMapping("/addLearner")
     @ResponseStatus(HttpStatus.CREATED)
     ResponseLearnerDTO createLearner(@RequestBody @Valid CreateLearnerDTO dto) throws AppServiceExeption, IOException;
+
+
+
+    @PostMapping("/countLearnerByOwner")
+    @ResponseStatus(HttpStatus.CREATED)
+    int countLearner(int owner) throws AppServiceExeption, IOException;
+
+
+    @PostMapping("/GetProfitByOwner")
+    @ResponseStatus(HttpStatus.CREATED)
+    double getProfitByOwner(int owner) throws AppServiceExeption, IOException;
 
 
 }
