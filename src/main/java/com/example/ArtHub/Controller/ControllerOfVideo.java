@@ -17,9 +17,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
+
 @RestController
 public class ControllerOfVideo implements InterfaceOfVideoController {
-
+    Path staticPath = Paths.get("static");
+    Path videoPath = Paths.get("videos");
 
     @Autowired
     VideoRepository videoRepository;
@@ -44,19 +47,22 @@ public class ControllerOfVideo implements InterfaceOfVideoController {
 
     private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
 
+
+
+
+
     @Override
     public ResponeVideoDTO createNewVideo(@RequestParam String name, @RequestParam MultipartFile data, @RequestParam String script, @RequestParam boolean isTrial, @RequestParam int sectionId) throws IOException {
 
 
-        Path staticPath = Paths.get("static");
-        Path videoPath = Paths.get("videos");
         if (!Files.exists(CURRENT_FOLDER.resolve(staticPath).resolve(videoPath))) {
             Files.createDirectories(CURRENT_FOLDER.resolve(staticPath).resolve(videoPath));
         }
-        Path file = CURRENT_FOLDER.resolve(staticPath)
-                .resolve(videoPath).resolve(data.getOriginalFilename());
-        try (OutputStream os = Files.newOutputStream(file)) {
 
+
+        String randomName = UUID.randomUUID().toString().substring(0, 5) +data.getOriginalFilename();
+        Path file = CURRENT_FOLDER.resolve(staticPath).resolve(videoPath).resolve(randomName);
+        try (OutputStream os = Files.newOutputStream(file)) {
             os.write(data.getBytes());
         }
 
@@ -64,7 +70,7 @@ public class ControllerOfVideo implements InterfaceOfVideoController {
 
         CreateVideoDTO createVideoDTO = new CreateVideoDTO();
         createVideoDTO.setSectionId(sectionId);
-        createVideoDTO.setData(data.getOriginalFilename());
+        createVideoDTO.setData(randomName);
         createVideoDTO.setName(name);
         createVideoDTO.setTrial(isTrial);
         createVideoDTO.setScript(script);

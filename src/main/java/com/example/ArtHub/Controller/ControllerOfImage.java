@@ -40,9 +40,6 @@ public class ControllerOfImage implements InterfaceOfImageController {
                 || contentType.equals("image/jpeg");
     }
 
-
-
-
     public String getImageName(MultipartFile image) throws IOException {
         String randomName = UUID.randomUUID().toString().substring(0, 5)+image.getOriginalFilename();
         Path file = CURRENT_FOLDER.resolve(staticPath)
@@ -52,10 +49,6 @@ public class ControllerOfImage implements InterfaceOfImageController {
         }
         return randomName;
     }
-
-
-
-
 
     public ResponseEntity<ResponeObject> saveCourseImages(@RequestParam MultipartFile one, @RequestParam MultipartFile two, @RequestParam MultipartFile three, @RequestParam MultipartFile four, @RequestParam int courseId) throws IOException {
         Set<String> supportedContentTypes = new HashSet<>(Arrays.asList("text/xml", "application/pdf", "image/png", "image/jpg", "image/jpeg"));
