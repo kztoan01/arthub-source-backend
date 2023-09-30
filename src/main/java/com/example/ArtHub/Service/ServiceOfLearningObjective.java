@@ -27,8 +27,6 @@ public class ServiceOfLearningObjective implements InterfaceOfLearningObjectiveS
         learningObjective.setTwo(dto.getTwo());
         learningObjective.setThree(dto.getThree());
         learningObjective.setFour(dto.getFour());
-        learningObjective.setFive(dto.getFive());
-        learningObjective.setSix(dto.getSix());
         logger.info("Inserted learning object:"+learningObjective.getOne());
         return learningObjectiveRepository.save(learningObjective);
     }

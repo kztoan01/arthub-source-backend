@@ -16,10 +16,6 @@ public class LearningObjective {
     private String three;
     @Column(name = "four")
     private String four;
-    @Column(name = "five")
-    private String five;
-    @Column(name = "six")
-    private String six;
     @Column(name = "courseId")
     private Integer courseId;
 
@@ -56,22 +52,6 @@ public class LearningObjective {
 
     public void setFour(String four) {
         this.four = four;
-    }
-
-    public String getFive() {
-        return five;
-    }
-
-    public void setFive(String five) {
-        this.five = five;
-    }
-
-    public String getSix() {
-        return six;
-    }
-
-    public void setSix(String six) {
-        this.six = six;
     }
 
     public Integer getId() {

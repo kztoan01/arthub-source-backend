@@ -25,7 +25,7 @@ public interface InterafceOfSectionController {
     List<ResponeSectionDTO> getSections();
 
     @GetMapping("/getSection/{id}")
-    ResponseEntity<ResponeObject> getSectionByID(@PathVariable Integer id);
+    ResponseEntity<ResponeObject> getSectionByCourseID(@PathVariable int id);
 
 
 }

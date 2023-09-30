@@ -41,9 +41,6 @@ public interface InterfaceOfCourseController {
     ResponseEntity<ResponeObject> updateStatusOfCourse(int courseId) throws AppServiceExeption, IOException;
 
 
-
-
-
     @PostMapping("/updateMainImage")
     @ResponseStatus(HttpStatus.CREATED)
     ResponseEntity<ResponeObject> updateMainImageOfCourse(int courseId, MultipartFile image) throws AppServiceExeption, IOException;

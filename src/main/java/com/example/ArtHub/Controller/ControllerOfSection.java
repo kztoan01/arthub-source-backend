@@ -34,9 +34,8 @@ public class ControllerOfSection implements InterafceOfSectionController {
     }
 
     @Override
-    public ResponseEntity<ResponeObject> getSectionByID(Integer id) {
-
-        return sectionService.getSectionByID(id);
+    public ResponseEntity<ResponeObject> getSectionByCourseID(int id) {
+        return sectionService.getSectionByCourseID(id);
 
     }
 }

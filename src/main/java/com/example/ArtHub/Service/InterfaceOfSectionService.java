@@ -17,7 +17,7 @@ public interface InterfaceOfSectionService {
 
     List<Section> getSections();
 
-    ResponseEntity<ResponeObject> getSectionByID(int id);
+    ResponseEntity<ResponeObject> getSectionByCourseID(int id);
 
 
 

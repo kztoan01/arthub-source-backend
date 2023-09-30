@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class CourseSortService implements InterfaceOfCourseSort {
+public class ServiceOfCourseSort implements InterfaceOfCourseSort {
     private final CourseRepository repository;
 
     @Autowired
-    public CourseSortService(CourseRepository repository) {
+    public ServiceOfCourseSort(CourseRepository repository) {
         this.repository = repository;
     }
 

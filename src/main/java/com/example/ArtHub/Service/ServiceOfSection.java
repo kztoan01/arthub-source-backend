@@ -30,8 +30,9 @@ public class ServiceOfSection implements InterfaceOfSectionService {
 
     @Override
     public List<Section> getSectionList(int ID) {
-        List<Section> sectionList = sectionRepository.findBycourseId(ID);
-        return sectionList;
+//        List<Section> sectionList = sectionRepository.findBycourseId(ID);
+//        return sectionList;
+        return null;
     }
 
     @Override
@@ -41,9 +42,9 @@ public class ServiceOfSection implements InterfaceOfSectionService {
     }
 
     @Override
-    public ResponseEntity<ResponeObject> getSectionByID(int id) {
-        Optional<Section> foundSection = sectionRepository.findById(id);
-        if(foundSection.isPresent())
+    public ResponseEntity<ResponeObject> getSectionByCourseID(int id) {
+        List<Section> foundSection = sectionRepository.findByCourseId(id);
+        if(!foundSection.isEmpty())
         {
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponeObject("ok","Query product seccessfully", foundSection)

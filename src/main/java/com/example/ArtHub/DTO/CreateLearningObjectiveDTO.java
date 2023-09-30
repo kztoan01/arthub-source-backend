@@ -17,9 +17,6 @@ public class CreateLearningObjectiveDTO {
 
     private String four;
 
-    private String five;
-
-    private String six;
 
     private Integer course;
 
@@ -55,21 +52,6 @@ public class CreateLearningObjectiveDTO {
         this.four = four;
     }
 
-    public String getFive() {
-        return five;
-    }
-
-    public void setFive(String five) {
-        this.five = five;
-    }
-
-    public String getSix() {
-        return six;
-    }
-
-    public void setSix(String six) {
-        this.six = six;
-    }
 
     public Integer getCourse() {
         return course;
