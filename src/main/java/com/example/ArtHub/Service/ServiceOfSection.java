@@ -30,9 +30,8 @@ public class ServiceOfSection implements InterfaceOfSectionService {
 
     @Override
     public List<Section> getSectionList(int ID) {
-//        List<Section> sectionList = sectionRepository.findBycourseId(ID);
-//        return sectionList;
-        return null;
+        List<Section> sectionList = sectionRepository.findByCourseId(ID);
+        return sectionList;
     }
 
     @Override
