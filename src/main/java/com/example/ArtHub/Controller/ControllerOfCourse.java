@@ -283,4 +283,9 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         return  fromCourseListToResponeCourseDTOList(courses);
 
     }
+
+    public ResponeCourseDTO showSectionAndVideo(@RequestParam int id) {
+        Course course = courseRepository.findById(id);
+        return fromCourseToResponeCourseDTO(course);
+    }
 }
