@@ -158,9 +158,9 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
 
         courseDTO.setBio(accountRepository.findById(course.getAccountId()).get().getBio());
         courseDTO.setInstructorName(accountRepository.findById(course.getAccountId()).get().getFirstname()+" "+accountRepository.findById(course.getAccountId()).get().getLastname());
-        courseDTO.setIntructorImage(accountRepository.findById(course.getAccountId()).get().getImage());
-        courseDTO.setIntructorAddress(accountRepository.findById(course.getAccountId()).get().getAddress());
-        courseDTO.setInstrutorEmail(accountRepository.findById(course.getAccountId()).get().getEmail());
+        courseDTO.setInstructorImage(accountRepository.findById(course.getAccountId()).get().getImage());
+        courseDTO.setInstructorAddress(accountRepository.findById(course.getAccountId()).get().getAddress());
+        courseDTO.setInstructorEmail(accountRepository.findById(course.getAccountId()).get().getEmail());
         courseDTO.setInstructorFacebook(accountRepository.findById(course.getAccountId()).get().getFacebook());
         courseDTO.setInstructorPhone(accountRepository.findById(course.getAccountId()).get().getPhone());
         courseDTO.setInstructorTwitter(accountRepository.findById(course.getAccountId()).get().getTwitter());
@@ -178,6 +178,8 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         List<Course> courseList = courseRepository.findByLanguageAndPrice(language, price);
         return fromCourseListToResponeCourseDTOList(courseList);
     }
+
+
 
     @Override
     public ResponeCourseDTO createCourse(CreateCourseDTO dto) throws AppServiceExeption {
@@ -230,7 +232,7 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     }
 
     @Override
-    public ResponseEntity<ResponeObject> updateMainImageOfCourse(@RequestParam int courseId, @RequestParam MultipartFile image) throws AppServiceExeption, IOException {
+        public ResponseEntity<ResponeObject> updateMainImageOfCourse(@RequestParam int courseId, @RequestParam MultipartFile image) throws AppServiceExeption, IOException {
         Path staticPath = Paths.get("static");
         Path imagePath = Paths.get("images");
         if (!Files.exists(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath))) {

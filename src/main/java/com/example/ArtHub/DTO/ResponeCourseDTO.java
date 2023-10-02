@@ -63,13 +63,13 @@ public class ResponeCourseDTO {
 
     private String instructorName;
 
-    private String intructorImage;
+    private String instructorImage;
 
     private String instructorPhone;
 
-    private String intructorAddress;
+    private String instructorAddress;
 
-    private String instrutorEmail;
+    private String instructorEmail;
 
     private String instructorTwitter;
 
@@ -85,8 +85,28 @@ public class ResponeCourseDTO {
         this.images = images;
     }
 
-    public String getIntructorImage() {
-        return intructorImage;
+    public String getInstructorImage() {
+        return instructorImage;
+    }
+
+    public void setInstructorImage(String instructorImage) {
+        this.instructorImage = instructorImage;
+    }
+
+    public String getInstructorAddress() {
+        return instructorAddress;
+    }
+
+    public void setInstructorAddress(String instructorAddress) {
+        this.instructorAddress = instructorAddress;
+    }
+
+    public String getInstructorEmail() {
+        return instructorEmail;
+    }
+
+    public void setInstructorEmail(String instructorEmail) {
+        this.instructorEmail = instructorEmail;
     }
 
     private String bio;
@@ -99,9 +119,6 @@ public class ResponeCourseDTO {
         this.bio = bio;
     }
 
-    public void setIntructorImage(String intructorImage) {
-        this.intructorImage = intructorImage;
-    }
 
     public String getInstructorPhone() {
         return instructorPhone;
@@ -111,21 +128,7 @@ public class ResponeCourseDTO {
         this.instructorPhone = instructorPhone;
     }
 
-    public String getIntructorAddress() {
-        return intructorAddress;
-    }
 
-    public void setIntructorAddress(String intructorAddress) {
-        this.intructorAddress = intructorAddress;
-    }
-
-    public String getInstrutorEmail() {
-        return instrutorEmail;
-    }
-
-    public void setInstrutorEmail(String instrutorEmail) {
-        this.instrutorEmail = instrutorEmail;
-    }
 
     public String getInstructorTwitter() {
         return instructorTwitter;
