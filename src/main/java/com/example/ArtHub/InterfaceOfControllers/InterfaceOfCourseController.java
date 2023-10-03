@@ -17,6 +17,9 @@ import java.util.List;
 @RequestMapping("/course")
 public interface InterfaceOfCourseController {
 
+    @GetMapping("/displayIsNotApprovedCourses")
+    List<ResponeCourseDTO> displayIsNotApprovedCourses();
+
     @PostMapping("/showSectionAndVideo")
     ResponeCourseDTO showSectionAndVideo(int id) throws IOException;
 

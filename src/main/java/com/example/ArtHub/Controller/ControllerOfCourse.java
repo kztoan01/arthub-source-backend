@@ -288,4 +288,10 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         Course course = courseRepository.findById(id);
         return fromCourseToResponeCourseDTO(course);
     }
+
+    public  List<ResponeCourseDTO>  displayIsNotApprovedCourses() {
+        List<Course> courseList = courseRepository.displayIsNotApprovedCourses();
+        return fromCourseListToResponeCourseDTOList(courseList);
+    }
+
 }
