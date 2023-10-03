@@ -7,6 +7,8 @@ import com.example.ArtHub.Entity.CategoryCourse;
 import com.example.ArtHub.Entity.Course;
 import com.example.ArtHub.Entity.Section;
 import com.example.ArtHub.InterfaceOfControllers.InterfaceOfCourseController;
+import com.example.ArtHub.MailConfig.MailDetail;
+import com.example.ArtHub.MailConfig.MailService;
 import com.example.ArtHub.Repository.*;
 import com.example.ArtHub.ResponeObject.ResponeObject;
 import com.example.ArtHub.Service.*;
@@ -33,7 +35,6 @@ import java.util.Optional;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class ControllerOfCourse implements InterfaceOfCourseController {
-//123
     private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
 
 
@@ -43,7 +44,6 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     ServiceOfCourse courseService;
     @Autowired
     CourseRepository courseRepository;
-
 
 
     @Autowired
@@ -65,6 +65,10 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
 
     @Autowired
     ImageRepository imageRepository;
+
+
+    @Autowired
+    private MailService mailService;
 
 
     public ResponeSectionDTO FromSectionIntoResponeSectionDTO(Section section)
@@ -126,6 +130,7 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         List<ResponeCourseDTO> responeCourseDTOList = fromCourseListToResponeCourseDTOList(courseListFromDB);
         return responeCourseDTOList;
     }
+
 
 
     public  ResponeCourseDTO fromCourseToResponeCourseDTO(Course course) { //This function use to convert courseEntity to ResponeCourseDTO
@@ -206,6 +211,13 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     }
 
     @Override
+    public List<ResponeCourseDTO> getUnapprovedCourses() {
+        List<Course> courseListFromDB = courseRepository.getUnapprovedCourse();
+        List<ResponeCourseDTO> responeCourseDTOList = fromCourseListToResponeCourseDTOList(courseListFromDB);
+        return responeCourseDTOList;
+    }
+
+    @Override
     public List<ResponeCourseDTO> findCourseThatContainsKeyword(String keyword) {
         List<Course> courses = courseRepository.findCourseThatContainsKeyword(keyword);
         return fromCourseListToResponeCourseDTOList(courses);
@@ -217,13 +229,18 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     }
 
     @Override
-    public ResponseEntity<ResponeObject> updateStatusOfCourse(int courseId) throws AppServiceExeption, IOException {
+    public ResponseEntity<ResponeObject> updateStatusOfCourse(int courseId, String InstructorEmail) throws AppServiceExeption, IOException {
         int rs = courseRepository.updateCourseStatus(courseId);
 
         if(rs!=0)
         {
+            MailDetail mailDetail = new MailDetail();
+            mailDetail.setMsgBody("Dear Instructor,\n\nYour course:"+ courseRepository.findById(courseId).getName()+ " has been approved! Thank you for your contribution to our platform.\n\nBest regards,\nArtHub Staff");
+            mailDetail.setRecipient(InstructorEmail);
+            mailDetail.setSubject("Course Approval Notification");
+            mailService.sendMail(mailDetail);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponeObject("ok","update status successfully!","")
+                    new ResponeObject("ok","-update status successfully!\n-"+mailService.sendMail(mailDetail),"")
             );
         }
         return ResponseEntity.status(HttpStatus.OK).body(

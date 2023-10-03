@@ -32,6 +32,9 @@ public interface InterfaceOfCourseController {
     @GetMapping("/getCourses")
     List<ResponeCourseDTO> getCourses();
 
+    @GetMapping("/getUnapprovedCourses")
+    List<ResponeCourseDTO> getUnapprovedCourses();
+
 
     @GetMapping("/getCourse/{keyword}")//search course by keyword
     List<ResponeCourseDTO> findCourseThatContainsKeyword(@PathVariable String keyword);
@@ -41,7 +44,9 @@ public interface InterfaceOfCourseController {
 
     @PostMapping("/updateCourseStatus")
     @ResponseStatus(HttpStatus.CREATED)
-    ResponseEntity<ResponeObject> updateStatusOfCourse(int courseId) throws AppServiceExeption, IOException;
+    ResponseEntity<ResponeObject> updateStatusOfCourse(int courseId,String InstructorEmail) throws AppServiceExeption, IOException;
+
+
 
 
     @PostMapping("/updateMainImage")

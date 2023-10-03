@@ -25,6 +25,10 @@ public interface CourseRepository extends JpaRepository<Course,Integer> {
     List<Course> findByLanguageAndPrice(String language, float price);
 
 
+    @Query("SELECT c FROM Course c WHERE c.isApproved = false")
+    List<Course> getUnapprovedCourse();
+
+
     @Modifying
     @Transactional
     @Query("UPDATE Course c SET c.image = ?2 WHERE c.id = ?1 ")
