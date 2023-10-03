@@ -52,8 +52,11 @@ public interface CourseRepository extends JpaRepository<Course,Integer> {
     @Query("UPDATE Course c SET c.isApproved = true WHERE c.id = ?1 ")
     int updateCourseStatus(int courseId);
 
-    @Query("SELECT c FROM Course c WHERE c.id = ?1")
-    Course findById(int id);
+
+    Course findById(int courseId);
+
+    @Query("SELECT c FROM Course c WHERE c.isApproved = false")
+    List<Course> displayIsNotApprovedCourses();
 }
 
 

@@ -160,4 +160,6 @@ public class Course {
     public void setImage(String image) {
         this.image = image;
     }
+
+
 }

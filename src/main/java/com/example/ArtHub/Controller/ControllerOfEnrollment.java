@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/enrollments")
-public class EnrollmentController {
+public class ControllerOfEnrollment {
     @Autowired
     private EnrollmentRepository enrollmentRepository;
     @PostMapping("/enroll")
