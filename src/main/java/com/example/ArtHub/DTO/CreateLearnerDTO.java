@@ -5,7 +5,7 @@ public class CreateLearnerDTO {
     private Integer accountId;
     private Integer courseId;
     private Integer ownerCourse;
-    private Double price;
+    private Float price;
 
     public Integer getAccountId() {
         return accountId;
@@ -31,11 +31,11 @@ public class CreateLearnerDTO {
         this.ownerCourse = ownerCourse;
     }
 
-    public Double getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 }

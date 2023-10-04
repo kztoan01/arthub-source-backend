@@ -13,9 +13,9 @@ public class Learner {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "accountId")
+    @Column(name = "accountId", insertable = false, updatable = false)
     private Integer accountId;
-    @Column(name = "courseId")
+    @Column(name = "courseId", insertable = false, updatable = false)
     private Integer courseId;
     @Column(name = "ownerCourse")
     private Integer ownerCourse;
@@ -23,8 +23,29 @@ public class Learner {
     @CreationTimestamp
     private Date date;
     @Column(name = "price")
-    private Double price;
+    private Float price;
+    @ManyToOne
+    @JoinColumn(name = "courseId")
+    private Course course;
+    @ManyToOne
+    @JoinColumn(name = "accountId")
+    private Account account;
 
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
 
     public Integer getId() {
         return id;
@@ -66,11 +87,11 @@ public class Learner {
         this.date = date;
     }
 
-    public Double getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 }

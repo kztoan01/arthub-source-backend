@@ -143,7 +143,7 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         courseDTO.setLevel(course.getLevel());
         courseDTO.setAccountId(course.getAccountId());
         courseDTO.setApproved(course.getApproved());
-        courseDTO.setPassed(course.isPassed());
+        courseDTO.setPassed(course.getPassed());
         courseDTO.setIntroduction(course.getIntroduction());
         courseDTO.setImage(course.getImage());
         courseDTO.setDate(course.getDate());
