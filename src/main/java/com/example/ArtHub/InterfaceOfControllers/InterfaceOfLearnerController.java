@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @RequestMapping("/learner")
 public interface InterfaceOfLearnerController {
@@ -16,7 +17,8 @@ public interface InterfaceOfLearnerController {
     @ResponseStatus(HttpStatus.CREATED)
     ResponseLearnerDTO createLearner(@RequestBody @Valid CreateLearnerDTO dto) throws AppServiceExeption, IOException;
 
-
+    @GetMapping("/getLearners")
+    List<ResponseLearnerDTO> getLearnerList();
 
     @PostMapping("/countLearnerByOwner")
     @ResponseStatus(HttpStatus.CREATED)

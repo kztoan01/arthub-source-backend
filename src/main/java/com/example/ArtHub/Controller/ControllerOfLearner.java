@@ -16,8 +16,10 @@
         import org.springframework.web.bind.annotation.RestController;
 
         import java.io.IOException;
+        import java.util.ArrayList;
+        import java.util.List;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+        @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class ControllerOfLearner implements InterfaceOfLearnerController {
     @Autowired
@@ -41,6 +43,20 @@ public class ControllerOfLearner implements InterfaceOfLearnerController {
         return learnerDTO;
 
 
+    }
+
+    public List<ResponseLearnerDTO> fromLearnerListToResponseLearnerDTOList(List<Learner> LearnerList) {
+        List<ResponseLearnerDTO> ResponseLearnerDTOList = new ArrayList<>();
+        for (Learner learner: LearnerList) {
+            ResponseLearnerDTOList.add(fromLearnerToResponseLearnerDTO(learner));
+        }
+        return ResponseLearnerDTOList;
+    }
+
+    public List<ResponseLearnerDTO> getLearnerList() {
+        List<Learner> learnerListFromDB = learnerRepository.findAll();
+        List<ResponseLearnerDTO> responseLearnerDTOList = fromLearnerListToResponseLearnerDTOList(learnerListFromDB);
+        return responseLearnerDTOList;
     }
 
     public ResponseLearnerDTO createLearner(CreateLearnerDTO dto) throws AppServiceExeption, IOException {
