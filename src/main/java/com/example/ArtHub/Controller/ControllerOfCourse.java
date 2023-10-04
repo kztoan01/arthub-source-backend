@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
@@ -232,15 +231,17 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     public ResponseEntity<ResponeObject> updateStatusOfCourse(int courseId, String InstructorEmail) throws AppServiceExeption, IOException {
         int rs = courseRepository.updateCourseStatus(courseId);
 
-        if(rs!=0)
-        {
+        if (rs != 0) {
+            String courseName = courseRepository.findById(courseId).getName();
+            String messageBody = "Dear instructor,\n\nWe are pleased to inform you that your course, " + courseName + ", has been approved and is now available on our online drawing course platform. Congratulations!\n\nYour course has passed our rigorous review process, and we believe it will be a valuable addition to our platform. We appreciate your hard work and dedication in creating a quality course that will help children in Vietnam learn to draw.\n\nYour course is now live and available for students to enroll. You can log in to your instructor dashboard to view the number of registered students, comments, and reports from your course. We encourage you to engage with your students and provide them with the best learning experience possible.\n\nThank you for choosing our platform to share your knowledge and expertise. We look forward to working with you and helping you grow your audience.\n\nBest regards,\n\n[ArtHub staff]\n[ArtHub]\n\nAvatar";
+            String subject = "Your Course Has Been Approved!";
             MailDetail mailDetail = new MailDetail();
-            mailDetail.setMsgBody("Dear Instructor,\n\nYour course:"+ courseRepository.findById(courseId).getName()+ " has been approved! Thank you for your contribution to our platform.\n\nBest regards,\nArtHub Staff");
+            mailDetail.setMsgBody(messageBody);
             mailDetail.setRecipient(InstructorEmail);
-            mailDetail.setSubject("Course Approval Notification");
+            mailDetail.setSubject(subject);
             mailService.sendMail(mailDetail);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponeObject("ok","-update status successfully!\n-"+mailService.sendMail(mailDetail),"")
+                    new ResponeObject("ok", "-update status successfully!\n-" + mailService.sendMail(mailDetail), "")
             );
         }
         return ResponseEntity.status(HttpStatus.OK).body(
