@@ -45,8 +45,7 @@ public class ResponeCourseDTO {
     private Boolean isPassed;
 
 
-
-    private Boolean isApproved;
+     private Integer Status;
 
 
     private Integer accountId;
@@ -162,6 +161,14 @@ public class ResponeCourseDTO {
         this.date = date;
     }
 
+    public Integer getStatus() {
+        return Status;
+    }
+
+    public void setStatus(Integer status) {
+        Status = status;
+    }
+
     public List<ResponeCategoryNameDTO> getCategories() {
         return categories;
     }
@@ -252,13 +259,6 @@ public class ResponeCourseDTO {
         isPassed = passed;
     }
 
-    public Boolean getApproved() {
-        return isApproved;
-    }
-
-    public void setApproved(Boolean approved) {
-        isApproved = approved;
-    }
 
     public Integer getAccountId() {
         return accountId;

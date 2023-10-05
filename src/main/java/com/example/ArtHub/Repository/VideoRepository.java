@@ -17,7 +17,7 @@ public interface VideoRepository extends JpaRepository<Video,Integer> {
 
     @Modifying
     @Transactional
-    @Query("delete from Video v where v.id = ?1")
-    int deleteViolatedCourse(int courseId);
+    @Query("delete from Video v where v.sectionId = ?1")
+    int deleteVideosBySectionID(int sectionID);
 
 }

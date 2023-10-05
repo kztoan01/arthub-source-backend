@@ -44,6 +44,10 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     @Autowired
     CourseRepository courseRepository;
 
+    @Autowired
+    SectionRepository sectionRepository;
+
+
 
     @Autowired
     ServiceOfSection sectionService;
@@ -60,10 +64,18 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     AccountRepository accountRepository;
 
     @Autowired
+    CategoryCourseRepository categoryCourseRepository;
+
+    @Autowired
     VideoRepository videoRepository;
 
     @Autowired
     ImageRepository imageRepository;
+
+    @Autowired
+    LearningObjectiveRepository learningObjectiveRepository;
+
+
 
 
     @Autowired
@@ -142,7 +154,7 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         courseDTO.setLanguage(course.getLanguage());
         courseDTO.setLevel(course.getLevel());
         courseDTO.setAccountId(course.getAccountId());
-        courseDTO.setApproved(course.getApproved());
+        courseDTO.setStatus(course.getStatus());
         courseDTO.setPassed(course.getPassed());
         courseDTO.setIntroduction(course.getIntroduction());
         courseDTO.setImage(course.getImage());
@@ -211,10 +223,15 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
 
     @Override
     public List<ResponeCourseDTO> getUnapprovedCourses() {
-        List<Course> courseListFromDB = courseRepository.getUnapprovedCourse();
-        List<ResponeCourseDTO> responeCourseDTOList = fromCourseListToResponeCourseDTOList(courseListFromDB);
-        return responeCourseDTOList;
+        return null;
     }
+
+//    @Override
+//    public List<ResponeCourseDTO> getUnapprovedCourses() {
+//        List<Course> courseListFromDB = courseRepository.getUnapprovedCourse();
+//        List<ResponeCourseDTO> responeCourseDTOList = fromCourseListToResponeCourseDTOList(courseListFromDB);
+//        return responeCourseDTOList;
+//    }
 
     @Override
     public List<ResponeCourseDTO> findCourseThatContainsKeyword(String keyword) {
@@ -227,33 +244,81 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         return null;
     }
 
+
+
     @Override
-    public ResponseEntity<ResponeObject> updateStatusOfCourse(int courseId, String InstructorEmail, String StaffMessages , boolean Reject) throws AppServiceExeption, IOException {
+    public ResponseEntity<ResponeObject> updateStatusOfCourse(int courseId, String InstructorEmail, String StaffMessages , int action) throws AppServiceExeption, IOException {
         String messageBody = "";
         String subject = "";
         String status = "";
         String courseName = courseRepository.findById(courseId).getName();
-        if(Reject)
+        if(action == -1)
         {
             List<Section> sections = sectionService.getSectionList(courseId);
             for (Section section: sections) {
+                int rs = videoRepository.deleteVideosBySectionID(section.getId());
+                if(rs!= 0)
+                {
+                    logger.info("Deleted course video;");
+                }
+            }
 
-            }
-            int rs = courseRepository.deleteViolatedCourse(courseId);
-            status = "Violate Course deleted";
-            if(rs != 0)
+            int rs1 = imageRepository.deleteImageByCourseId(courseId);
+
+            if(rs1!= 0)
             {
-                messageBody = "Dear Instructor,\n\nWe regret to inform you that your course ," + courseName + ", has been rejected due to a violation of ArtHub's privacy policy. Our team has determined that the course content infringes upon the privacy of the ArtHub application and its users.\n\n"+ StaffMessages +"\n\nWe take the privacy and security of our platform and community very seriously, and we cannot allow any content that compromises this. We encourage you to review our privacy policy and ensure that any future courses you submit comply with our guidelines.\n\nThank you for your understanding.\n\nBest regards,\n\n[ArtHub Staff]\n[ArtHub]\n\n🚫🔒🙅‍♀️ Avatar";
-                subject = "Your Course Has Been Rejected!";
+                logger.info("Deleted course image;");
             }
+
+            int rs2 = sectionRepository.deleteSectionsByCourseID(courseId);
+
+            if(rs2!= 0)
+            {
+                logger.info("Deleted course section;");
+            }
+
+            int rs3 = categoryCourseRepository.deleteCategoryCourseByCourseID(courseId);
+
+            if(rs3!= 0)
+            {
+                logger.info("Deleted categoryCourse;");
+            }
+
+           int rs4 = learningObjectiveRepository.deleteLearningObjectivesByCourseID(courseId);
+
+            if(rs4!= 0)
+            {
+                logger.info("Deleted learningObjective;");
+            }
+
+            int rs5 = courseRepository.deleteViolatedCourse(courseId);
+
+            if(rs5!= 0)
+            {
+                logger.info("Deleted course;");
+            }
+
+
+            status = "Violate Course deleted";
+            messageBody = "Dear Instructor,\n\nWe regret to inform you that your course ," + courseName + ", has been rejected due to a violation of ArtHub's privacy policy. Our team has determined that the course content infringes upon the privacy of the ArtHub application and its users.\n\n"+ StaffMessages +"\n\nWe take the privacy and security of our platform and community very seriously, and we cannot allow any content that compromises this. We encourage you to review our privacy policy and ensure that any future courses you submit comply with our guidelines.\n\nThank you for your understanding.\n\nBest regards,\n\n[ArtHub Staff]\n[ArtHub]\n\n🚫🔒🙅‍♀️ Avatar";
+            subject = "Your Course Has Been Rejected!";
+
         }
-        else
+        else if(action == 2)
         {
-            int rs = courseRepository.updateCourseStatus(courseId);
+            int rs = courseRepository.updateCourseStatus(courseId, 2);
             status = "Course approved";
             if (rs != 0) {
                 messageBody = "Dear instructor,\n\nWe are pleased to inform you that your course, " + courseName + ", has been approved and is now available on our online drawing course platform. Congratulations!\n\nYour course has passed our rigorous review process, and we believe it will be a valuable addition to our platform. We appreciate your hard work and dedication in creating a quality course that will help children in Vietnam learn to draw.\n\nYour course is now live and available for students to enroll. You can log in to your instructor dashboard to view the number of registered students, comments, and reports from your course. We encourage you to engage with your students and provide them with the best learning experience possible.\n\nThank you for choosing our platform to share your knowledge and expertise. We look forward to working with you and helping you grow your audience.\n\nBest regards,\n\n[ArtHub staff]\n[ArtHub]\n\nAvatar";
                 subject = "Your Course Has Been Approved!";
+            }
+        }
+        else {
+            int rs = courseRepository.updateCourseStatus(courseId, 1);
+            status = "Course details setting are done!";
+            if (rs != 0) {
+                messageBody = "Dear instructor,\n\nWe are pleased to inform you that the course details for your course, " + courseName + ", have been successfully set up on our online drawing course platform. Your course is now being reviewed by our team to ensure it meets our quality standards.\n\nOnce your course has passed our rigorous review process, it will be made available on our platform for students to enroll. You will be notified via email when your course is approved and live on our platform.\n\nWe appreciate your hard work and dedication in creating a quality course that will help children in Vietnam learn to draw. Thank you for choosing our platform to share your knowledge and expertise.\n\nIf you have any questions or concerns, please don't hesitate to contact us.\n\nBest regards,\n[ArtHub staff]\n[ArtHub]\nAvatar";
+                subject = "Your Course are being validated!";
             }
         }
         MailDetail mailDetail = new MailDetail();
@@ -321,14 +386,19 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
 
     }
 
+    @Override
+    public List<ResponeCourseDTO> displayIsNotApprovedCourses() {
+        return null;
+    }
+
     public ResponeCourseDTO showSectionAndVideo(@RequestParam int id) {
         Course course = courseRepository.findById(id);
         return fromCourseToResponeCourseDTO(course);
     }
 
-    public  List<ResponeCourseDTO>  displayIsNotApprovedCourses() {
-        List<Course> courseList = courseRepository.displayIsNotApprovedCourses();
-        return fromCourseListToResponeCourseDTOList(courseList);
-    }
+//    public  List<ResponeCourseDTO>  displayIsNotApprovedCourses() {
+//        List<Course> courseList = courseRepository.displayIsNotApprovedCourses();
+//        return fromCourseListToResponeCourseDTOList(courseList);
+//    }
 
 }

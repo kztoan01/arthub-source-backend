@@ -16,6 +16,7 @@ public class ServiceOfCourse implements InterfaceOfCourseService {
     CourseRepository courseRepository;
 
 
+
     @Override
     public Course createCourse(CreateCourseDTO dto) throws AppServiceExeption {
         Course course = new Course();
@@ -27,7 +28,6 @@ public class ServiceOfCourse implements InterfaceOfCourseService {
         course.setPrice(dto.getPrice());
         course.setAccountId(dto.getAccountId());
         course.setName(dto.getName());
-        course.setApproved(dto.getApproved());
         course.setPassed(dto.isPassed());
         return courseRepository.save(course);
     }

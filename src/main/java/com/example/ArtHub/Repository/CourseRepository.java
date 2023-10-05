@@ -25,8 +25,8 @@ public interface CourseRepository extends JpaRepository<Course,Integer> {
     List<Course> findByLanguageAndPrice(String language, float price);
 
 
-    @Query("SELECT c FROM Course c WHERE c.isApproved = false")
-    List<Course> getUnapprovedCourse();
+//    @Query("SELECT c FROM Course c WHERE c.isApproved = false")
+//    List<Course> getUnapprovedCourse();
 
 
     @Modifying
@@ -49,8 +49,8 @@ public interface CourseRepository extends JpaRepository<Course,Integer> {
 
     @Modifying
     @Transactional
-    @Query("UPDATE Course c SET c.isApproved = true WHERE c.id = ?1 ")
-    int updateCourseStatus(int courseId);
+    @Query("UPDATE Course c SET c.Status = ?2 WHERE c.id = ?1 ")
+    int updateCourseStatus(int courseId , int status);
 
 
     @Modifying
@@ -59,10 +59,13 @@ public interface CourseRepository extends JpaRepository<Course,Integer> {
     int deleteViolatedCourse(int courseId);
 
 
+
+
+
     Course findById(int courseId);
 
-    @Query("SELECT c FROM Course c WHERE c.isApproved = false")
-    List<Course> displayIsNotApprovedCourses();
+//    @Query("SELECT c FROM Course c WHERE c.isApproved = false")
+//    List<Course> displayIsNotApprovedCourses();
 }
 
 

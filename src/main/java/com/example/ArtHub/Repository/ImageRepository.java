@@ -10,6 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface ImageRepository extends JpaRepository<Image,Integer> {
     Image  findByCourseId(int CourseId);
+    @Modifying
+    @Transactional
+    @Query("delete from Image i where i.courseId = ?1")
+    int deleteImageByCourseId(int courseId);
+
+
 
     @Modifying
     @Transactional

@@ -4,7 +4,10 @@ package com.example.ArtHub.Repository;
 import com.example.ArtHub.Entity.CategoryCourse;
 import com.example.ArtHub.Entity.CategoryCourse;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -12,5 +15,10 @@ import java.util.List;
 public interface CategoryCourseRepository extends JpaRepository<CategoryCourse,Integer> {
 
     public List<CategoryCourse> findByCourseId(int id);
+
+    @Modifying
+    @Transactional
+    @Query("delete from CategoryCourse c where c.courseId = ?1")
+    int deleteCategoryCourseByCourseID(int courseID);
 
 }

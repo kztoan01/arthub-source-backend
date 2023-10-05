@@ -43,11 +43,15 @@ public class Course {
     private Boolean isPassed;
 
 
-    @Column(name = "isApproved")
-    private Boolean isApproved;
 
-    @Column(name = "accountId", insertable = false, updatable = false)
+    @Column(name = "accountId")
     private Integer accountId;
+
+
+    @Column(name = "Status")
+    private Integer Status = 0;
+
+
 
     @Column(name = "image")
     private String image;
@@ -56,17 +60,6 @@ public class Course {
     @CreationTimestamp
     private Date date;
 
-    @ManyToOne
-    @JoinColumn(name = "accountId")
-    private Account account;
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
 
     public Date getDate() {
         return date;
@@ -132,6 +125,14 @@ public class Course {
         this.price = price;
     }
 
+    public Integer getStatus() {
+        return Status;
+    }
+
+    public void setStatus(Integer status) {
+        Status = status;
+    }
+
     public Float getCoupon() {
         return coupon;
     }
@@ -146,14 +147,6 @@ public class Course {
 
     public void setPassed(Boolean passed) {
         isPassed = passed;
-    }
-
-    public Boolean getApproved() {
-        return isApproved;
-    }
-
-    public void setApproved(Boolean approved) {
-        isApproved = approved;
     }
 
     public Integer getAccountId() {
