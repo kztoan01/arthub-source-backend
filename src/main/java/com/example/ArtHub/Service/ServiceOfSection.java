@@ -20,10 +20,10 @@ public class ServiceOfSection implements InterfaceOfSectionService {
 
 
     @Override
-    public Section createSection(CreateSectionDTO dto, int courseID) throws AppServiceExeption {
+    public Section createSection(CreateSectionDTO dto, int courseID , int accountID) throws AppServiceExeption {
         Section section = new Section();
         section.setName(dto.getName());
-        section.setAccountId(dto.getAccountId());
+        section.setAccountId(accountID);
         section.setCourseId(courseID);
         return sectionRepository.save(section);
     }

@@ -47,7 +47,7 @@ public interface InterfaceOfCourseController {
 
     @PostMapping("/updateCourseStatus")
     @ResponseStatus(HttpStatus.CREATED)
-    ResponseEntity<ResponeObject> updateStatusOfCourse(int courseId,String InstructorEmail) throws AppServiceExeption, IOException;
+    ResponseEntity<ResponeObject> updateStatusOfCourse(int courseId,String InstructorEmail,String StaffMessages , boolean Reject) throws AppServiceExeption, IOException;
 
 
 

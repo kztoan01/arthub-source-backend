@@ -11,7 +11,7 @@ import java.util.List;
 public interface InterfaceOfSectionService {
 
 
-    Section createSection(CreateSectionDTO dto, int courseID) throws AppServiceExeption;
+    Section createSection(CreateSectionDTO dto, int courseID , int accountID) throws AppServiceExeption;
 
     List<Section> getSectionList(int ID);
 

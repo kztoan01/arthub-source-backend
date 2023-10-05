@@ -53,6 +53,12 @@ public interface CourseRepository extends JpaRepository<Course,Integer> {
     int updateCourseStatus(int courseId);
 
 
+    @Modifying
+    @Transactional
+    @Query("delete from Course c where c.id = ?1")
+    int deleteViolatedCourse(int courseId);
+
+
     Course findById(int courseId);
 
     @Query("SELECT c FROM Course c WHERE c.isApproved = false")

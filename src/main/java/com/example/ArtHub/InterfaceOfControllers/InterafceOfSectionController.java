@@ -18,7 +18,7 @@ public interface InterafceOfSectionController {
 
     @PostMapping("/addSection")
     @ResponseStatus(HttpStatus.CREATED)
-    ResponeSectionDTO createSection(@RequestBody @Valid CreateSectionDTO dto) throws AppServiceExeption, IOException;
+    ResponeSectionDTO createSection(@RequestBody @Valid CreateSectionDTO dto, int courseID , int accountID) throws AppServiceExeption, IOException;
 
 
     @GetMapping("/getSections")

@@ -191,7 +191,7 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
 
         List<CreateSectionDTO> sections = dto.getSections();
         for (CreateSectionDTO createSectionDTO: sections) {
-            sectionService.createSection(createSectionDTO, course.getId());
+            sectionService.createSection(createSectionDTO, course.getId(),course.getAccountId());
         }
 
         serviceOfLearningObjective.createLearningObjective(dto.getLearningObjective(), course.getId());
@@ -228,24 +228,41 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     }
 
     @Override
-    public ResponseEntity<ResponeObject> updateStatusOfCourse(int courseId, String InstructorEmail) throws AppServiceExeption, IOException {
-        int rs = courseRepository.updateCourseStatus(courseId);
+    public ResponseEntity<ResponeObject> updateStatusOfCourse(int courseId, String InstructorEmail, String StaffMessages , boolean Reject) throws AppServiceExeption, IOException {
+        String messageBody = "";
+        String subject = "";
+        String status = "";
+        String courseName = courseRepository.findById(courseId).getName();
+        if(Reject)
+        {
+            List<Section> sections = sectionService.getSectionList(courseId);
+            for (Section section: sections) {
 
-        if (rs != 0) {
-            String courseName = courseRepository.findById(courseId).getName();
-            String messageBody = "Dear instructor,\n\nWe are pleased to inform you that your course, " + courseName + ", has been approved and is now available on our online drawing course platform. Congratulations!\n\nYour course has passed our rigorous review process, and we believe it will be a valuable addition to our platform. We appreciate your hard work and dedication in creating a quality course that will help children in Vietnam learn to draw.\n\nYour course is now live and available for students to enroll. You can log in to your instructor dashboard to view the number of registered students, comments, and reports from your course. We encourage you to engage with your students and provide them with the best learning experience possible.\n\nThank you for choosing our platform to share your knowledge and expertise. We look forward to working with you and helping you grow your audience.\n\nBest regards,\n\n[ArtHub staff]\n[ArtHub]\n\nAvatar";
-            String subject = "Your Course Has Been Approved!";
-            MailDetail mailDetail = new MailDetail();
-            mailDetail.setMsgBody(messageBody);
-            mailDetail.setRecipient(InstructorEmail);
-            mailDetail.setSubject(subject);
-            mailService.sendMail(mailDetail);
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponeObject("ok", "-update status successfully!\n-" + mailService.sendMail(mailDetail), "")
-            );
+            }
+            int rs = courseRepository.deleteViolatedCourse(courseId);
+            status = "Violate Course deleted";
+            if(rs != 0)
+            {
+                messageBody = "Dear Instructor,\n\nWe regret to inform you that your course ," + courseName + ", has been rejected due to a violation of ArtHub's privacy policy. Our team has determined that the course content infringes upon the privacy of the ArtHub application and its users.\n\n"+ StaffMessages +"\n\nWe take the privacy and security of our platform and community very seriously, and we cannot allow any content that compromises this. We encourage you to review our privacy policy and ensure that any future courses you submit comply with our guidelines.\n\nThank you for your understanding.\n\nBest regards,\n\n[ArtHub Staff]\n[ArtHub]\n\n🚫🔒🙅‍♀️ Avatar";
+                subject = "Your Course Has Been Rejected!";
+            }
         }
+        else
+        {
+            int rs = courseRepository.updateCourseStatus(courseId);
+            status = "Course approved";
+            if (rs != 0) {
+                messageBody = "Dear instructor,\n\nWe are pleased to inform you that your course, " + courseName + ", has been approved and is now available on our online drawing course platform. Congratulations!\n\nYour course has passed our rigorous review process, and we believe it will be a valuable addition to our platform. We appreciate your hard work and dedication in creating a quality course that will help children in Vietnam learn to draw.\n\nYour course is now live and available for students to enroll. You can log in to your instructor dashboard to view the number of registered students, comments, and reports from your course. We encourage you to engage with your students and provide them with the best learning experience possible.\n\nThank you for choosing our platform to share your knowledge and expertise. We look forward to working with you and helping you grow your audience.\n\nBest regards,\n\n[ArtHub staff]\n[ArtHub]\n\nAvatar";
+                subject = "Your Course Has Been Approved!";
+            }
+        }
+        MailDetail mailDetail = new MailDetail();
+        mailDetail.setMsgBody(messageBody);
+        mailDetail.setRecipient(InstructorEmail);
+        mailDetail.setSubject(subject);
+        mailService.sendMail(mailDetail);
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponeObject("ok","update status failed!","")
+                new ResponeObject("ok",  status  + "  successfully!\n" + mailService.sendMail(mailDetail), "")
         );
     }
 
