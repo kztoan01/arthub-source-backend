@@ -42,7 +42,7 @@ public class ResponeCourseDTO {
 
 
 
-    private boolean isPassed;
+    private Boolean isPassed;
 
 
 
@@ -244,11 +244,11 @@ public class ResponeCourseDTO {
         this.coupon = coupon;
     }
 
-    public boolean isPassed() {
+    public Boolean getPassed() {
         return isPassed;
     }
 
-    public void setPassed(boolean passed) {
+    public void setPassed(Boolean passed) {
         isPassed = passed;
     }
 

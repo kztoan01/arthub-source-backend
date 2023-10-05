@@ -40,13 +40,13 @@ public class Course {
 
 
     @Column(name = "isPassed")
-    private boolean isPassed;
+    private Boolean isPassed;
 
 
     @Column(name = "isApproved")
     private Boolean isApproved;
 
-    @Column(name = "accountId")
+    @Column(name = "accountId", insertable = false, updatable = false)
     private Integer accountId;
 
     @Column(name = "image")
@@ -56,6 +56,17 @@ public class Course {
     @CreationTimestamp
     private Date date;
 
+    @ManyToOne
+    @JoinColumn(name = "accountId")
+    private Account account;
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 
     public Date getDate() {
         return date;
@@ -129,11 +140,11 @@ public class Course {
         this.coupon = coupon;
     }
 
-    public boolean isPassed() {
+    public Boolean getPassed() {
         return isPassed;
     }
 
-    public void setPassed(boolean passed) {
+    public void setPassed(Boolean passed) {
         isPassed = passed;
     }
 

@@ -8,7 +8,7 @@ public class ResponseLearnerDTO {
     private Integer courseId;
     private Integer ownerCourse;
     private Date date;
-    private Double price;
+    private Float price;
 
     public Integer getId() {
         return id;
@@ -50,11 +50,11 @@ public class ResponseLearnerDTO {
         this.date = date;
     }
 
-    public Double getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 }
