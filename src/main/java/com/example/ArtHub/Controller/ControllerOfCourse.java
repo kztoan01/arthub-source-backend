@@ -388,7 +388,8 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
 
     @Override
     public List<ResponeCourseDTO> displayIsNotApprovedCourses() {
-        return null;
+        List<Course> courseList = courseRepository.displayIsNotApprovedCourses();
+        return fromCourseListToResponeCourseDTOList(courseList);
     }
 
     public ResponeCourseDTO showSectionAndVideo(@RequestParam int id) {

@@ -64,8 +64,8 @@ public interface CourseRepository extends JpaRepository<Course,Integer> {
 
     Course findById(int courseId);
 
-//    @Query("SELECT c FROM Course c WHERE c.isApproved = false")
-//    List<Course> displayIsNotApprovedCourses();
+    @Query("SELECT c FROM Course c WHERE c.Status = 1")
+    List<Course> displayIsNotApprovedCourses();
 }
 
 
