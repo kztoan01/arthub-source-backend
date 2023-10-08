@@ -1,11 +1,12 @@
 package com.example.ArtHub.Entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
-import java.util.List;
 
 @Entity
+@Table(name = "Orders")
 public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,19 +14,10 @@ public class Orders {
     @ManyToOne
     @JoinColumn(name = "accountId")
     private Account account;
+    @Column(name = "date")
+    @CreationTimestamp
     private Date date;
-    @OneToMany
-    private List<OrdersDetails> ordersDetails;
 
-    public Orders() {
-    }
-
-    public Orders(int id, Account account, Date date, List<OrdersDetails> ordersDetails) {
-        this.id = id;
-        this.account = account;
-        this.date = date;
-        this.ordersDetails = ordersDetails;
-    }
 
     public int getId() {
         return id;
@@ -49,13 +41,5 @@ public class Orders {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public List<OrdersDetails> getOrdersDetails() {
-        return ordersDetails;
-    }
-
-    public void setOrdersDetails(List<OrdersDetails> ordersDetails) {
-        this.ordersDetails = ordersDetails;
     }
 }

@@ -3,35 +3,42 @@ package com.example.ArtHub.Entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "OrdersDetails")
+@IdClass(OrderDetailId.class)
 public class OrdersDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @ManyToOne
-    @JoinColumn(name = "courseId")
-    private Course course;
+    private  int orderId;
+    @Id
+    private int courseId;
 
-    private float finalPrice;
     @ManyToOne
-    @JoinColumn(name = "orderId")
+    @JoinColumn(name = "orderId",insertable=false, updatable=false)
     private Orders orders;
 
-    public OrdersDetails() {
+
+    @ManyToOne
+    @JoinColumn(name = "courseId",insertable=false, updatable=false)
+    private Course course;
+
+
+    @Column(name = "finalPrice")
+    private Float finalPrice;
+
+
+    public int getOrderId() {
+        return orderId;
     }
 
-    public OrdersDetails(int id, Course course, float finalPrice, Orders orders) {
-        this.id = id;
-        this.course = course;
-        this.finalPrice = finalPrice;
-        this.orders = orders;
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
-    public int getId() {
-        return id;
+    public int getCourseId() {
+        return courseId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
     }
 
     public Course getCourse() {
@@ -42,11 +49,11 @@ public class OrdersDetails {
         this.course = course;
     }
 
-    public float getFinalPrice() {
+    public Float getFinalPrice() {
         return finalPrice;
     }
 
-    public void setFinalPrice(float finalPrice) {
+    public void setFinalPrice(Float finalPrice) {
         this.finalPrice = finalPrice;
     }
 
@@ -58,4 +65,3 @@ public class OrdersDetails {
         this.orders = orders;
     }
 }
-
