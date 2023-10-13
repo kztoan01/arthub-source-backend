@@ -45,6 +45,24 @@ public class Account {
     @Column(nullable = false,name = "bio")
     private  String bio;
 
+    public Account() {
+    }
+
+    public Account(String username, String password, String address, String lastname, String firstname, String phone, String image, String email, String roleId, String twitter, String facebook, String bio) {
+        this.username = username;
+        this.password = password;
+        this.address = address;
+        this.lastname = lastname;
+        this.firstname = firstname;
+        this.phone = phone;
+        this.image = image;
+        this.email = email;
+        this.roleId = roleId;
+        this.twitter = twitter;
+        this.facebook = facebook;
+        this.bio = bio;
+    }
+
     public String getBio() {
         return bio;
     }

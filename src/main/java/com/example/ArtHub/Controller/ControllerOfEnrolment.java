@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/course")
 public class ControllerOfEnrolment {
     @Autowired
@@ -25,9 +26,8 @@ public class ControllerOfEnrolment {
     private AccountRepository accountRepository;
 
     @PostMapping("/enrol")
-    public ResponseEntity<String> enrolCourse(@RequestParam Integer courseId,@RequestParam Integer accountId){
+    public ResponseEntity<String> enrolCourse(@RequestParam(value = "courseId", required = false) Integer courseId,@RequestParam(value = "accountId", required = false)  Integer accountId){
         try{
-
 
             Optional<Course> courseOptional=courseRepository.findById(courseId);
             if(!courseOptional.isPresent()){
