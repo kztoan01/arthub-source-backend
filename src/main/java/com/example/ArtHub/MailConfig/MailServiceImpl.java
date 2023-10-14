@@ -38,4 +38,10 @@ public class MailServiceImpl implements MailService {
         }
     }
 
+    @Override
+    public String sendMailWithAttachment(MailDetail mailDetail) {
+        return null;
+    }
+
+
 }
