@@ -67,6 +67,7 @@ public interface CourseRepository extends JpaRepository<Course,Integer> {
 
     @Query("SELECT c FROM Course c WHERE c.Status = 1")
     List<Course> displayIsNotApprovedCourses();
+
 }
 
 

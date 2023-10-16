@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/course")
 public interface InterfaceOfCourseController {
 
@@ -51,7 +51,8 @@ public interface InterfaceOfCourseController {
     // action = -1 ===> Reject the course ,  action = 1 ==> instructor done setting course details, action = 2 ==> approve the course
 
 
-
+    @PostMapping("/updateCourseStatusTo1")
+    public int updateCourseStatusTo1(@RequestParam int courseId,@RequestParam int status );
     @PostMapping("/updateMainImage")
     @ResponseStatus(HttpStatus.CREATED)
     ResponseEntity<ResponeObject> updateMainImageOfCourse(int courseId, MultipartFile image) throws AppServiceExeption, IOException;

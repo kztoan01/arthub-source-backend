@@ -330,7 +330,10 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
                 new ResponeObject("ok",  status  + "  successfully!\n" + mailService.sendMail(mailDetail), "")
         );
     }
-
+    public int updateCourseStatusTo1(@RequestParam int courseId,@RequestParam int status ) {
+        int update = courseRepository.updateCourseStatus(courseId,status);
+        return update;
+    }
     @Override
         public ResponseEntity<ResponeObject> updateMainImageOfCourse(@RequestParam int courseId, @RequestParam MultipartFile image) throws AppServiceExeption, IOException {
         Path staticPath = Paths.get("static");
