@@ -1,10 +1,12 @@
 package com.example.ArtHub.MailConfig;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class MailDetail {
     private String recipient;
     private String subject;
     private String msgBody;
-    private String attachment;
+    private MultipartFile attachment;
 
     public MailDetail() {
     }
@@ -26,10 +28,12 @@ public class MailDetail {
     public void setMsgBody(String msgBody) {
         this.msgBody = msgBody;
     }
-    public String getAttachment() {
+
+    public MultipartFile getAttachment() {
         return attachment;
     }
-    public void setAttachment(String attachment) {
+
+    public void setAttachment(MultipartFile attachment) {
         this.attachment = attachment;
     }
 }

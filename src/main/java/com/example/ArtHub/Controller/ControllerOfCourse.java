@@ -47,8 +47,6 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     @Autowired
     SectionRepository sectionRepository;
 
-
-
     @Autowired
     ServiceOfSection sectionService;
 
@@ -145,6 +143,10 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
 
 
     public  ResponeCourseDTO fromCourseToResponeCourseDTO(Course course) { //This function use to convert courseEntity to ResponeCourseDTO
+        if(course.getAccountId() == null)
+        {
+            logger.info("Id is null;");
+        }
         ResponeCourseDTO courseDTO = new ResponeCourseDTO();
         courseDTO.setName(course.getName());
         courseDTO.setDescription(course.getDescription());
@@ -159,19 +161,8 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         courseDTO.setIntroduction(course.getIntroduction());
         courseDTO.setImage(course.getImage());
         courseDTO.setDate(course.getDate());
-
         courseDTO.setSections(fromSectionListToResponeSectionDTOList(sectionService.getSectionList(course.getId())));
-
-
         courseDTO.setImages(imageRepository.findByCourseId(course.getId()));
-
-
-        if(course.getAccountId() == null)
-        {
-            logger.info("Id is null;");
-        }
-
-
         courseDTO.setBio(accountRepository.findById(course.getAccountId()).get().getBio());
         courseDTO.setInstructorName(accountRepository.findById(course.getAccountId()).get().getFirstname()+" "+accountRepository.findById(course.getAccountId()).get().getLastname());
         courseDTO.setInstructorImage(accountRepository.findById(course.getAccountId()).get().getImage());
@@ -180,11 +171,8 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         courseDTO.setInstructorFacebook(accountRepository.findById(course.getAccountId()).get().getFacebook());
         courseDTO.setInstructorPhone(accountRepository.findById(course.getAccountId()).get().getPhone());
         courseDTO.setInstructorTwitter(accountRepository.findById(course.getAccountId()).get().getTwitter());
-
         courseDTO.setCategories(fromCategoryListToCategoryDTOList(serviceOfCategory.getCategoriesByCourseID(course.getId())));
-
         courseDTO.setLearningObjective(serviceOfLearningObjective.getLearningObjectiveByCourseId(course.getId()));
-
         return courseDTO;
     }
 
@@ -247,7 +235,7 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
 
 
     @Override
-    public ResponseEntity<ResponeObject> updateStatusOfCourse(int courseId, String InstructorEmail, String StaffMessages , int action) throws AppServiceExeption, IOException {
+    public ResponseEntity<ResponeObject> updateStatusOfCourse(@RequestParam int courseId, String InstructorEmail, String StaffMessages , @RequestParam int action) throws AppServiceExeption, IOException {
         String messageBody = "";
         String subject = "";
         String status = "";
@@ -263,37 +251,31 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
                 }
             }
 
-            int rs1 = imageRepository.deleteImageByCourseId(courseId);
-
-            if(rs1!= 0)
+            if(imageRepository.deleteImageByCourseId(courseId)!= 0)
             {
                 logger.info("Deleted course image;");
             }
 
-            int rs2 = sectionRepository.deleteSectionsByCourseID(courseId);
 
-            if(rs2!= 0)
+            if(sectionRepository.deleteSectionsByCourseID(courseId)!= 0)
             {
                 logger.info("Deleted course section;");
             }
 
-            int rs3 = categoryCourseRepository.deleteCategoryCourseByCourseID(courseId);
 
-            if(rs3!= 0)
+            if(categoryCourseRepository.deleteCategoryCourseByCourseID(courseId)!= 0)
             {
                 logger.info("Deleted categoryCourse;");
             }
 
-           int rs4 = learningObjectiveRepository.deleteLearningObjectivesByCourseID(courseId);
 
-            if(rs4!= 0)
+            if(learningObjectiveRepository.deleteLearningObjectivesByCourseID(courseId)!= 0)
             {
                 logger.info("Deleted learningObjective;");
             }
 
-            int rs5 = courseRepository.deleteViolatedCourse(courseId);
 
-            if(rs5!= 0)
+            if(courseRepository.deleteViolatedCourse(courseId)!= 0)
             {
                 logger.info("Deleted course;");
             }
@@ -306,17 +288,15 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         }
         else if(action == 2)
         {
-            int rs = courseRepository.updateCourseStatus(courseId, 2);
             status = "Course approved";
-            if (rs != 0) {
+            if (courseRepository.updateCourseStatus(courseId, 2) != 0) {
                 messageBody = "Dear instructor,\n\nWe are pleased to inform you that your course, " + courseName + ", has been approved and is now available on our online drawing course platform. Congratulations!\n\nYour course has passed our rigorous review process, and we believe it will be a valuable addition to our platform. We appreciate your hard work and dedication in creating a quality course that will help children in Vietnam learn to draw.\n\nYour course is now live and available for students to enroll. You can log in to your instructor dashboard to view the number of registered students, comments, and reports from your course. We encourage you to engage with your students and provide them with the best learning experience possible.\n\nThank you for choosing our platform to share your knowledge and expertise. We look forward to working with you and helping you grow your audience.\n\nBest regards,\n\n[ArtHub staff]\n[ArtHub]\n\nAvatar";
                 subject = "Your Course Has Been Approved!";
             }
         }
         else {
-            int rs = courseRepository.updateCourseStatus(courseId, 1);
             status = "Course details setting are done!";
-            if (rs != 0) {
+            if (courseRepository.updateCourseStatus(courseId, 1) != 0) {
                 messageBody = "Dear instructor,\n\nWe are pleased to inform you that the course details for your course, " + courseName + ", have been successfully set up on our online drawing course platform. Your course is now being reviewed by our team to ensure it meets our quality standards.\n\nOnce your course has passed our rigorous review process, it will be made available on our platform for students to enroll. You will be notified via email when your course is approved and live on our platform.\n\nWe appreciate your hard work and dedication in creating a quality course that will help children in Vietnam learn to draw. Thank you for choosing our platform to share your knowledge and expertise.\n\nIf you have any questions or concerns, please don't hesitate to contact us.\n\nBest regards,\n[ArtHub staff]\n[ArtHub]\nAvatar";
                 subject = "Your Course are being validated!";
             }

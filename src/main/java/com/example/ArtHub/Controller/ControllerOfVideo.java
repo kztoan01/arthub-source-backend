@@ -1,14 +1,13 @@
 package com.example.ArtHub.Controller;
 
-import com.example.ArtHub.AppServiceExeption;
 import com.example.ArtHub.DTO.CreateVideoDTO;
 import com.example.ArtHub.DTO.ResponeVideoDTO;
 import com.example.ArtHub.Entity.Video;
 import com.example.ArtHub.InterfaceOfControllers.InterfaceOfVideoController;
 import com.example.ArtHub.Repository.VideoRepository;
-import com.example.ArtHub.ResponeObject.ResponeObject;
 import com.example.ArtHub.Service.ServiceOfVideo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
-@CrossOrigin(origins = "*", maxAge = 3600)
+
 @RestController
 public class ControllerOfVideo implements InterfaceOfVideoController {
     Path staticPath = Paths.get("static");
@@ -33,10 +32,6 @@ public class ControllerOfVideo implements InterfaceOfVideoController {
     @Autowired
     ServiceOfVideo serviceOfVideo;
 
-    public int deleteVideo(@RequestParam int id) {
-        int delete = videoRepository.deleteVideo(id);
-        return delete;
-    }
 
     public ResponeVideoDTO fromVideoIntoResponeVideoDTO(Video video) {
 
@@ -98,5 +93,10 @@ public class ControllerOfVideo implements InterfaceOfVideoController {
     @Override
     public List<ResponeVideoDTO> findAllVideos() {
         return null;
+    }
+
+    @Override
+    public int deleteVideo(int id) {
+        return 0;
     }
 }
