@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -308,6 +309,51 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         mailService.sendMail(mailDetail);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponeObject("ok",  status  + "  successfully!\n" + mailService.sendMail(mailDetail), "")
+        );
+    }
+    @Override
+    public ResponseEntity<ResponeObject> sendMailToReceiver(@RequestParam int courseId, String receiverEmail,String SenderMessages, String receiverName,String receiverPassword,String senderName, @RequestParam int action) throws AppServiceExeption, IOException {
+        String messageBody = "";
+        String subject = "";
+        String courseName = courseRepository.findById(courseId).getName();
+        Float coursePrice = courseRepository.findById(courseId).getPrice();
+        if(action == 1) // receiver dont have arthub account
+        {
+            messageBody = "Hello " + receiverName +", you are given a drawing course named " + courseName +" on the online teaching and learning platform ArtHub that worth " +coursePrice+"$\n\n" +
+                "The sender is " + senderName +" with the following message:\n\n" +
+                SenderMessages +"\n\n\n" +
+                "We notice that your email address does not currently have an account on ArtHub. We are very sorry about this.\n\n" +
+                "However, you can still access the gifted course by accessing the account we created for you.\n\n" +
+                "Account contents are as follows:\n\n" +
+                "Email: " + receiverEmail +"\n\n\n" +
+                "Password: " + receiverPassword +"\n\n\n" +
+                "After logging in, change your personal information including your password to increase security.\n\n" +
+                "You will then have full access to the " + courseName +" course sent to you by " + senderName +"\n\n"+
+                "Visit the ArtHub website at http://localhost:3000/ and start learning now!!!\n\n" +
+                "If you have any questions or concerns, please don't hesitate to contact us.\n\nBest regards,\n[ArtHub staff]\n[ArtHub]\nAvatar";
+            subject = "You are given a course on ArtHub worth " +coursePrice;
+        }
+        else if(action == 2) // receiver have arthub account
+        {
+            messageBody = "Hello " + receiverName +", you are given a drawing course named " + courseName +" on the online teaching and learning platform ArtHub that worth " +coursePrice+"\n\n" +
+                    "The sender is " + senderName +" with the following message:\n\n" +
+                    SenderMessages +"\n\n\n" +
+                    "We noticed that you already have an ArtHub account using this email as your login name.\n\n" +
+                    "Account contents are as follows:\n\n" +
+                    "Email: " + receiverEmail +"\n\n\n" +
+                    "Password: ######## \n\n\n" +
+                    "After logging in, you will then have full access to the " + courseName +" course sent to you by " + senderName +"\n\n"+
+                    "Visit the ArtHub website at http://localhost:3000/ and start learning now!!!\n\n" +
+                    "If you have any questions or concerns, please don't hesitate to contact us.\n\nBest regards,\n[ArtHub staff]\n[ArtHub]\nAvatar";
+            subject = "You are given a course on ArtHub worth " +coursePrice;
+        }
+        MailDetail mailDetail = new MailDetail();
+        mailDetail.setMsgBody(messageBody);
+        mailDetail.setRecipient(receiverEmail);
+        mailDetail.setSubject(subject);
+        mailService.sendMail(mailDetail);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponeObject("ok",  "ok"  + "  successfully!\n" + mailService.sendMail(mailDetail), "")
         );
     }
     public int updateCourseStatusTo1(@RequestParam int courseId,@RequestParam int status ) {

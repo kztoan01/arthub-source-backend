@@ -26,7 +26,7 @@ public class ControllerOfEnrolment {
     private AccountRepository accountRepository;
 
     @PostMapping("/enrol")
-    public ResponseEntity<String> enrolCourse(@RequestParam(value = "courseId", required = false) Integer courseId,@RequestParam(value = "accountId", required = false)  Integer accountId){
+    public ResponseEntity<String> enrolCourse(@RequestParam(value = "courseId", required = false) Integer courseId,@RequestParam(value = "accountId", required = false)  Integer accountId,@RequestParam  Integer status,@RequestParam  Integer senderId,@RequestParam  String message){
         try{
 
             Optional<Course> courseOptional=courseRepository.findById(courseId);
@@ -37,7 +37,7 @@ public class ControllerOfEnrolment {
             Float price=courseOptional.get().getPrice();
             Optional<Learner> existingEnrolment=learnerRepository.findByAccountIdAndCourseId(accountId,courseId);
             if(existingEnrolment.isPresent()){
-                return ResponseEntity.badRequest().body("Course is already Enrolled");
+                return ResponseEntity.status(HttpStatus.OK).body("Course is already Enrolled");
             }
             Integer id=courseOptional.get().getAccountId();
             Learner learner=new Learner();
@@ -45,7 +45,9 @@ public class ControllerOfEnrolment {
             learner.setAccount(accountOptional.get());
             learner.setPrice(price);
             learner.setOwnerCourse(id);
-
+            learner.setStatus(status);
+            learner.setSenderId(senderId);
+            learner.setMessage(message);
 
             learnerRepository.save(learner);
             return ResponseEntity.ok("Successfully");

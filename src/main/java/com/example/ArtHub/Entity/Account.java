@@ -44,11 +44,12 @@ public class Account {
     private String facebook;
     @Column(nullable = false,name = "bio")
     private  String bio;
-
+    @Column(nullable = false,name = "isActive")
+    private  String isActive;
     public Account() {
     }
 
-    public Account(String username, String password, String address, String lastname, String firstname, String phone, String image, String email, String roleId, String twitter, String facebook, String bio) {
+    public Account(String username, String password, String address, String lastname, String firstname, String phone, String image, String email, String roleId, String twitter, String facebook, String bio, String isActive) {
         this.username = username;
         this.password = password;
         this.address = address;
@@ -61,6 +62,15 @@ public class Account {
         this.twitter = twitter;
         this.facebook = facebook;
         this.bio = bio;
+        this.isActive = isActive;
+    }
+
+    public String getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(String isActive) {
+        this.isActive = isActive;
     }
 
     public String getBio() {

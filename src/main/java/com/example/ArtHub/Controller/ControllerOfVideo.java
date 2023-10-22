@@ -20,7 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
-
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class ControllerOfVideo implements InterfaceOfVideoController {
     Path staticPath = Paths.get("static");
@@ -97,6 +97,8 @@ public class ControllerOfVideo implements InterfaceOfVideoController {
 
     @Override
     public int deleteVideo(int id) {
-        return 0;
+        //moi sua
+        int delete = videoRepository.deleteVideo(id);
+        return delete;
     }
 }

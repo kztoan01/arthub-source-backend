@@ -39,7 +39,9 @@ public class ControllerOfLearner implements InterfaceOfLearnerController {
         learnerDTO.setOwnerCourse(courseRepository.findById(learner.getCourseId()).get().getAccountId());
         learnerDTO.setDate(learner.getDate());
         learnerDTO.setPrice(learner.getPrice());
-
+        learnerDTO.setStatus(learner.getStatus());
+        learnerDTO.setSenderId(learner.getSenderId());
+        learnerDTO.setMessage(learner.getMessage());
         return learnerDTO;
 
 

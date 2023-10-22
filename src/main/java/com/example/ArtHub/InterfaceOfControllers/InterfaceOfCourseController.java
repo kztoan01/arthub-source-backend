@@ -50,6 +50,9 @@ public interface InterfaceOfCourseController {
     ResponseEntity<ResponeObject> updateStatusOfCourse( @PathVariable int courseId,String InstructorEmail,String StaffMessages , @PathVariable int action) throws AppServiceExeption, IOException;
     // action = -1 ===> Reject the course ,  action = 1 ==> instructor done setting course details, action = 2 ==> approve the course
 
+    @PostMapping("/sendMailToReceiver")
+    @ResponseStatus(HttpStatus.CREATED)
+    ResponseEntity<ResponeObject> sendMailToReceiver( @RequestParam int courseId,String receiverEmail,String SenderMessages, String receiverName,String receiverPassword,String senderName, @RequestParam  int action) throws AppServiceExeption, IOException;
 
     @PostMapping("/updateCourseStatusTo1")
     public int updateCourseStatusTo1(@RequestParam int courseId,@RequestParam int status );

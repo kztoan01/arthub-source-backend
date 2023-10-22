@@ -30,9 +30,39 @@ public class Learner {
     @ManyToOne
     @JoinColumn(name = "accountId")
     private Account account;
+    @Column(name = "status")
+    private Integer status;
+    @Column(name = "senderId")
+    private Integer senderId;
+    @Column(name = "message")
+    private String message;
+
+    public Integer getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(Integer senderId) {
+        this.senderId = senderId;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public Account getAccount() {
         return account;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public void setAccount(Account account) {

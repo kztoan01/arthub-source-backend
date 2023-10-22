@@ -99,7 +99,8 @@ public class AccountController {
                         account.getRoleId(),
                         account.getTwitter(),
                         account.getFacebook(),
-                        account.getBio()));
+                        account.getBio(),
+                        account.getIsActive()));
                 return new ResponseEntity<>(_account,HttpStatus.CREATED);
             }
 
@@ -125,6 +126,7 @@ public class AccountController {
             _account.setRoleId(account.getRoleId());
             _account.setTwitter(account.getTwitter());
             _account.setFacebook(account.getFacebook());
+            _account.setIsActive(account.getIsActive());
             return  new ResponseEntity<>(accountRepository.save(_account),HttpStatus.OK);
         }else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
