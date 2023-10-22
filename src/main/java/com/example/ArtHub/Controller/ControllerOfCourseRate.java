@@ -16,6 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.swing.text.html.Option;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +33,48 @@ public class ControllerOfCourseRate {
     private AccountRepository accountRepository;
     @Autowired
     private CourseRateRepository courseRateRepository;
+
+    @PostMapping("/showCourseRate")
+    public ResponseEntity<List<CourseRate>> showCourseRate(@RequestParam Integer courseId) {
+        try{
+            Optional<Course> courseOptional = courseRepository.findById(courseId);
+            if(!courseOptional.isPresent()) {
+                return ResponseEntity.badRequest().body(null);
+            }
+            List<CourseRate> courseRates = courseRateRepository.showCourseRateByCourseId(courseId);
+            return ResponseEntity.ok(courseRates);
+
+
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @PostMapping("/saveCourseRate")
+    public ResponseEntity<String> saveCourseRate(@RequestParam Integer courseId, @RequestParam Integer accountId, @RequestParam Integer rate, @RequestParam String comment) {
+        try{
+            Optional<Course> courseOptional = courseRepository.findById(courseId);
+            if (!courseOptional.isPresent()) {
+                return ResponseEntity.badRequest().body("Course is not exist!");
+            }
+            Optional<Account> accountOptional = accountRepository.findById(accountId);
+            if(!accountOptional.isPresent()) {
+                return ResponseEntity.badRequest().body("Account is not exist!");
+            }
+            CourseRate courseRate = new CourseRate();
+            courseRate.setComment(comment);
+            courseRate.setRate(rate);
+            courseRate.setAccountId(accountId);
+            courseRate.setCourseId(courseId);
+            courseRate.setTimeRate(new Date());
+            courseRateRepository.save(courseRate);
+            return ResponseEntity.ok("Successfully");
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("There is an error when rating course");
+        }
+    }
+
     @PostMapping("/CourseRate")
     public ResponseEntity<String> RateOfCourse(@RequestParam Integer courseId,@RequestParam Integer accountId,@RequestParam Integer rate,@RequestParam String comment){
         try{
