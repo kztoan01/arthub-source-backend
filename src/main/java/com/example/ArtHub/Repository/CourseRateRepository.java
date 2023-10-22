@@ -26,5 +26,9 @@ public interface CourseRateRepository extends JpaRepository<CourseRate,Integer> 
     int deleteAnn(int id);
     @Query("SELECT c FROM CourseRate c WHERE c.courseId = ?1")
     List<CourseRate> showCourseRateByCourseId(Integer courseId);
+    @Query("SELECT COUNT(c.courseId) FROM CourseRate c WHERE c.courseId = ?1")
+    Integer countCourseRateByCourseId(Integer courseId);
+    @Query("SELECT ROUND(AVG(c.rate), 0) FROM CourseRate c WHERE c.courseId = ?1")
+    Float avgCourseRateByCourseId(Integer courseId);
 
 }

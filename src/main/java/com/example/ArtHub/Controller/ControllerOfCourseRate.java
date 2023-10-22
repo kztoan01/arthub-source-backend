@@ -34,6 +34,35 @@ public class ControllerOfCourseRate {
     @Autowired
     private CourseRateRepository courseRateRepository;
 
+    @PostMapping("/avgCourseRate")
+    public ResponseEntity<Float> avgCourseRate(@RequestParam Integer courseId) {
+        try{
+            Optional<Course> courseOptional = courseRepository.findById(courseId);
+            if (!courseOptional.isPresent()) {
+                return ResponseEntity.badRequest().body(null);
+            }
+            Float avg = courseRateRepository.avgCourseRateByCourseId(courseId);
+            return ResponseEntity.ok(avg);
+
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @PostMapping("/countCourseRate")
+    public ResponseEntity<Integer> countCourseRate(@RequestParam Integer courseId) {
+        try{
+            Optional<Course> courseOptional = courseRepository.findById(courseId);
+            if (!courseOptional.isPresent()) {
+                return ResponseEntity.badRequest().body(null);
+            }
+            int count = courseRateRepository.countCourseRateByCourseId(courseId);
+            return ResponseEntity.ok(count);
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
     @PostMapping("/showCourseRate")
     public ResponseEntity<List<CourseRate>> showCourseRate(@RequestParam Integer courseId) {
         try{
