@@ -10,6 +10,9 @@ import java.util.Optional;
 
 public interface LearnerRepository extends JpaRepository<Learner, Integer> {
 
+    @Query("SELECT l FROM Learner l WHERE l.accountId = ?1")
+    List<Learner> showStudentPurchaseByAccountId(Integer accountId);
+
     @Query("SELECT COUNT(DISTINCT l.accountId) FROM Learner l WHERE l.ownerCourse = :owner GROUP BY l.ownerCourse")
     Integer countDistinctAccountIdByOwner(@Param("owner") int owner);
 

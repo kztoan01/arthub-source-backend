@@ -4,20 +4,26 @@
         import com.example.ArtHub.AppServiceExeption;
         import com.example.ArtHub.DTO.CreateLearnerDTO;
         import com.example.ArtHub.DTO.ResponseLearnerDTO;
+        import com.example.ArtHub.Entity.Account;
         import com.example.ArtHub.Entity.Learner;
         import com.example.ArtHub.InterfaceOfControllers.InterfaceOfLearnerController;
+        import com.example.ArtHub.Repository.AccountRepository;
         import com.example.ArtHub.Repository.CourseRepository;
         import com.example.ArtHub.Repository.LearnerRepository;
         import com.example.ArtHub.Service.ServiceOfCourse;
         import com.example.ArtHub.Service.ServiceOfLearner;
         import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.http.HttpStatus;
+        import org.springframework.http.ResponseEntity;
         import org.springframework.web.bind.annotation.CrossOrigin;
         import org.springframework.web.bind.annotation.RequestParam;
         import org.springframework.web.bind.annotation.RestController;
 
+        import javax.swing.text.html.Option;
         import java.io.IOException;
         import java.util.ArrayList;
         import java.util.List;
+        import java.util.Optional;
 
         @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -30,6 +36,26 @@ public class ControllerOfLearner implements InterfaceOfLearnerController {
 
     @Autowired
     CourseRepository courseRepository;
+
+    @Autowired
+    AccountRepository accountRepository;
+
+    public ResponseEntity<List<Learner>> showStudentPurchase(Integer accountId) {
+        try {
+            Optional<Account> accountOptional = accountRepository.findById(accountId);
+            if(!accountOptional.isPresent()) {
+                return ResponseEntity.badRequest().body(null);
+            }
+
+            List<Learner> learnerList = learnerRepository.showStudentPurchaseByAccountId(accountId);
+            return ResponseEntity.ok(learnerList);
+
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+
 
     public ResponseLearnerDTO fromLearnerToResponseLearnerDTO (Learner learner) {
         ResponseLearnerDTO learnerDTO = new ResponseLearnerDTO();
