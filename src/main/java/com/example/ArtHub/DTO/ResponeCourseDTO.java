@@ -1,16 +1,31 @@
 package com.example.ArtHub.DTO;
 
-import com.example.ArtHub.Entity.CategoryCourse;
-import com.example.ArtHub.Entity.Image;
-import com.example.ArtHub.Entity.LearningObjective;
-import com.example.ArtHub.Entity.Section;
+import com.example.ArtHub.Entity.*;
 import com.example.ArtHub.Service.ServiceOfSection;
 
+import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.List;
 
 public class ResponeCourseDTO {
     ServiceOfSection sectionService = new ServiceOfSection();
+
+    public void removeNullProperties() {
+        Field[] fields = this.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+            try {
+                Object value = field.get(this);
+                if (value == null) {
+                    // Remove field from the output
+                    field.setAccessible(true);
+                    field.set(this, null);
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
     private Integer id;
@@ -57,6 +72,12 @@ public class ResponeCourseDTO {
     private LearningObjective learningObjective;
 
     private List<ResponeCategoryNameDTO> categories;
+
+
+    private List<ResponeStudentInfor> Students;
+
+
+
 
     private Date date;
 
@@ -128,6 +149,13 @@ public class ResponeCourseDTO {
     }
 
 
+    public List<ResponeStudentInfor> getStudents() {
+        return Students;
+    }
+
+    public void setStudents(List<ResponeStudentInfor> students) {
+        Students = students;
+    }
 
     public String getInstructorTwitter() {
         return instructorTwitter;

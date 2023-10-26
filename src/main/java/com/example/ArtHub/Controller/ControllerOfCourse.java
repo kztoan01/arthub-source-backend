@@ -1,11 +1,10 @@
 package com.example.ArtHub.Controller;
 
 import com.example.ArtHub.AppServiceExeption;
+import com.example.ArtHub.CourseModelAssembler;
+import com.example.ArtHub.CourseNotFoundException;
 import com.example.ArtHub.DTO.*;
-import com.example.ArtHub.Entity.Category;
-import com.example.ArtHub.Entity.CategoryCourse;
-import com.example.ArtHub.Entity.Course;
-import com.example.ArtHub.Entity.Section;
+import com.example.ArtHub.Entity.*;
 import com.example.ArtHub.InterfaceOfControllers.InterfaceOfCourseController;
 import com.example.ArtHub.MailConfig.MailDetail;
 import com.example.ArtHub.MailConfig.MailService;
@@ -15,6 +14,8 @@ import com.example.ArtHub.Service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -31,6 +32,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -65,17 +70,21 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     @Autowired
     CategoryCourseRepository categoryCourseRepository;
 
+
+    @Autowired
+    LearnerRepository learnerRepository;
+
     @Autowired
     VideoRepository videoRepository;
+
+    @Autowired
+    CourseModelAssembler assembler;
 
     @Autowired
     ImageRepository imageRepository;
 
     @Autowired
     LearningObjectiveRepository learningObjectiveRepository;
-
-
-
 
     @Autowired
     private MailService mailService;
@@ -136,9 +145,21 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     }
 
     public List<ResponeCourseDTO> getCourseList() {
-        List<Course> courseListFromDB = courseRepository.findAll();
-        List<ResponeCourseDTO> responeCourseDTOList = fromCourseListToResponeCourseDTOList(courseListFromDB);
+        List<ResponeCourseDTO> responeCourseDTOList = courseRepository.findAll().stream().map(course -> fromCourseToResponeCourseDTO(course)).toList();
         return responeCourseDTOList;
+    }
+
+
+    public ResponeStudentInfor fromAccountToResponeStudentDTO(Account account)
+    {
+        ResponeStudentInfor student = new ResponeStudentInfor();
+        student.setId(account.getId());
+        student.setEmail(account.getEmail());
+        student.setFacebook(account.getFacebook());
+        student.setFirstname(account.getFirstname());
+        student.setTwitter(account.getTwitter());
+        student.setLastname(account.getLastname());
+        return  student;
     }
 
 
@@ -178,6 +199,20 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     }
 
 
+    public  ResponeCourseDTO fromCourseToResponeCourseDTO2(Course course) {
+        ResponeCourseDTO courseDTO = new ResponeCourseDTO();
+        courseDTO.setName(course.getName());
+        courseDTO.setPrice(course.getPrice());
+        courseDTO.setInstructorName(accountRepository.findById(course.getAccountId()).get().getFirstname()+" "+accountRepository.findById(course.getAccountId()).get().getLastname());
+        courseDTO.setImage(course.getImage());
+        courseDTO.setStudents(learnerRepository.findLeanerOfCourse(course.getId()).stream().map(account -> fromAccountToResponeStudentDTO(account)).toList());
+
+        courseDTO.removeNullProperties();
+        return courseDTO;
+    }
+
+
+
     @Override
     public List<ResponeCourseDTO> findAllCourseByLanguageAndPrice(String language, float price) {
         List<Course> courseList = courseRepository.findByLanguageAndPrice(language, price);
@@ -205,6 +240,11 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     }
 
     @Override
+    public List<ResponeCourseDTO> findCoursesByInstructorId(int id) throws CourseNotFoundException {
+        return courseRepository.findCoursesByInstructorId(id).stream().map(course -> fromCourseToResponeCourseDTO2(course)).toList();
+    }
+
+    @Override
     public List<ResponeCourseDTO> getCourses() {
         List<ResponeCourseDTO> courseList =  getCourseList();
         return courseList;
@@ -215,12 +255,6 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         return null;
     }
 
-//    @Override
-//    public List<ResponeCourseDTO> getUnapprovedCourses() {
-//        List<Course> courseListFromDB = courseRepository.getUnapprovedCourse();
-//        List<ResponeCourseDTO> responeCourseDTOList = fromCourseListToResponeCourseDTOList(courseListFromDB);
-//        return responeCourseDTOList;
-//    }
 
     @Override
     public List<ResponeCourseDTO> findCourseThatContainsKeyword(String keyword) {
@@ -236,7 +270,7 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
 
 
     @Override
-    public ResponseEntity<ResponeObject> updateStatusOfCourse(@RequestParam int courseId, String InstructorEmail, String StaffMessages , @RequestParam int action) throws AppServiceExeption, IOException {
+    public ResponseEntity<ResponeObject> updateStatusOfCourse(@RequestParam int courseId, String InstructorEmail, String StaffMessages , @RequestParam int action, @RequestParam String attachment) throws AppServiceExeption, IOException {
         String messageBody = "";
         String subject = "";
         String status = "";
@@ -283,8 +317,9 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
 
 
             status = "Violate Course deleted";
-            messageBody = "Dear Instructor,\n\nWe regret to inform you that your course ," + courseName + ", has been rejected due to a violation of ArtHub's privacy policy. Our team has determined that the course content infringes upon the privacy of the ArtHub application and its users.\n\n"+ StaffMessages +"\n\nWe take the privacy and security of our platform and community very seriously, and we cannot allow any content that compromises this. We encourage you to review our privacy policy and ensure that any future courses you submit comply with our guidelines.\n\nThank you for your understanding.\n\nBest regards,\n\n[ArtHub Staff]\n[ArtHub]\n\n🚫🔒🙅‍♀️ Avatar";
+            messageBody = "Dear Instructor,\n\nWe regret to inform you that your course :" + courseName + " has been rejected due to a violation of ArtHub's privacy policy. Our team has determined that the course content infringes upon the privacy of the ArtHub application and its users.\n\n"+ StaffMessages +"\n\nWe take the privacy and security of our platform and community very seriously, and we cannot allow any content that compromises this. We encourage you to review our privacy policy and ensure that any future courses you submit comply with our guidelines.\n\nThank you for your understanding.\n\nBest regards,\n\n[ArtHub Staff]\n[ArtHub]\n\n🚫🔒🙅‍♀️ Avatar";
             subject = "Your Course Has Been Rejected!";
+
 
         }
         else if(action == 2)
@@ -293,6 +328,7 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
             if (courseRepository.updateCourseStatus(courseId, 2) != 0) {
                 messageBody = "Dear instructor,\n\nWe are pleased to inform you that your course, " + courseName + ", has been approved and is now available on our online drawing course platform. Congratulations!\n\nYour course has passed our rigorous review process, and we believe it will be a valuable addition to our platform. We appreciate your hard work and dedication in creating a quality course that will help children in Vietnam learn to draw.\n\nYour course is now live and available for students to enroll. You can log in to your instructor dashboard to view the number of registered students, comments, and reports from your course. We encourage you to engage with your students and provide them with the best learning experience possible.\n\nThank you for choosing our platform to share your knowledge and expertise. We look forward to working with you and helping you grow your audience.\n\nBest regards,\n\n[ArtHub staff]\n[ArtHub]\n\nAvatar";
                 subject = "Your Course Has Been Approved!";
+
             }
         }
         else {
@@ -306,7 +342,15 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         mailDetail.setMsgBody(messageBody);
         mailDetail.setRecipient(InstructorEmail);
         mailDetail.setSubject(subject);
-        mailService.sendMail(mailDetail);
+        if(attachment.isBlank())
+        {
+            mailService.sendMail(mailDetail);
+        }
+        else
+        {
+            mailDetail.setAttachment(attachment);
+            mailService.sendMailWithAttachment(mailDetail);
+        }
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponeObject("ok",  status  + "  successfully!\n" + mailService.sendMail(mailDetail), "")
         );

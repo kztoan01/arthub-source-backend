@@ -6,6 +6,8 @@ import com.example.ArtHub.DTO.ResponeCourseDTO;
 import com.example.ArtHub.Entity.Course;
 import com.example.ArtHub.ResponeObject.ResponeObject;
 import jakarta.validation.Valid;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +33,10 @@ public interface InterfaceOfCourseController {
     @ResponseStatus(HttpStatus.CREATED)
     ResponeCourseDTO createCourse(@RequestBody @Valid CreateCourseDTO dto) throws AppServiceExeption, IOException;
 
+    @GetMapping("/GetCourseByInstructorID/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    List<ResponeCourseDTO> findCoursesByInstructorId(@PathVariable int id);
+
 
     @GetMapping("/getCourses")
     List<ResponeCourseDTO> getCourses();
@@ -47,7 +53,7 @@ public interface InterfaceOfCourseController {
 
     @PostMapping("/updateCourseStatus")
     @ResponseStatus(HttpStatus.CREATED)
-    ResponseEntity<ResponeObject> updateStatusOfCourse( @PathVariable int courseId,String InstructorEmail,String StaffMessages , @PathVariable int action) throws AppServiceExeption, IOException;
+    ResponseEntity<ResponeObject> updateStatusOfCourse( @PathVariable int courseId,String InstructorEmail,String StaffMessages , @PathVariable int action,String attachment) throws AppServiceExeption, IOException;
     // action = -1 ===> Reject the course ,  action = 1 ==> instructor done setting course details, action = 2 ==> approve the course
 
     @PostMapping("/sendMailToReceiver")

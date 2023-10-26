@@ -6,7 +6,7 @@ public class MailDetail {
     private String recipient;
     private String subject;
     private String msgBody;
-    private MultipartFile attachment;
+    private String attachment;
 
     public MailDetail() {
     }
@@ -29,11 +29,11 @@ public class MailDetail {
         this.msgBody = msgBody;
     }
 
-    public MultipartFile getAttachment() {
+    public String getAttachment() {
         return attachment;
     }
 
-    public void setAttachment(MultipartFile attachment) {
+    public void setAttachment(String attachment) {
         this.attachment = attachment;
     }
 }

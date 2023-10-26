@@ -1,5 +1,6 @@
 package com.example.ArtHub.Repository;
 
+import com.example.ArtHub.Entity.Account;
 import com.example.ArtHub.Entity.Learner;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,6 +19,10 @@ public interface LearnerRepository extends JpaRepository<Learner, Integer> {
 
     @Query("SELECT SUM(l.price) FROM Learner l WHERE l.ownerCourse = :owner")
     Double sumOfProfit(@Param("owner") int owner);
+
+
+    @Query("select a from Learner l join Account a on a.id = l.accountId where l.courseId = ?1")
+    List<Account> findLeanerOfCourse(int courseID);
 
     Optional<Learner> findByAccountIdAndCourseId(Integer accountId,Integer courseId);
 
