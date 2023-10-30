@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "arthub-gcp-project",
+  "private_key_id": "ced24a31b2addde80986d33592495a7f9ee45a16",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCx2cwslourTSof\nj4Ni9SQyl+EkD5HSgIwsfOXKy+zCDY6D+SRKq9XJFKEc/F51gHlN2j7Hl59Qjawc\nk7t1HmiseWKxmkqHal6KwLX3pgj9brmFaUsyxrtvsOtTAq+zfQ0c4HXx/o6f+Ud6\nJASDESJIGwBCO5A9kTLvAnOyZcnG1sLCZXr4x+u7Ru58CMY/Ujb/kPY7z2LESsIy\n1G0fQIVXJtRsDsbF/X3xBWaqRLlTyUSzwjGjP7oKEUVs0WI2XNmVSpvmuKWXlPc6\n7vVx6IyxHtZAf0Uq/UOXVJRqQL78DAWUOaVRvBlPPl8GGv8hpfnGZVI4yMUBoV0/\nPB4D4lrZAgMBAAECggEALF1wg3HlcuyrlJZj98A/kJhW+vwgS+KxtNpOJ03B6HFh\nyvWQEkl1qbSp8RVaSdTrzZoi3X6q6PkCRVmr4i4c/eNE1ZlvvIJyBYpHijiilvez\nMz6+GbM96AF53mn14uAPsJOkkGKH+QuBw0vvTTOtuc90e9EobNdG3ZzeuBKQqDcY\nOKtYECEjyIvxxai4HjCnJ55k6DKet6+47Aif3b2CUgVz1BCwcN03jSBC0A0LDns/\ndyxfjjgpLJIH1AbhsYJIDOxfUX5A/EmxaLNQqwU+KcOTeDA/KlXa978Xn67USAqy\nRPt2vAYxXN9AwW13p5/2deV/ZUB5q4NRZZmGrRiPRQKBgQD5hx5MzeVsaElb3rq3\nZHPBi5wsIXQ/oYO4tM0kKUc0C2+VfqrW2r0G7fYpSGR0stUmvTQtNMhCV/0YEffU\nB7bGmn3kzUgJ3LKNi0Uun3kN29MtqQka0VkAk+dKgQ9be8VxH24cLdfFrcrglfe7\n/uVwLJf2ld0g44l/iXtWcgMF1QKBgQC2dr0iIEPA/+5Dydv7BieN54cmwb6H/uQ7\nXd0h0KX3fm574l61+avjWzU62TaBXsjwDjnihSdGU5OR68uujSr4+nTVCrQWgk0X\nfSytd+5L7dVomqkWYShgmYvniCNczw2sbHfzlWYFh5CSK2/+qyNAZnna0vf/VRei\n8UFTRWuu9QKBgQDovK13R6gQeCjMRq9y9H+/a39L7hwmaXiZpBGfA91E3tHB5zZj\nVfxvZS5vjPUdn9uN2XW8IHoU30rS05eLLXK+RUTdTtc9U5s6yEbL2LSpR3ruILa8\nS70u+8UESeJQGt6qx30FTYDvAU20MkyyDWplOUK4HUn2LiSGT245z/efzQKBgQCz\nfBvSPPDJIjhroF5vEH/KPC0bN8xHlLlHmK6Uu9z2lvzxihzmXuHxtN+ostDF88ov\nMZ9JLvgSWtY33T4vxxe1cRGKG4xI9AYHjA9t2CKluB+MVU7s/8erNn+D0swOWHK3\n4L8h8h04ZUEWN/pkBk6X4/YMBikDlt24YB+FXS1vHQKBgQDjgSRKRkrAXpnWcMwz\nFCupN/CMQYiXYlmJSpgDNriBHEW0nYYmmAeM+pHZmC4i5aoRC34ymsDXVG16p9Cw\neztM7ZL/3n8ks2f7ShxlR3DirkMyeO6uh3WxIlr7+Mi5yC61R5zHZg2G1syir+xm\nIg1ukfjttxloBDSZaCn0khfAlw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "arthub-service@arthub-gcp-project.iam.gserviceaccount.com",
+  "client_id": "109108763418123490512",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/arthub-service%40arthub-gcp-project.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
