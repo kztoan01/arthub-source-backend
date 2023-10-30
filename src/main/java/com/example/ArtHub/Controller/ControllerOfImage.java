@@ -4,6 +4,7 @@ import com.example.ArtHub.Entity.Image;
 import com.example.ArtHub.InterfaceOfControllers.InterfaceOfImageController;
 import com.example.ArtHub.Repository.ImageRepository;
 import com.example.ArtHub.ResponeObject.ResponeObject;
+import com.example.ArtHub.Service.ServiceOfFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,9 @@ public class ControllerOfImage implements InterfaceOfImageController {
 
     @Autowired
     ImageRepository imageRepository;
+
+    @Autowired
+    ServiceOfFile serviceOfFile;
 
 
     private boolean isSupportedContentType(String contentType) {
@@ -69,12 +73,9 @@ public class ControllerOfImage implements InterfaceOfImageController {
 
         List<String> imageNames = new ArrayList<>();
         for (MultipartFile image : Arr) {
-            String randomName = UUID.randomUUID().toString().substring(0, 5) + image.getOriginalFilename();
-            Path file = CURRENT_FOLDER.resolve(staticPath).resolve(imagePath).resolve(randomName);
-            try (OutputStream os = Files.newOutputStream(file)) {
-                os.write(image.getBytes());
-            }
-            imageNames.add(randomName);
+            imageNames.add(image.getOriginalFilename());
+            serviceOfFile.uploadFile(image);
+
         }
 
         Image image = new Image();

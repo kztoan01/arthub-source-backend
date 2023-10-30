@@ -5,6 +5,7 @@ import com.example.ArtHub.DTO.ResponeVideoDTO;
 import com.example.ArtHub.Entity.Video;
 import com.example.ArtHub.InterfaceOfControllers.InterfaceOfVideoController;
 import com.example.ArtHub.Repository.VideoRepository;
+import com.example.ArtHub.Service.ServiceOfFile;
 import com.example.ArtHub.Service.ServiceOfVideo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,6 +31,9 @@ public class ControllerOfVideo implements InterfaceOfVideoController {
     VideoRepository videoRepository;
 
     @Autowired
+    ServiceOfFile serviceOfFile;
+
+    @Autowired
     ServiceOfVideo serviceOfVideo;
 
 
@@ -53,30 +57,17 @@ public class ControllerOfVideo implements InterfaceOfVideoController {
 
 
 
+
     @Override
     public ResponeVideoDTO createNewVideo(@RequestParam String name, @RequestParam MultipartFile data, @RequestParam String script, @RequestParam boolean isTrial, @RequestParam int sectionId) throws IOException {
 
-
-        if (!Files.exists(CURRENT_FOLDER.resolve(staticPath).resolve(videoPath))) {
-            Files.createDirectories(CURRENT_FOLDER.resolve(staticPath).resolve(videoPath));
-        }
-
-
-        String randomName = UUID.randomUUID().toString().substring(0, 5) +data.getOriginalFilename();
-        Path file = CURRENT_FOLDER.resolve(staticPath).resolve(videoPath).resolve(randomName);
-        try (OutputStream os = Files.newOutputStream(file)) {
-            os.write(data.getBytes());
-        }
-
-        //saved videos can be access via http://localhost:8080\\videos\\VideoForTest.mp4
-
+        serviceOfFile.uploadFile(data);
         CreateVideoDTO createVideoDTO = new CreateVideoDTO();
         createVideoDTO.setSectionId(sectionId);
-        createVideoDTO.setData(randomName);
+        createVideoDTO.setData(data.getOriginalFilename());
         createVideoDTO.setName(name);
         createVideoDTO.setTrial(isTrial);
         createVideoDTO.setScript(script);
-
         return  fromVideoIntoResponeVideoDTO(serviceOfVideo.saveVideo(createVideoDTO));
     }
 
