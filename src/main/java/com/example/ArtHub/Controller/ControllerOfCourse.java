@@ -14,33 +14,23 @@ import com.example.ArtHub.Service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class ControllerOfCourse implements InterfaceOfCourseController {
-    private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
+
 
 
 
@@ -464,9 +454,5 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         return fromCourseToResponeCourseDTO(course);
     }
 
-//    public  List<ResponeCourseDTO>  displayIsNotApprovedCourses() {
-//        List<Course> courseList = courseRepository.displayIsNotApprovedCourses();
-//        return fromCourseListToResponeCourseDTOList(courseList);
-//    }
 
 }
