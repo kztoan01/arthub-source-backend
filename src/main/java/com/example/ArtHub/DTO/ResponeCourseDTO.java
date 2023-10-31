@@ -97,6 +97,25 @@ public class ResponeCourseDTO {
 
     private Image images;
 
+    private int count;
+    private Float avg;
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public Float getAvg() {
+        return avg;
+    }
+
+    public void setAvg(Float avg) {
+        this.avg = avg;
+    }
+
     public Image getImages() {
         return images;
     }

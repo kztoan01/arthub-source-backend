@@ -21,11 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -36,6 +35,9 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
 
 
     private static final Logger logger = LoggerFactory.getLogger(ControllerOfCourse.class);
+
+    @Autowired
+    CourseRateRepository courseRateRepository;
 
     @Autowired
     ServiceOfCourse courseService;
@@ -191,6 +193,8 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         courseDTO.setInstructorTwitter(accountRepository.findById(course.getAccountId()).get().getTwitter());
         courseDTO.setCategories(fromCategoryListToCategoryDTOList(serviceOfCategory.getCategoriesByCourseID(course.getId())));
         courseDTO.setLearningObjective(serviceOfLearningObjective.getLearningObjectiveByCourseId(course.getId()));
+        courseDTO.setAvg(courseRateRepository.avgCourseRateByCourseId(course.getId()));
+        courseDTO.setCount(courseRateRepository.countCourseRateByCourseId(course.getId()));
         return courseDTO;
     }
 
@@ -453,6 +457,5 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         Course course = courseRepository.findById(id);
         return fromCourseToResponeCourseDTO(course);
     }
-
 
 }

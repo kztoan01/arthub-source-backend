@@ -23,7 +23,7 @@ public interface InterfaceOfCourseController {
     List<ResponeCourseDTO> displayIsNotApprovedCourses();
 
     @PostMapping("/showSectionAndVideo")
-    ResponeCourseDTO showSectionAndVideo(int id) throws IOException;
+    ResponeCourseDTO showSectionAndVideo(@RequestParam int id) throws IOException;
 
     // http://localhost:8080/course/thailan/5000
     @GetMapping("/{language}/{price}")
