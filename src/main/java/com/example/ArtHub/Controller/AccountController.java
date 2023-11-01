@@ -5,6 +5,7 @@ import com.example.ArtHub.AppServiceExeption;
 import com.example.ArtHub.Entity.Account;
 import com.example.ArtHub.Repository.AccountRepository;
 import com.example.ArtHub.ResponeObject.ResponeObject;
+import com.example.ArtHub.Service.ServiceOfFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,8 @@ public class AccountController {
     private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
     @Autowired
     AccountRepository accountRepository;
-
+    @Autowired
+    ServiceOfFile serviceOfFile;
     //    @GetMapping("/accounts")
 //    public ResponseEntity<List<Account>> getAllAccounts(@RequestParam(required = false) String name) {
 //        try {
@@ -168,17 +170,18 @@ public class AccountController {
     @PostMapping("/updateAccountImage")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<ResponeObject> updateMainImageOfCourse(@RequestParam int accountId, @RequestParam MultipartFile image) throws AppServiceExeption, IOException {
-        Path staticPath = Paths.get("static");
-        Path imagePath = Paths.get("images");
-        if (!Files.exists(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath))) {
-            Files.createDirectories(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath));
-        }
-        Path file = CURRENT_FOLDER.resolve(staticPath)
-                .resolve(imagePath).resolve(image.getOriginalFilename());
-        try (OutputStream os = Files.newOutputStream(file)) {
-
-            os.write(image.getBytes());
-        }
+//        Path staticPath = Paths.get("static");
+//        Path imagePath = Paths.get("images");
+//        if (!Files.exists(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath))) {
+//            Files.createDirectories(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath));
+//        }
+//        Path file = CURRENT_FOLDER.resolve(staticPath)
+//                .resolve(imagePath).resolve(image.getOriginalFilename());
+//        try (OutputStream os = Files.newOutputStream(file)) {
+//
+//            os.write(image.getBytes());
+//        }
+        serviceOfFile.uploadFile(image);
 
         int rs = accountRepository.updateMainImageAccount(accountId,image.getOriginalFilename());
 

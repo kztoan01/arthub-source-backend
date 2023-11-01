@@ -14,39 +14,35 @@ import com.example.ArtHub.Service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class ControllerOfCourse implements InterfaceOfCourseController {
-    private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
+
+
+
 
 
     private static final Logger logger = LoggerFactory.getLogger(ControllerOfCourse.class);
 
     @Autowired
     ServiceOfCourse courseService;
+
+
+    @Autowired
+    ServiceOfFile serviceOfFile;
     @Autowired
     CourseRepository courseRepository;
 
@@ -206,8 +202,6 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         courseDTO.setInstructorName(accountRepository.findById(course.getAccountId()).get().getFirstname()+" "+accountRepository.findById(course.getAccountId()).get().getLastname());
         courseDTO.setImage(course.getImage());
         courseDTO.setStudents(learnerRepository.findLeanerOfCourse(course.getId()).stream().map(account -> fromAccountToResponeStudentDTO(account)).toList());
-
-        courseDTO.removeNullProperties();
         return courseDTO;
     }
 
@@ -405,21 +399,9 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         return update;
     }
     @Override
-        public ResponseEntity<ResponeObject> updateMainImageOfCourse(@RequestParam int courseId, @RequestParam MultipartFile image) throws AppServiceExeption, IOException {
-        Path staticPath = Paths.get("static");
-        Path imagePath = Paths.get("images");
-        if (!Files.exists(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath))) {
-            Files.createDirectories(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath));
-        }
-        Path file = CURRENT_FOLDER.resolve(staticPath)
-                .resolve(imagePath).resolve(image.getOriginalFilename());
-        try (OutputStream os = Files.newOutputStream(file)) {
-
-            os.write(image.getBytes());
-        }
-
-       int rs = courseRepository.updateMainImage(courseId,image.getOriginalFilename());
-
+    public ResponseEntity<ResponeObject> updateMainImageOfCourse(@RequestParam int courseId, @RequestParam MultipartFile image) throws AppServiceExeption, IOException {
+        serviceOfFile.uploadFile(image);
+        int rs = courseRepository.updateMainImage(courseId,image.getOriginalFilename());
         if(rs!=0)
         {
             return ResponseEntity.status(HttpStatus.OK).body(
@@ -430,6 +412,8 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
                 new ResponeObject("ok","update main image failed!","")
         );
     }
+
+
     @Autowired
     public ControllerOfCourse(InterfaceOfCourseSort courseSort) {
         this.courseSort = courseSort;
@@ -470,9 +454,5 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         return fromCourseToResponeCourseDTO(course);
     }
 
-//    public  List<ResponeCourseDTO>  displayIsNotApprovedCourses() {
-//        List<Course> courseList = courseRepository.displayIsNotApprovedCourses();
-//        return fromCourseListToResponeCourseDTOList(courseList);
-//    }
 
 }
