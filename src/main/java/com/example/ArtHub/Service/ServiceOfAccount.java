@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ServiceOfAccount implements InterfaceOfAccountService {
@@ -37,6 +38,11 @@ public class ServiceOfAccount implements InterfaceOfAccountService {
         List<Account> accountListFrommDatabase = accountRepository.findAll();
         return accountListFrommDatabase;
 
+    }
+
+    @Override
+    public Optional<Account> getAccountByCourseID(int id) {
+        return accountRepository.findById(id);
     }
 
 
