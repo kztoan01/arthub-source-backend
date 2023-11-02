@@ -15,4 +15,10 @@ public class ServiceOfImage implements InterfaceOfImageService{
     public Image getImageByCourseID(int id) {
         return imageRepository.findByCourseId(id);
     }
+
+   @Override
+    public int deleteImageByCourseID(int id)
+    {
+        return imageRepository.deleteImageByCourseId(id);
+    }
 }

@@ -37,6 +37,11 @@ public class ServiceOfLearningObjective implements InterfaceOfLearningObjectiveS
         return learningObjectives ;
     }
 
+    public int DeleteLearningObjectivesByCourseID(int courseId)
+    {
+        return learningObjectiveRepository.deleteLearningObjectivesByCourseID(courseId);
+    }
+
     @Override
     public LearningObjective getLearningObjectiveByCourseId(int ID) {
         LearningObjective learningObjective = learningObjectiveRepository.findBycourseId(ID);

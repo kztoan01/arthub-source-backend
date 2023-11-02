@@ -23,7 +23,7 @@ public class ServiceOfSection implements InterfaceOfSectionService {
     @Autowired
     VideoRepository videoRepository;
 
-
+    @Override
     public ResponeSectionDTO fromSectionIntoResponeSectionDTO(Section section)
     {
         ResponeSectionDTO sectionDTO = new ResponeSectionDTO();
@@ -43,6 +43,12 @@ public class ServiceOfSection implements InterfaceOfSectionService {
         section.setAccountId(accountID);
         section.setCourseId(courseID);
         return sectionRepository.save(section);
+    }
+
+    @Override
+    public int DeleteSectionByCourseID(int courseId)
+    {
+        return sectionRepository.deleteSectionsByCourseID(courseId);
     }
 
     @Override

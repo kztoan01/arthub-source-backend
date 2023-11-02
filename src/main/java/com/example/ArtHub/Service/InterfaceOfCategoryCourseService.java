@@ -16,4 +16,7 @@ public interface InterfaceOfCategoryCourseService {
 
     List<CategoryCourse> getCategoriesByCourseID(int id);
 
+
+    public int DeleteCategoryCourseByCourseID(int courseId);
+
 }

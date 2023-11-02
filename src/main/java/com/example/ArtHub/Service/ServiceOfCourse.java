@@ -1,4 +1,5 @@
 package com.example.ArtHub.Service;
+import com.example.ArtHub.CourseNotFoundException;
 import com.example.ArtHub.DTO.CreateCourseDTO;
 import com.example.ArtHub.DTO.ResponeCourseDTO;
 import com.example.ArtHub.DTO.ResponeStudentInfor;
@@ -63,6 +64,27 @@ public class ServiceOfCourse implements InterfaceOfCourseService {
         return courseRepository.save(course);
     }
 
+
+    @Override
+    public String getNameByID(int id)
+    {
+       return courseRepository.findById(id).getName();
+    }
+
+    @Override
+    public int DeleteCourseByID(int courseId)
+    {
+        return courseRepository.deleteViolatedCourse(courseId);
+    }
+
+
+    @Override
+    public List<ResponeCourseDTO> findCoursesByInstructorId(int id) throws CourseNotFoundException {
+        return courseRepository.findCoursesByInstructorId(id).stream().map(course -> fromCourseToResponeCourseDTO2(course)).toList();
+    }
+
+
+    @Override
     public ResponeStudentInfor fromAccountToResponeStudentDTO(Account account)
     {
         ResponeStudentInfor student = new ResponeStudentInfor();
@@ -76,7 +98,20 @@ public class ServiceOfCourse implements InterfaceOfCourseService {
     }
 
 
+   @Override
+    public int updateCourseStatus(int courseId, int status)
+    {
+        return courseRepository.updateCourseStatus(courseId, status);
+    }
 
+
+    @Override
+    public int updateMainImage(int id, String imageName)
+    {
+        return courseRepository.updateMainImage(id,imageName);
+    }
+
+    @Override
     public ResponeCourseDTO fromCourseToResponeCourseDTO2(Course course) {
         ResponeCourseDTO courseDTO = new ResponeCourseDTO();
         courseDTO.setName(course.getName());
@@ -88,6 +123,7 @@ public class ServiceOfCourse implements InterfaceOfCourseService {
     }
 
 
+    @Override
     public  ResponeCourseDTO fromCourseToResponeCourseDTO(Course course) { //This function use to convert courseEntity to ResponeCourseDTO
         ResponeCourseDTO courseDTO = new ResponeCourseDTO();
         courseDTO.setName(course.getName());
@@ -119,6 +155,8 @@ public class ServiceOfCourse implements InterfaceOfCourseService {
     }
 
 
+
+@Override
     public  List<ResponeCourseDTO> fromCourseListToResponeCourseDTOList(List<Course> CourseList) { //This fucntion use to convert courseList into ResponeCourseDTO list
         List<ResponeCourseDTO> ResponeCourseDTOList = new ArrayList<>();
         for (Course course : CourseList) {

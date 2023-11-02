@@ -17,6 +17,7 @@ public class ServiceOfCategory implements InterfaceOfCategoryService {
     @Autowired
     CategoryRepository categoryRepository;
 
+    @Override
     public ResponeCategoryNameDTO fromCategoryToCategotyResponeNameDTO(CategoryCourse categoryCourse) {
         ResponeCategoryNameDTO responeCategoryNameDTO = new ResponeCategoryNameDTO();
         Category category = categoryRepository.findAllById(Collections.singleton(categoryCourse.getCategoryId())).stream().findFirst().orElse(null);
