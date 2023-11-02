@@ -16,6 +16,9 @@ import java.util.List;
 public class ServiceOfCourse implements InterfaceOfCourseService {
 
     @Autowired
+    CourseRateRepository courseRateRepository;
+
+    @Autowired
     CourseRepository courseRepository;
 
     @Autowired
@@ -151,6 +154,8 @@ public class ServiceOfCourse implements InterfaceOfCourseService {
         courseDTO.setInstructorTwitter(serviceOfAccount.getAccountByCourseID(course.getAccountId()).get().getTwitter());
         courseDTO.setCategories(serviceOfCategoryCourse.getCategoriesByCourseID(course.getId()).stream().map(categoryCourse -> serviceOfCategory.fromCategoryToCategotyResponeNameDTO(categoryCourse)).toList());
         courseDTO.setLearningObjective(serviceOfLearningObjective.getLearningObjectiveByCourseId(course.getId()));
+        courseDTO.setCount(courseRateRepository.countCourseRateByCourseId(course.getId()));
+        courseDTO.setAvg(courseRateRepository.avgCourseRateByCourseId(course.getId()));
         return courseDTO;
     }
 
