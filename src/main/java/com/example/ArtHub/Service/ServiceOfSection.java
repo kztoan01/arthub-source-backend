@@ -1,9 +1,11 @@
 package com.example.ArtHub.Service;
 
 import com.example.ArtHub.AppServiceExeption;
+import com.example.ArtHub.DTO.ResponeSectionDTO;
 import com.example.ArtHub.Entity.Section;
 import com.example.ArtHub.Repository.SectionRepository;
 import com.example.ArtHub.DTO.CreateSectionDTO;
+import com.example.ArtHub.Repository.VideoRepository;
 import com.example.ArtHub.ResponeObject.ResponeObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,21 @@ public class ServiceOfSection implements InterfaceOfSectionService {
     @Autowired
     SectionRepository sectionRepository ;
 
+    @Autowired
+    VideoRepository videoRepository;
+
+    @Override
+    public ResponeSectionDTO fromSectionIntoResponeSectionDTO(Section section)
+    {
+        ResponeSectionDTO sectionDTO = new ResponeSectionDTO();
+        sectionDTO.setSection_id(section.getId());
+        sectionDTO.setSection_name(section.getName());
+        sectionDTO.setCourse(section.getCourseId());
+        sectionDTO.setAccount_id(section.getAccountId());
+        sectionDTO.setVideos(videoRepository.findAllBySectionId(section.getId()));
+        return sectionDTO;
+    }
+
 
     @Override
     public Section createSection(CreateSectionDTO dto, int courseID , int accountID) throws AppServiceExeption {
@@ -26,6 +43,12 @@ public class ServiceOfSection implements InterfaceOfSectionService {
         section.setAccountId(accountID);
         section.setCourseId(courseID);
         return sectionRepository.save(section);
+    }
+
+    @Override
+    public int DeleteSectionByCourseID(int courseId)
+    {
+        return sectionRepository.deleteSectionsByCourseID(courseId);
     }
 
     @Override

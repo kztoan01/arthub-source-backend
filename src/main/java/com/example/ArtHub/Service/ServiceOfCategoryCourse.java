@@ -18,6 +18,8 @@ public class ServiceOfCategoryCourse implements InterfaceOfCategoryCourseService
 
     @Autowired
     CategoryCourseRepository categoryRepository;
+
+
     @Override
     public CategoryCourse createCategoryCourse(CreateCategoryCourseDTO dto, int courseId) throws AppServiceExeption {
         CategoryCourse category = new CategoryCourse();
@@ -25,6 +27,15 @@ public class ServiceOfCategoryCourse implements InterfaceOfCategoryCourseService
         category.setCourseId(courseId);
         return categoryRepository.save(category) ;
     }
+
+
+    @Override
+    public int DeleteCategoryCourseByCourseID(int courseId)
+    {
+        return categoryRepository.deleteCategoryCourseByCourseID(courseId);
+    }
+
+
 
     @Override
     public List<CategoryCourse> getCategoris() {

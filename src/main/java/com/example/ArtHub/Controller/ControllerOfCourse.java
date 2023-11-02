@@ -1,13 +1,12 @@
 package com.example.ArtHub.Controller;
 
 import com.example.ArtHub.AppServiceExeption;
-import com.example.ArtHub.CourseModelAssembler;
 import com.example.ArtHub.CourseNotFoundException;
 import com.example.ArtHub.DTO.*;
 import com.example.ArtHub.Entity.*;
 import com.example.ArtHub.InterfaceOfControllers.InterfaceOfCourseController;
 import com.example.ArtHub.MailConfig.MailDetail;
-import com.example.ArtHub.MailConfig.MailService;
+import com.example.ArtHub.MailConfig.InterfaceOfMailService;
 import com.example.ArtHub.Repository.*;
 import com.example.ArtHub.ResponeObject.ResponeObject;
 import com.example.ArtHub.Service.*;
@@ -21,35 +20,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class ControllerOfCourse implements InterfaceOfCourseController {
 
-
-
-
-
     private static final Logger logger = LoggerFactory.getLogger(ControllerOfCourse.class);
 
     @Autowired
-    CourseRateRepository courseRateRepository;
-
-    @Autowired
     ServiceOfCourse courseService;
-
 
     @Autowired
     ServiceOfFile serviceOfFile;
     @Autowired
     CourseRepository courseRepository;
-
-    @Autowired
-    SectionRepository sectionRepository;
 
     @Autowired
     ServiceOfSection sectionService;
@@ -58,166 +43,31 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     ServiceOfCategoryCourse serviceOfCategory;
 
     @Autowired
+    ServiceOfVideo serviceOfVideo;
+
+    @Autowired
     ServiceOfLearningObjective serviceOfLearningObjective;
-    @Autowired
-    CategoryRepository categoryRepository;
 
-    @Autowired
-    AccountRepository accountRepository;
-
-    @Autowired
-    CategoryCourseRepository categoryCourseRepository;
 
 
     @Autowired
-    LearnerRepository learnerRepository;
+    ServiceOfImage serviceOfImage;
+
+
 
     @Autowired
-    VideoRepository videoRepository;
+    ServiceOfSection serviceOfSection;
+
 
     @Autowired
-    CourseModelAssembler assembler;
-
-    @Autowired
-    ImageRepository imageRepository;
-
-    @Autowired
-    LearningObjectiveRepository learningObjectiveRepository;
-
-    @Autowired
-    private MailService mailService;
-
-
-    public ResponeSectionDTO FromSectionIntoResponeSectionDTO(Section section)
-    {
-        ResponeSectionDTO sectionDTO = new ResponeSectionDTO();
-        sectionDTO.setSection_id(section.getId());
-        sectionDTO.setSection_name(section.getName());
-        sectionDTO.setCourse(section.getCourseId());
-        sectionDTO.setAccount_id(section.getAccountId());
-        sectionDTO.setVideos(videoRepository.findAllBySectionId(section.getId()));
-        return sectionDTO;
-    }
-
-    public List<ResponeSectionDTO> fromSectionListToResponeSectionDTOList(List<Section> SectionList) {
-        List<ResponeSectionDTO> ResponeSectionDTOList = new ArrayList<>();
-        for (Section section : SectionList) {
-            ResponeSectionDTOList.add(FromSectionIntoResponeSectionDTO(section));
-        }
-        return ResponeSectionDTOList;
-    }
-
-
-
-    ResponeCategoryNameDTO fromCategoryToCategotyResponeNameDTO(CategoryCourse categoryCourse) {
-        ResponeCategoryNameDTO responeCategoryNameDTO = new ResponeCategoryNameDTO();
-        Category category = categoryRepository.findAllById(Collections.singleton(categoryCourse.getCategoryId())).stream().findFirst().orElse(null);
-        if (category != null) {
-            responeCategoryNameDTO.setName(category.getName());
-        }
-        return responeCategoryNameDTO;
-    }
-
-
-     List<ResponeCategoryNameDTO> fromCategoryListToCategoryDTOList(List<CategoryCourse> CategoryCourseList)
-    {
-        List<ResponeCategoryNameDTO> responeCategoryNameDTOS = new ArrayList<>();
-        for (CategoryCourse category : CategoryCourseList) {
-            responeCategoryNameDTOS.add(fromCategoryToCategotyResponeNameDTO(category));
-        }
-        return responeCategoryNameDTOS;
-    }
-
-
-
-
-
-
-    public  List<ResponeCourseDTO> fromCourseListToResponeCourseDTOList(List<Course> CourseList) { //This fucntion use to convert courseList into ResponeCourseDTO list
-        List<ResponeCourseDTO> ResponeCourseDTOList = new ArrayList<>();
-        for (Course course : CourseList) {
-
-            ResponeCourseDTOList.add(fromCourseToResponeCourseDTO(course));
-        }
-        return ResponeCourseDTOList;
-    }
-
-    public List<ResponeCourseDTO> getCourseList() {
-        List<ResponeCourseDTO> responeCourseDTOList = courseRepository.findAll().stream().map(course -> fromCourseToResponeCourseDTO(course)).toList();
-        return responeCourseDTOList;
-    }
-
-
-    public ResponeStudentInfor fromAccountToResponeStudentDTO(Account account)
-    {
-        ResponeStudentInfor student = new ResponeStudentInfor();
-        student.setId(account.getId());
-        student.setEmail(account.getEmail());
-        student.setFacebook(account.getFacebook());
-        student.setFirstname(account.getFirstname());
-        student.setTwitter(account.getTwitter());
-        student.setLastname(account.getLastname());
-        return  student;
-    }
-
-
-
-    public  ResponeCourseDTO fromCourseToResponeCourseDTO(Course course) { //This function use to convert courseEntity to ResponeCourseDTO
-        if(course.getAccountId() == null)
-        {
-            logger.info("Id is null;");
-        }
-        ResponeCourseDTO courseDTO = new ResponeCourseDTO();
-        courseDTO.setName(course.getName());
-        courseDTO.setDescription(course.getDescription());
-        courseDTO.setPrice(course.getPrice());
-        courseDTO.setCoupon(course.getCoupon());
-        courseDTO.setId(course.getId());
-        courseDTO.setLanguage(course.getLanguage());
-        courseDTO.setLevel(course.getLevel());
-        courseDTO.setAccountId(course.getAccountId());
-        courseDTO.setStatus(course.getStatus());
-        courseDTO.setPassed(course.getPassed());
-        courseDTO.setIntroduction(course.getIntroduction());
-        courseDTO.setImage(course.getImage());
-        courseDTO.setDate(course.getDate());
-        courseDTO.setSections(fromSectionListToResponeSectionDTOList(sectionService.getSectionList(course.getId())));
-        courseDTO.setImages(imageRepository.findByCourseId(course.getId()));
-        courseDTO.setBio(accountRepository.findById(course.getAccountId()).get().getBio());
-        courseDTO.setInstructorName(accountRepository.findById(course.getAccountId()).get().getFirstname()+" "+accountRepository.findById(course.getAccountId()).get().getLastname());
-        courseDTO.setInstructorImage(accountRepository.findById(course.getAccountId()).get().getImage());
-        courseDTO.setInstructorAddress(accountRepository.findById(course.getAccountId()).get().getAddress());
-        courseDTO.setInstructorEmail(accountRepository.findById(course.getAccountId()).get().getEmail());
-        courseDTO.setInstructorFacebook(accountRepository.findById(course.getAccountId()).get().getFacebook());
-        courseDTO.setInstructorPhone(accountRepository.findById(course.getAccountId()).get().getPhone());
-        courseDTO.setInstructorTwitter(accountRepository.findById(course.getAccountId()).get().getTwitter());
-        courseDTO.setCategories(fromCategoryListToCategoryDTOList(serviceOfCategory.getCategoriesByCourseID(course.getId())));
-        courseDTO.setLearningObjective(serviceOfLearningObjective.getLearningObjectiveByCourseId(course.getId()));
-        courseDTO.setAvg(courseRateRepository.avgCourseRateByCourseId(course.getId()));
-        courseDTO.setCount(courseRateRepository.countCourseRateByCourseId(course.getId()));
-        return courseDTO;
-    }
-
-
-    public  ResponeCourseDTO fromCourseToResponeCourseDTO2(Course course) {
-        ResponeCourseDTO courseDTO = new ResponeCourseDTO();
-        courseDTO.setName(course.getName());
-        courseDTO.setPrice(course.getPrice());
-        courseDTO.setInstructorName(accountRepository.findById(course.getAccountId()).get().getFirstname()+" "+accountRepository.findById(course.getAccountId()).get().getLastname());
-        courseDTO.setImage(course.getImage());
-        courseDTO.setStudents(learnerRepository.findLeanerOfCourse(course.getId()).stream().map(account -> fromAccountToResponeStudentDTO(account)).toList());
-        return courseDTO;
-    }
-
+    private InterfaceOfMailService mailService;
 
 
     @Override
     public List<ResponeCourseDTO> findAllCourseByLanguageAndPrice(String language, float price) {
         List<Course> courseList = courseRepository.findByLanguageAndPrice(language, price);
-        return fromCourseListToResponeCourseDTOList(courseList);
+        return courseService.fromCourseListToResponeCourseDTOList(courseList);
     }
-
-
 
     @Override
     public ResponeCourseDTO createCourse(CreateCourseDTO dto) throws AppServiceExeption {
@@ -234,17 +84,17 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
             serviceOfCategory.createCategoryCourse(categoryDTO, course.getId());
         }
 
-        return fromCourseToResponeCourseDTO(course);
+        return courseService.fromCourseToResponeCourseDTO(course);
     }
 
     @Override
     public List<ResponeCourseDTO> findCoursesByInstructorId(int id) throws CourseNotFoundException {
-        return courseRepository.findCoursesByInstructorId(id).stream().map(course -> fromCourseToResponeCourseDTO2(course)).toList();
+        return courseService.findCoursesByInstructorId(id);
     }
 
     @Override
     public List<ResponeCourseDTO> getCourses() {
-        List<ResponeCourseDTO> courseList =  getCourseList();
+        List<ResponeCourseDTO> courseList =  courseService.getCourseList();
         return courseList;
     }
 
@@ -256,8 +106,7 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
 
     @Override
     public List<ResponeCourseDTO> findCourseThatContainsKeyword(String keyword) {
-        List<Course> courses = courseRepository.findCourseThatContainsKeyword(keyword);
-        return fromCourseListToResponeCourseDTOList(courses);
+        return null;
     }
 
     @Override
@@ -265,50 +114,48 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         return null;
     }
 
-
-
     @Override
     public ResponseEntity<ResponeObject> updateStatusOfCourse(@RequestParam int courseId, String InstructorEmail, String StaffMessages , @RequestParam int action, @RequestParam String attachment) throws AppServiceExeption, IOException {
         String messageBody = "";
         String subject = "";
         String status = "";
-        String courseName = courseRepository.findById(courseId).getName();
+        String courseName = courseService.getNameByID(courseId);
         if(action == -1)
         {
             List<Section> sections = sectionService.getSectionList(courseId);
             for (Section section: sections) {
-                int rs = videoRepository.deleteVideosBySectionID(section.getId());
+                int rs = serviceOfVideo.DeleteVideoByCourseID(section.getId());
                 if(rs!= 0)
                 {
                     logger.info("Deleted course video;");
                 }
             }
 
-            if(imageRepository.deleteImageByCourseId(courseId)!= 0)
+            if(serviceOfImage.deleteImageByCourseID(courseId)!= 0)
             {
                 logger.info("Deleted course image;");
             }
 
 
-            if(sectionRepository.deleteSectionsByCourseID(courseId)!= 0)
+            if(serviceOfSection.DeleteSectionByCourseID(courseId)!= 0)
             {
                 logger.info("Deleted course section;");
             }
 
 
-            if(categoryCourseRepository.deleteCategoryCourseByCourseID(courseId)!= 0)
+            if(serviceOfCategory.DeleteCategoryCourseByCourseID(courseId)!= 0)
             {
                 logger.info("Deleted categoryCourse;");
             }
 
 
-            if(learningObjectiveRepository.deleteLearningObjectivesByCourseID(courseId)!= 0)
+            if(serviceOfLearningObjective.DeleteLearningObjectivesByCourseID(courseId)!= 0)
             {
                 logger.info("Deleted learningObjective;");
             }
 
 
-            if(courseRepository.deleteViolatedCourse(courseId)!= 0)
+            if(courseService.DeleteCourseByID(courseId)!= 0)
             {
                 logger.info("Deleted course;");
             }
@@ -323,7 +170,7 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         else if(action == 2)
         {
             status = "Course approved";
-            if (courseRepository.updateCourseStatus(courseId, 2) != 0) {
+            if (courseService.updateCourseStatus(courseId, 2) != 0) {
                 messageBody = "Dear instructor,\n\nWe are pleased to inform you that your course, " + courseName + ", has been approved and is now available on our online drawing course platform. Congratulations!\n\nYour course has passed our rigorous review process, and we believe it will be a valuable addition to our platform. We appreciate your hard work and dedication in creating a quality course that will help children in Vietnam learn to draw.\n\nYour course is now live and available for students to enroll. You can log in to your instructor dashboard to view the number of registered students, comments, and reports from your course. We encourage you to engage with your students and provide them with the best learning experience possible.\n\nThank you for choosing our platform to share your knowledge and expertise. We look forward to working with you and helping you grow your audience.\n\nBest regards,\n\n[ArtHub staff]\n[ArtHub]\n\nAvatar";
                 subject = "Your Course Has Been Approved!";
 
@@ -331,7 +178,7 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         }
         else {
             status = "Course details setting are done!";
-            if (courseRepository.updateCourseStatus(courseId, 1) != 0) {
+            if (courseService.updateCourseStatus(courseId, 1) != 0) {
                 messageBody = "Dear instructor,\n\nWe are pleased to inform you that the course details for your course, " + courseName + ", have been successfully set up on our online drawing course platform. Your course is now being reviewed by our team to ensure it meets our quality standards.\n\nOnce your course has passed our rigorous review process, it will be made available on our platform for students to enroll. You will be notified via email when your course is approved and live on our platform.\n\nWe appreciate your hard work and dedication in creating a quality course that will help children in Vietnam learn to draw. Thank you for choosing our platform to share your knowledge and expertise.\n\nIf you have any questions or concerns, please don't hesitate to contact us.\n\nBest regards,\n[ArtHub staff]\n[ArtHub]\nAvatar";
                 subject = "Your Course are being validated!";
             }
@@ -405,7 +252,7 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     @Override
     public ResponseEntity<ResponeObject> updateMainImageOfCourse(@RequestParam int courseId, @RequestParam MultipartFile image) throws AppServiceExeption, IOException {
         serviceOfFile.uploadFile(image);
-        int rs = courseRepository.updateMainImage(courseId,image.getOriginalFilename());
+        int rs = courseService.updateMainImage(courseId,image.getOriginalFilename());
         if(rs!=0)
         {
             return ResponseEntity.status(HttpStatus.OK).body(
@@ -417,7 +264,6 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
         );
     }
 
-
     @Autowired
     public ControllerOfCourse(InterfaceOfCourseSort courseSort) {
         this.courseSort = courseSort;
@@ -426,36 +272,37 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     @Override
     public List<ResponeCourseDTO> getCoursesByPriceHigher(){
         List<Course> courses=courseRepository.findAllByOrderByPriceDesc();
-        return  fromCourseListToResponeCourseDTOList(courses);
+        return  courseService.fromCourseListToResponeCourseDTOList(courses);
     }
     @Override
     public List<ResponeCourseDTO> getCoursesByPriceLower(){
         List<Course> courses=courseRepository.findAllByOrderByPriceAsc();
-        return  fromCourseListToResponeCourseDTOList(courses);
+        return  courseService.fromCourseListToResponeCourseDTOList(courses);
     }
 
     @Override
     public List<ResponeCourseDTO> getCoursesByDateNew(){
         List<Course> courses=courseRepository.findAllByOrderByDateDesc();
-        return  fromCourseListToResponeCourseDTOList(courses);
+        return  courseService.fromCourseListToResponeCourseDTOList(courses);
     }
 
     @Override
     public List<ResponeCourseDTO> getCoursesByDateOld(){
         List<Course> courses=courseRepository.findAllByOrderByDateAsc();
-        return  fromCourseListToResponeCourseDTOList(courses);
+        return  courseService.fromCourseListToResponeCourseDTOList(courses);
 
     }
 
     @Override
     public List<ResponeCourseDTO> displayIsNotApprovedCourses() {
         List<Course> courseList = courseRepository.displayIsNotApprovedCourses();
-        return fromCourseListToResponeCourseDTOList(courseList);
+        return courseService.fromCourseListToResponeCourseDTOList(courseList);
     }
 
     public ResponeCourseDTO showSectionAndVideo(@RequestParam int id) {
         Course course = courseRepository.findById(id);
-        return fromCourseToResponeCourseDTO(course);
+        return courseService.fromCourseToResponeCourseDTO(course);
     }
+
 
 }

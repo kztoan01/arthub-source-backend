@@ -28,10 +28,15 @@ public class ServiceOfVideo implements InterfaceOfVideoService {
     }
 
 
+    public int DeleteVideoByCourseID(int id)
+    {
+      return videoRepository.deleteVideosBySectionID(id);
+    }
+
+
 
     @Override
     public List<Video> getVideos() {
-
 
         return null;
     }
