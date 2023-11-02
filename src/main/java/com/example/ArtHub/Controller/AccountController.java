@@ -2,6 +2,7 @@ package com.example.ArtHub.Controller;
 
 
 import com.example.ArtHub.AppServiceExeption;
+import com.example.ArtHub.DTO.ResponseAccountDTO;
 import com.example.ArtHub.Entity.Account;
 import com.example.ArtHub.Repository.AccountRepository;
 import com.example.ArtHub.ResponeObject.ResponeObject;
@@ -70,6 +71,34 @@ public class AccountController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PostMapping("/accounts/login")
+    public ResponseEntity<ResponseAccountDTO> LoginAccount(@RequestParam String email,@RequestParam String password) {
+        Optional<Account> userAccount = accountRepository.findByEmail(email);
+        if (userAccount.isPresent()) {
+            if(userAccount.get().getPassword().equals(password)){
+                ResponseAccountDTO responseAccountDTO = new ResponseAccountDTO();
+                responseAccountDTO.setId(userAccount.get().getId());
+                responseAccountDTO.setUsername(userAccount.get().getUsername());
+                responseAccountDTO.setAddress(userAccount.get().getAddress());
+                responseAccountDTO.setLastname(userAccount.get().getLastname());
+                responseAccountDTO.setFirstname(userAccount.get().getFirstname());
+                responseAccountDTO.setPhone(userAccount.get().getPhone());
+                responseAccountDTO.setImage(userAccount.get().getImage());
+                responseAccountDTO.setEmail(userAccount.get().getEmail());
+                responseAccountDTO.setRoleId(userAccount.get().getRoleId());
+                responseAccountDTO.setTwitter(userAccount.get().getTwitter());
+                responseAccountDTO.setFacebook(userAccount.get().getFacebook());
+                responseAccountDTO.setBio(userAccount.get().getBio());
+                responseAccountDTO.setIsActive(userAccount.get().getIsActive());
+                return new ResponseEntity<>(responseAccountDTO, HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
     @GetMapping("/accounts/{id}")
     public ResponseEntity<Account> getAccountById(@PathVariable("id") int id) {
         Optional<Account> accountData = accountRepository.findById(id);
@@ -85,10 +114,14 @@ public class AccountController {
     @PostMapping("/accounts")
     public ResponseEntity<Account> createAccount(@RequestBody Account account) {
         try {
-            List<Account> accounts = accountRepository.findByEmail(account.getEmail());
-            if(!accounts.isEmpty()){
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }else{
+            Optional<Account> accountbyEmail = accountRepository.findByEmail(account.getEmail());
+            Optional<Account> accountbyUsername = accountRepository.findByUsername(account.getUsername());
+            if(!accountbyEmail.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN); //email exist
+            }else if (!accountbyUsername.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT); //username exist
+            }
+            else{
                 Account _account = accountRepository.save(new Account(
                         account.getUsername(),
                         account.getPassword(),
@@ -170,17 +203,6 @@ public class AccountController {
     @PostMapping("/updateAccountImage")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<ResponeObject> updateMainImageOfCourse(@RequestParam int accountId, @RequestParam MultipartFile image) throws AppServiceExeption, IOException {
-//        Path staticPath = Paths.get("static");
-//        Path imagePath = Paths.get("images");
-//        if (!Files.exists(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath))) {
-//            Files.createDirectories(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath));
-//        }
-//        Path file = CURRENT_FOLDER.resolve(staticPath)
-//                .resolve(imagePath).resolve(image.getOriginalFilename());
-//        try (OutputStream os = Files.newOutputStream(file)) {
-//
-//            os.write(image.getBytes());
-//        }
         serviceOfFile.uploadFile(image);
 
         int rs = accountRepository.updateMainImageAccount(accountId,image.getOriginalFilename());

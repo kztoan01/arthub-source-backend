@@ -15,9 +15,9 @@ public interface AccountRepository extends JpaRepository<Account, Integer>{
     public boolean existsByUsername(String username);
     List<Account> findByRoleId(String roleId);
     List<Account> findByUsernameContaining (String username);
-    List<Account> findByEmail (String email);
     Optional<Account> findById(int accountID);
-
+    Optional<Account> findByEmail(String email);
+    Optional<Account> findByUsername(String username);
     @Modifying
     @Transactional
     @Query("UPDATE Account c SET c.image = ?2 WHERE c.id = ?1 ")
