@@ -4,6 +4,8 @@ package com.example.ArtHub.Controller;
 import com.example.ArtHub.AppServiceExeption;
 import com.example.ArtHub.DTO.ResponseAccountDTO;
 import com.example.ArtHub.Entity.Account;
+import com.example.ArtHub.MailConfig.InterfaceOfMailService;
+import com.example.ArtHub.MailConfig.MailDetail;
 import com.example.ArtHub.Repository.AccountRepository;
 import com.example.ArtHub.ResponeObject.ResponeObject;
 import com.example.ArtHub.Service.ServiceOfFile;
@@ -33,6 +35,8 @@ public class AccountController {
     AccountRepository accountRepository;
     @Autowired
     ServiceOfFile serviceOfFile;
+    @Autowired
+    private InterfaceOfMailService mailService;
     //    @GetMapping("/accounts")
 //    public ResponseEntity<List<Account>> getAllAccounts(@RequestParam(required = false) String name) {
 //        try {
@@ -131,6 +135,7 @@ public class AccountController {
                 responseAccountDTO.setFacebook(userAccount.get().getFacebook());
                 responseAccountDTO.setBio(userAccount.get().getBio());
                 responseAccountDTO.setIsActive(userAccount.get().getIsActive());
+                responseAccountDTO.setToken(userAccount.get().getToken());
                 return new ResponseEntity<>(responseAccountDTO, HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -150,7 +155,38 @@ public class AccountController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    @PostMapping("/accounts/checkToken")
+    public ResponseEntity<Account> checkToken(@RequestParam int id,@RequestParam String token) {
+        Optional<Account> userAccount = accountRepository.findById(id);
+        if (userAccount.isPresent()) {
+                if(userAccount.get().getToken().equals(token)){
+                    int updateToken = accountRepository.updateToken(id);
+                    return new ResponseEntity<>(HttpStatus.OK);
+                }else{
+                    return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+                }
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    public boolean sendMailToReceiver(String email, String token) throws AppServiceExeption, IOException {
+        String messageBody = "";
+        String subject = "";
 
+            messageBody = "Hello,\n" +
+                    "Please use the verification code below on the ArtHub website\n\n" +
+                    token +"\n\n" +
+                    "If you didn't request this, you can ignore this email or let us know.\n" +
+                    "Thanks! ArtHub team";
+            subject = "ArtHub OTP verification" ;
+
+        MailDetail mailDetail = new MailDetail();
+        mailDetail.setMsgBody(messageBody);
+        mailDetail.setRecipient("kztoan01@gmail.com");
+        mailDetail.setSubject(subject);
+        mailService.sendMail(mailDetail);
+        return true;
+    }
     @PostMapping("/accounts")
     public ResponseEntity<Account> createAccount(@RequestBody Account account) {
         try {
@@ -162,6 +198,7 @@ public class AccountController {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT); //username exist
             }
             else{
+                boolean sendToken = sendMailToReceiver(account.getEmail(), account.getToken());
                 Account _account = accountRepository.save(new Account(
                         account.getUsername(),
                         account.getPassword(),
@@ -175,11 +212,12 @@ public class AccountController {
                         account.getTwitter(),
                         account.getFacebook(),
                         account.getBio(),
-                        account.getIsActive()));
+                        account.getIsActive(),
+                        account.getToken()));
                 return new ResponseEntity<>(_account,HttpStatus.CREATED);
             }
 
-        } catch (Exception e) {
+        } catch (Exception | AppServiceExeption e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
