@@ -53,7 +53,7 @@ public class AccountController {
 //        }
 //    }
     @GetMapping("/accounts")
-    public ResponseEntity<List<Account>> getAllTutorials(@RequestParam(required = false) String name) {
+    public ResponseEntity<List<Account>> getAllAccounts(@RequestParam(required = false) String name) {
         try {
             List<Account> accounts = new ArrayList<Account>();
 
@@ -71,7 +71,47 @@ public class AccountController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    @PostMapping("/accounts/GoogleLogin")
+    public ResponseEntity<ResponseAccountDTO> LoginGoogleAccount(@RequestParam String email) {
+        Optional<Account> userAccount = accountRepository.findByEmail(email);
+        if (userAccount.isPresent()) {
+                ResponseAccountDTO responseAccountDTO = new ResponseAccountDTO();
+                responseAccountDTO.setId(userAccount.get().getId());
+                responseAccountDTO.setUsername(userAccount.get().getUsername());
+                responseAccountDTO.setAddress(userAccount.get().getAddress());
+                responseAccountDTO.setLastname(userAccount.get().getLastname());
+                responseAccountDTO.setFirstname(userAccount.get().getFirstname());
+                responseAccountDTO.setPhone(userAccount.get().getPhone());
+                responseAccountDTO.setImage(userAccount.get().getImage());
+                responseAccountDTO.setEmail(userAccount.get().getEmail());
+                responseAccountDTO.setRoleId(userAccount.get().getRoleId());
+                responseAccountDTO.setTwitter(userAccount.get().getTwitter());
+                responseAccountDTO.setFacebook(userAccount.get().getFacebook());
+                responseAccountDTO.setBio(userAccount.get().getBio());
+                responseAccountDTO.setIsActive(userAccount.get().getIsActive());
+                return new ResponseEntity<>(responseAccountDTO, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @PostMapping("/accounts/changePassword")
+    public ResponseEntity<ResponseAccountDTO> ChangePassword(@RequestParam String email,@RequestParam String newPassword,@RequestParam String oldPassword) {
+        Optional<Account> userAccount = accountRepository.findByEmail(email);
+        if (userAccount.isPresent()) {
+            if(!userAccount.get().getPassword().equals(oldPassword)){
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            } else {int changed = accountRepository.updatePassword(email,newPassword);
+                if(changed != 0){
+                    return new ResponseEntity<>(HttpStatus.OK);
+                }
+                else {
+                    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                }
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
     @PostMapping("/accounts/login")
     public ResponseEntity<ResponseAccountDTO> LoginAccount(@RequestParam String email,@RequestParam String password) {
         Optional<Account> userAccount = accountRepository.findByEmail(email);
@@ -150,7 +190,11 @@ public class AccountController {
         if(accountData.isPresent()){
             Account _account = accountData.get();
             _account.setUsername(account.getUsername());
-            _account.setPassword(account.getPassword());
+            if(account.getPassword() == null){
+                _account.setPassword(_account.getPassword());
+            }else{
+                _account.setPassword(account.getPassword());
+            }
             _account.setAddress(account.getAddress());
             _account.setLastname(account.getLastname());
             _account.setFirstname(account.getFirstname());
