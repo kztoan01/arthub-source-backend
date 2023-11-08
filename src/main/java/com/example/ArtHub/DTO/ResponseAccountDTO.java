@@ -33,12 +33,11 @@ public class ResponseAccountDTO {
 
     private  String isActive;
     private  String token;
-
+    private  String isPremium;
     public ResponseAccountDTO() {
     }
 
-
-    public ResponseAccountDTO(int id, String username, String address, String lastname, String firstname, String phone, String image, String email, String roleId, String twitter, String facebook, String bio, String isActive, String token) {
+    public ResponseAccountDTO(int id, String username, String address, String lastname, String firstname, String phone, String image, String email, String roleId, String twitter, String facebook, String bio, String isActive, String token, String isPremium) {
         this.id = id;
         this.username = username;
         this.address = address;
@@ -53,6 +52,15 @@ public class ResponseAccountDTO {
         this.bio = bio;
         this.isActive = isActive;
         this.token = token;
+        this.isPremium = isPremium;
+    }
+
+    public String getIsPremium() {
+        return isPremium;
+    }
+
+    public void setIsPremium(String isPremium) {
+        this.isPremium = isPremium;
     }
 
     public String getToken() {

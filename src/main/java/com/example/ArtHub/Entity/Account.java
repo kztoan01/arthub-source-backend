@@ -48,11 +48,13 @@ public class Account {
     private  String isActive;
     @Column(nullable = false,name = "token")
     private  String token;
+    @Column(nullable = false,name = "isPremium")
+    private  String isPremium;
     public Account() {
     }
 
 
-    public Account(String username, String password, String address, String lastname, String firstname, String phone, String image, String email, String roleId, String twitter, String facebook, String bio, String isActive, String token) {
+    public Account(String username, String password, String address, String lastname, String firstname, String phone, String image, String email, String roleId, String twitter, String facebook, String bio, String isActive, String token, String isPremium) {
         this.username = username;
         this.password = password;
         this.address = address;
@@ -67,6 +69,15 @@ public class Account {
         this.bio = bio;
         this.isActive = isActive;
         this.token = token;
+        this.isPremium = isPremium;
+    }
+
+    public String getIsPremium() {
+        return isPremium;
+    }
+
+    public void setIsPremium(String isPremium) {
+        this.isPremium = isPremium;
     }
 
     public String getToken() {
