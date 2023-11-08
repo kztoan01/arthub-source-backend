@@ -5,6 +5,22 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "Payout")
 public class Payout {
+
+
+    public Payout(int id, int accountId, String platform, String recipientName, String recipientUsername, String recipientEmail, String recipientPhone, String recipient) {
+        this.id = id;
+        this.accountId = accountId;
+        this.platform = platform;
+        this.recipientName = recipientName;
+        this.recipientUsername = recipientUsername;
+        this.recipientEmail = recipientEmail;
+        this.recipientPhone = recipientPhone;
+        this.recipient = recipient;
+    }
+
+    public Payout() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false,unique = true,name = "id")

@@ -1,5 +1,6 @@
 package com.example.ArtHub.Controller;
 
+import com.example.ArtHub.CourseNotFoundException;
 import com.example.ArtHub.DTO.PayoutDTO;
 import com.example.ArtHub.DTO.ResponeCourseDTO;
 import com.example.ArtHub.DTO.ResponseAccountDTO;
@@ -8,6 +9,7 @@ import com.example.ArtHub.Entity.Course;
 import com.example.ArtHub.Entity.Payout;
 import com.example.ArtHub.Repository.AccountRepository;
 import com.example.ArtHub.Repository.PayoutRepository;
+import com.example.ArtHub.Service.ServiceOfPayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,9 @@ import java.util.Optional;
 public class PayoutController {
     @Autowired
     PayoutRepository payoutRepository;
+
+    @Autowired
+    ServiceOfPayout serviceOfPayout;
     @Autowired
     AccountRepository accountRepository;
     @GetMapping("/getAll")
@@ -41,6 +46,22 @@ public class PayoutController {
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+
+    @GetMapping("/getPayoutInformation/{id}")
+    public PayoutDTO getAllPayoutsByID(@PathVariable("id") int id) {
+
+            return serviceOfPayout.getPayoutInformationByInstructorID(id);
+
+    }
+
+
+    @GetMapping("/getPayoutInformations")
+    public List<PayoutDTO> getAllPayouts() {
+
+        return serviceOfPayout.getListPayouts();
+
     }
     @PostMapping("/create")
     public ResponseEntity<Payout> createPayout(@RequestBody Payout payout) {

@@ -1,25 +1,53 @@
 package com.example.ArtHub.DTO;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 public class PayoutDTO {
+
+    private int id;
+
+
     private int accountId;
-    private Float TotalPayout;
+
+
+    private String image;
+
+    private String lastname;
+
+    private String firstname;
+
+    private String phone;
+
+    private String email;
+
+
     private String platform;
+
+
     private String recipientName;
+
+
     private String recipientUsername;
+
+
     private String recipientEmail;
+
+
     private String recipientPhone;
 
 
-    public PayoutDTO(int accountId, Float totalPayout, String platform, String recipientName, String recipientUsername, String recipientEmail, String recipientPhone) {
-        this.accountId = accountId;
-        TotalPayout = totalPayout;
-        this.platform = platform;
-        this.recipientName = recipientName;
-        this.recipientUsername = recipientUsername;
-        this.recipientEmail = recipientEmail;
-        this.recipientPhone = recipientPhone;
+    private String recipient;
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getAccountId() {
@@ -28,14 +56,6 @@ public class PayoutDTO {
 
     public void setAccountId(int accountId) {
         this.accountId = accountId;
-    }
-
-    public Float getTotalPayout() {
-        return TotalPayout;
-    }
-
-    public void setTotalPayout(Float totalPayout) {
-        TotalPayout = totalPayout;
     }
 
     public String getPlatform() {
@@ -76,5 +96,54 @@ public class PayoutDTO {
 
     public void setRecipientPhone(String recipientPhone) {
         this.recipientPhone = recipientPhone;
+    }
+
+    public String getRecipient() {
+        return recipient;
+    }
+
+    public void setRecipient(String recipient) {
+        this.recipient = recipient;
+    }
+
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

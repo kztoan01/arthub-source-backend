@@ -1,5 +1,7 @@
 package com.example.ArtHub.Service;
 
+import com.example.ArtHub.AccountNotFoundException;
+import com.example.ArtHub.CourseNotFoundException;
 import com.example.ArtHub.DTO.CreateAccountDTO;
 import com.example.ArtHub.AppServiceExeption;
 import com.example.ArtHub.Entity.Account;
@@ -43,6 +45,11 @@ public class ServiceOfAccount implements InterfaceOfAccountService {
     @Override
     public Optional<Account> getAccountByCourseID(int id) {
         return accountRepository.findById(id);
+    }
+
+    @Override
+    public Account getAccountByID(int id) {
+        return accountRepository.findById(id).orElseThrow(() -> new AccountNotFoundException(id));
     }
 
 
