@@ -1,5 +1,9 @@
 package com.example.ArtHub.DTO;
 
+import com.google.type.DateTime;
+
+import java.util.Date;
+
 public class ResponeStudentInfor {
 
     private int id;
@@ -12,6 +16,8 @@ public class ResponeStudentInfor {
     private String twitter;
 
     private String facebook;
+
+    private Date date;
 
     public int getId() {
         return id;
@@ -59,5 +65,13 @@ public class ResponeStudentInfor {
 
     public void setFacebook(String facebook) {
         this.facebook = facebook;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

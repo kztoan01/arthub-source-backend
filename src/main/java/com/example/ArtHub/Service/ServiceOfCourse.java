@@ -34,6 +34,10 @@ public class ServiceOfCourse implements InterfaceOfCourseService {
     @Autowired
     ServiceOfSection sectionService;
 
+
+    @Autowired
+    ServiceOfLearner serviceOfLearner;
+
     @Autowired
     ServiceOfAccount serviceOfAccount;
 
@@ -97,6 +101,7 @@ public class ServiceOfCourse implements InterfaceOfCourseService {
         student.setFirstname(account.getFirstname());
         student.setTwitter(account.getTwitter());
         student.setLastname(account.getLastname());
+        student.setDate(serviceOfLearner.findLearnerByID(account.getId()).getDate());
         return  student;
     }
 
@@ -128,20 +133,7 @@ public class ServiceOfCourse implements InterfaceOfCourseService {
 
     @Override
     public  ResponeCourseDTO fromCourseToResponeCourseDTO(Course course) { //This function use to convert courseEntity to ResponeCourseDTO
-        ResponeCourseDTO courseDTO = new ResponeCourseDTO();
-        courseDTO.setName(course.getName());
-        courseDTO.setDescription(course.getDescription());
-        courseDTO.setPrice(course.getPrice());
-        courseDTO.setCoupon(course.getCoupon());
-        courseDTO.setId(course.getId());
-        courseDTO.setLanguage(course.getLanguage());
-        courseDTO.setLevel(course.getLevel());
-        courseDTO.setAccountId(course.getAccountId());
-        courseDTO.setStatus(course.getStatus());
-        courseDTO.setPassed(course.getPassed());
-        courseDTO.setIntroduction(course.getIntroduction());
-        courseDTO.setImage(course.getImage());
-        courseDTO.setDate(course.getDate());
+        ResponeCourseDTO courseDTO = modelMapper.modelMapper().map(course, ResponeCourseDTO.class);
         courseDTO.setSections(sectionService.getSectionList(course.getId()).stream().map(section -> sectionService.fromSectionIntoResponeSectionDTO(section)).toList());
         courseDTO.setImages(serviceOfImage.getImageByCourseID(course.getId()));
         courseDTO.setBio(serviceOfAccount.getAccountByCourseID(course.getAccountId()).get().getBio());

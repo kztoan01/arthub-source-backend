@@ -27,4 +27,11 @@ public class ServiceOfLearner implements InterfaceOfLearnerService{
         return learnerRepository.save(learner);
 
     }
+
+    @Override
+    public Learner findLearnerByID(int id) {
+        return learnerRepository.findById(id);
+    }
+
+
 }

@@ -20,6 +20,9 @@ public interface LearnerRepository extends JpaRepository<Learner, Integer> {
     @Query("SELECT SUM(l.price) FROM Learner l WHERE l.ownerCourse = :owner")
     Double sumOfProfit(@Param("owner") int owner);
 
+    @Query("SELECT l from Learner l where l.accountId = ?1")
+    Learner findById(int id);
+
 
     @Query("select a from Learner l join Account a on a.id = l.accountId where l.courseId = ?1")
     List<Account> findLeanerOfCourse(int courseID);
