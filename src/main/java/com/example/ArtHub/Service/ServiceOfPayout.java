@@ -21,6 +21,10 @@ public class ServiceOfPayout implements InterfaceOfPayoutService {
 
     @Autowired
     ServiceOfCourse serviceOfCourse;
+
+
+    @Autowired
+    ServiceOfLearner serviceOfLearner;
     @Autowired
     ServiceOfAccount serviceOfAccount;
 
@@ -46,7 +50,7 @@ public class ServiceOfPayout implements InterfaceOfPayoutService {
         payoutDTO.setEmail(serviceOfAccount.getAccountByID(payout.getAccountId()).getEmail());
         payoutDTO.setPhone(serviceOfAccount.getAccountByID(payout.getAccountId()).getPhone());
         payoutDTO.setImage(serviceOfAccount.getAccountByID(payout.getAccountId()).getImage());
-        payoutDTO.setTotalPayout(serviceOfCourse.getSumPriceCourseByAccountID(payout.getAccountId()));
+        payoutDTO.setTotalPayout(serviceOfLearner.getProfitByOwnerID(payout.getAccountId()));
         return payoutDTO;
     }
 

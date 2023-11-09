@@ -29,6 +29,12 @@ public class ServiceOfLearner implements InterfaceOfLearnerService{
     }
 
     @Override
+    public Double getProfitByOwnerID(int id) {
+        return learnerRepository.sumOfProfit(id);
+    }
+
+
+    @Override
     public Learner findLearnerByIDAndCourse(int id,int courseID) {
         return learnerRepository.findById(id,courseID);
     }
