@@ -2,6 +2,7 @@ package com.example.ArtHub.Service;
 
 import com.example.ArtHub.DTO.PayoutDTO;
 import com.example.ArtHub.Entity.Payout;
+import com.example.ArtHub.Repository.CourseRepository;
 import com.example.ArtHub.Repository.PayoutRepository;
 import com.example.ArtHub.utils.ModelMapperObject;
 import org.modelmapper.ModelMapper;
@@ -17,8 +18,12 @@ public class ServiceOfPayout implements InterfaceOfPayoutService {
     ModelMapperObject mapperObject;
 
 
+
+    @Autowired
+    ServiceOfCourse serviceOfCourse;
     @Autowired
     ServiceOfAccount serviceOfAccount;
+
 
     @Autowired
     PayoutRepository payoutRepository;
@@ -41,6 +46,7 @@ public class ServiceOfPayout implements InterfaceOfPayoutService {
         payoutDTO.setEmail(serviceOfAccount.getAccountByID(payout.getAccountId()).getEmail());
         payoutDTO.setPhone(serviceOfAccount.getAccountByID(payout.getAccountId()).getPhone());
         payoutDTO.setImage(serviceOfAccount.getAccountByID(payout.getAccountId()).getImage());
+        payoutDTO.setTotalPayout(serviceOfCourse.getSumPriceCourseByAccountID(payout.getAccountId()));
         return payoutDTO;
     }
 

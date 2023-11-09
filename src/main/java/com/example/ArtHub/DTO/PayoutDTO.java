@@ -42,6 +42,16 @@ public class PayoutDTO {
     private String recipient;
 
 
+    private Double TotalPayout;
+
+    public Double getTotalPayout() {
+        return TotalPayout;
+    }
+
+    public void setTotalPayout(Double totalPayout) {
+        TotalPayout = totalPayout;
+    }
+
     public int getId() {
         return id;
     }

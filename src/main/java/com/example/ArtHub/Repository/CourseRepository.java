@@ -31,6 +31,10 @@ public interface CourseRepository extends JpaRepository<Course,Integer> {
     List<Course> findCoursesByInstructorId(int id);
 
 
+    @Query("select SUM(c.price) from Course c group by c.accountId having c.accountId = ?1")
+    Double findSumCoursesPriceTotalByAccountID(int id);
+
+
 
     @Modifying
     @Transactional

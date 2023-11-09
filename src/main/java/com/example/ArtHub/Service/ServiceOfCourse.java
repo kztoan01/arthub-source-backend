@@ -72,6 +72,9 @@ public class ServiceOfCourse implements InterfaceOfCourseService {
     }
 
 
+
+
+
     @Override
     public String getNameByID(int id)
     {
@@ -105,8 +108,13 @@ public class ServiceOfCourse implements InterfaceOfCourseService {
         return  student;
     }
 
+    @Override
+    public Double getSumPriceCourseByAccountID(int id) {
+        return courseRepository.findSumCoursesPriceTotalByAccountID(id);
+    }
 
-   @Override
+
+    @Override
     public int updateCourseStatus(int courseId, int status)
     {
         return courseRepository.updateCourseStatus(courseId, status);

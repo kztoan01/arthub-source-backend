@@ -21,6 +21,9 @@ public interface InterfaceOfCourseService {
     public ResponeStudentInfor fromAccountToResponeStudentDTO(Account account,int courseID);
 
 
+    public Double getSumPriceCourseByAccountID(int id);
+
+
     public  ResponeCourseDTO fromCourseToResponeCourseDTO(Course course);
 
     public  List<ResponeCourseDTO> fromCourseListToResponeCourseDTOList(List<Course> CourseList);
