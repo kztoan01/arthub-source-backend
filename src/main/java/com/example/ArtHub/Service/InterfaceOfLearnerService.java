@@ -8,5 +8,5 @@ public interface InterfaceOfLearnerService {
     Learner createLearner(CreateLearnerDTO dto) throws AppServiceExeption;
 
 
-    Learner findLearnerByID(int id);
+    Learner findLearnerByIDAndCourse(int id,int courseID);
 }

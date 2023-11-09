@@ -26,7 +26,7 @@ public class ControllerOfEnrolment {
     private AccountRepository accountRepository;
 
     @PostMapping("/enrol")
-    public ResponseEntity<String> enrolCourse(@RequestParam(value = "courseId", required = false) Integer courseId,@RequestParam(value = "accountId", required = false)  Integer accountId,@RequestParam  Integer status,@RequestParam  Integer senderId,@RequestParam  String message){
+        public ResponseEntity<String> enrolCourse(@RequestParam(value = "courseId", required = false) Integer courseId,@RequestParam(value = "accountId", required = false)  Integer accountId,@RequestParam  Integer status,@RequestParam  Integer senderId,@RequestParam  String message){
         try{
 
             Optional<Course> courseOptional=courseRepository.findById(courseId);

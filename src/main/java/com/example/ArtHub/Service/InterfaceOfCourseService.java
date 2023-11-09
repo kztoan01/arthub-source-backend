@@ -18,7 +18,7 @@ public interface InterfaceOfCourseService {
 
     public ResponeCourseDTO fromCourseToResponeCourseDTO2(Course course);
 
-    public ResponeStudentInfor fromAccountToResponeStudentDTO(Account account);
+    public ResponeStudentInfor fromAccountToResponeStudentDTO(Account account,int courseID);
 
 
     public  ResponeCourseDTO fromCourseToResponeCourseDTO(Course course);

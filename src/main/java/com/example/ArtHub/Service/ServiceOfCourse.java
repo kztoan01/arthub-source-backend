@@ -92,7 +92,7 @@ public class ServiceOfCourse implements InterfaceOfCourseService {
 
 
     @Override
-    public ResponeStudentInfor fromAccountToResponeStudentDTO(Account account)
+    public ResponeStudentInfor fromAccountToResponeStudentDTO(Account account,int courseID)
     {
         ResponeStudentInfor student = new ResponeStudentInfor();
         student.setId(account.getId());
@@ -101,7 +101,7 @@ public class ServiceOfCourse implements InterfaceOfCourseService {
         student.setFirstname(account.getFirstname());
         student.setTwitter(account.getTwitter());
         student.setLastname(account.getLastname());
-        student.setDate(serviceOfLearner.findLearnerByID(account.getId()).getDate());
+        student.setDate(serviceOfLearner.findLearnerByIDAndCourse(account.getId(),courseID).getDate());
         return  student;
     }
 
@@ -126,7 +126,7 @@ public class ServiceOfCourse implements InterfaceOfCourseService {
         courseDTO.setPrice(course.getPrice());
         courseDTO.setInstructorName(accountRepository.findById(course.getAccountId()).get().getFirstname()+" "+accountRepository.findById(course.getAccountId()).get().getLastname());
         courseDTO.setImage(course.getImage());
-        courseDTO.setStudents(learnerRepository.findLeanerOfCourse(course.getId()).stream().map(account -> fromAccountToResponeStudentDTO(account)).toList());
+        courseDTO.setStudents(learnerRepository.findLeanerOfCourse(course.getId()).stream().map(account -> fromAccountToResponeStudentDTO(account,course.getId())).toList());
         return courseDTO;
     }
 

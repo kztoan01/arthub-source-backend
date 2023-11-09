@@ -29,8 +29,8 @@ public class ServiceOfLearner implements InterfaceOfLearnerService{
     }
 
     @Override
-    public Learner findLearnerByID(int id) {
-        return learnerRepository.findById(id);
+    public Learner findLearnerByIDAndCourse(int id,int courseID) {
+        return learnerRepository.findById(id,courseID);
     }
 
 
