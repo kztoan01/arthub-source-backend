@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface LearnerRepository extends JpaRepository<Learner, Integer> {
 
-    @Query("SELECT l FROM Learner l WHERE l.accountId = ?1")
+    @Query("SELECT l FROM Learner l WHERE l.accountId = ?1 AND l.price > 0")
     List<Learner> showStudentPurchaseByAccountId(Integer accountId);
 
     @Query("SELECT COUNT(DISTINCT l.accountId) FROM Learner l WHERE l.ownerCourse = :owner GROUP BY l.ownerCourse")
