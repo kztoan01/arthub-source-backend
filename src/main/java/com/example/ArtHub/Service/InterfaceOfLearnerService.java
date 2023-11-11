@@ -7,6 +7,7 @@ import com.example.ArtHub.Entity.Learner;
 public interface InterfaceOfLearnerService {
     Learner createLearner(CreateLearnerDTO dto) throws AppServiceExeption;
 
+    Double getProfitByOwnerID(int id);
 
     Learner findLearnerByIDAndCourse(int id,int courseID);
 }
