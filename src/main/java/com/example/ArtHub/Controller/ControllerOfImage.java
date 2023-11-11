@@ -55,22 +55,22 @@ public class ControllerOfImage implements InterfaceOfImageController {
     }
 
     public ResponseEntity<ResponeObject> saveCourseImages(@RequestParam MultipartFile one, @RequestParam MultipartFile two, @RequestParam MultipartFile three, @RequestParam MultipartFile four, @RequestParam int courseId) throws IOException {
-        Set<String> supportedContentTypes = new HashSet<>(Arrays.asList("text/xml", "application/pdf", "image/png", "image/jpg", "image/jpeg"));
-
+//        Set<String> supportedContentTypes = new HashSet<>(Arrays.asList("text/xml", "application/pdf", "image/png", "image/jpg", "image/jpeg"));
+//
         List<MultipartFile> Arr = Arrays.asList(one, two, three, four);
-        for (MultipartFile image : Arr) {
-            boolean isSupported = supportedContentTypes.contains(image.getContentType());
-            if (!isSupported) {
-                return ResponseEntity.status(HttpStatus.OK).body(
-                        new ResponeObject("ok", "This image: " + image.getOriginalFilename() + " must be png, jpg, or jpeg.", "")
-                );
-            }
-        }
-
-        if (!Files.exists(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath))) {
-            Files.createDirectories(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath));
-        }
-
+//        for (MultipartFile image : Arr) {
+//            boolean isSupported = supportedContentTypes.contains(image.getContentType());
+//            if (!isSupported) {
+//                return ResponseEntity.status(HttpStatus.OK).body(
+//                        new ResponeObject("ok", "This image: " + image.getOriginalFilename() + " must be png, jpg, or jpeg.", "")
+//                );
+//            }
+//        }
+//
+//        if (!Files.exists(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath))) {
+//            Files.createDirectories(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath));
+//        }
+//
         List<String> imageNames = new ArrayList<>();
         for (MultipartFile image : Arr) {
             imageNames.add(image.getOriginalFilename());

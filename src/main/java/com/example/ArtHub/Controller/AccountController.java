@@ -191,7 +191,7 @@ public class AccountController {
 
         MailDetail mailDetail = new MailDetail();
         mailDetail.setMsgBody(messageBody);
-        mailDetail.setRecipient("kztoan01@gmail.com");
+        mailDetail.setRecipient(email);
         mailDetail.setSubject(subject);
         mailService.sendMail(mailDetail);
         return true;
@@ -207,7 +207,10 @@ public class AccountController {
             } else if (!accountbyUsername.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT); //username exist
             } else {
-                boolean sendToken = sendMailToReceiver(account.getEmail(), account.getToken());
+                if(account.getToken() != null)//send otp
+                {
+                    boolean sendToken = sendMailToReceiver(account.getEmail(), account.getToken());
+                }
                 Account _account = accountRepository.save(new Account(
                         account.getUsername(),
                         account.getPassword(),

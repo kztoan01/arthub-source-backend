@@ -64,8 +64,9 @@ public class PayoutController {
 
     }
     @PostMapping("/create")
-    public ResponseEntity<Payout> createPayout(@RequestBody Payout payout) {
+    public ResponseEntity<Optional<Account>> createPayout(@RequestBody Payout payout) {
         try {
+
             Optional<Payout> payoutMethod = payoutRepository.findByAccountId(payout.getAccountId());
             if (!payoutMethod.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN); //payout exsist
@@ -80,7 +81,8 @@ public class PayoutController {
                         payout.getRecipientPhone(),
                         payout.getRecipient()
                 ));
-                return new ResponseEntity<>(_payout, HttpStatus.CREATED);
+                Optional<Account> accountData = accountRepository.findById(payout.getAccountId());
+                return new ResponseEntity<>(accountData, HttpStatus.CREATED);
             }
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

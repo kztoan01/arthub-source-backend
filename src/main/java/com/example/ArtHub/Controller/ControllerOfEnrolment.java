@@ -1,8 +1,11 @@
 package com.example.ArtHub.Controller;
 
+import com.example.ArtHub.DTO.CartDTO;
+import com.example.ArtHub.DTO.CheckoutDTO;
 import com.example.ArtHub.Entity.Account;
 import com.example.ArtHub.Entity.Course;
 import com.example.ArtHub.Entity.Learner;
+import com.example.ArtHub.Entity.Section;
 import com.example.ArtHub.Repository.AccountRepository;
 import com.example.ArtHub.Repository.CourseRepository;
 import com.example.ArtHub.Repository.LearnerRepository;
@@ -24,7 +27,26 @@ public class ControllerOfEnrolment {
     private CourseRepository courseRepository;
     @Autowired
     private AccountRepository accountRepository;
-
+//    @PostMapping("/enrollCheckout")
+//    public ResponseEntity<String> enrolCourseCheckout(@RequestBody CheckoutDTO dto){
+//        try{
+//            List<CartDTO> cart = dto.getCartItems();
+//            for(CartDTO c : cart){
+//                Optional<Course> courseOptional=courseRepository.findById(c.isCourseId());
+//                Learner learner = new Learner();
+//                learner.setCourse(courseOptional.get());
+//                learner.setAccount(accountOptional.get());
+//                learner.setPrice();
+//                learner.setOwnerCourse(id);
+//                learner.setStatus(0);
+//                learner.setSenderId(dto.getAccountId());
+//                learner.setMessage("");
+//            }
+//            return ResponseEntity.status(HttpStatus.OK).body("Ok");
+//        }catch (Exception e){
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error when enrol course");
+//        }
+//    }
     @PostMapping("/enrol")
         public ResponseEntity<String> enrolCourse(@RequestParam(value = "courseId", required = false) Integer courseId,@RequestParam(value = "accountId", required = false)  Integer accountId,@RequestParam  Integer status,@RequestParam  Integer senderId,@RequestParam  String message){
         try{
