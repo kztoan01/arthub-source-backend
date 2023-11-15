@@ -4,7 +4,7 @@ import com.example.ArtHub.DTO.PayoutDTO;
 
 import java.util.List;
 
-public interface IPayoutService {
+public interface InterfaceOfPayoutService {
 
     public PayoutDTO getPayoutInformationByInstructorID(int id);
 

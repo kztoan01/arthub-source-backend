@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RequestMapping("/video")
-public interface IVideoController {
+public interface InterfaceOfVideoController {
 
     @PostMapping("/add")
     public ResponeVideoDTO createNewVideo(String name, MultipartFile data, String script, boolean isTrial, int sectionId  ) throws IOException;

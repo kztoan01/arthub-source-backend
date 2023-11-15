@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @RequestMapping("/image")
-public interface IImageController {
+public interface InterfaceOfImageController {
 
     @PostMapping("/saveCourseImages")
     ResponseEntity<ResponeObject> saveCourseImages(MultipartFile one, MultipartFile two, MultipartFile three, MultipartFile four, int courseId) throws IOException;

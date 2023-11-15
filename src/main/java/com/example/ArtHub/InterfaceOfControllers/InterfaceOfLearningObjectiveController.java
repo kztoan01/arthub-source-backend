@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RequestMapping("/learningObjective")
-public interface ILearningObjectiveController {
+public interface InterfaceOfLearningObjectiveController {
 
     @PostMapping("/addLearningObjective")
     @ResponseStatus(HttpStatus.CREATED)

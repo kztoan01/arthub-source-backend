@@ -18,8 +18,7 @@ public interface CategoryCourseRepository extends JpaRepository<CategoryCourse,I
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM CategoryCourse c WHERE c.course.id = ?1")
-    int deleteCategoryCourseByCourseID(int courseId);
-
+    @Query("delete from CategoryCourse c where c.courseId = ?1")
+    int deleteCategoryCourseByCourseID(int courseID);
 
 }

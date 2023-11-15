@@ -16,7 +16,7 @@ public interface SectionRepository extends JpaRepository<Section,Integer> {
 
     @Modifying
     @Transactional
-    @Query("delete from Section s  where s.course.id = ?1")
+    @Query("delete from Section s where s.courseId = ?1")
     int deleteSectionsByCourseID(int CourseID);
 }
 

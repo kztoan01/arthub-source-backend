@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class ServiceOfCourseSort implements ICourseSort {
+public class ServiceOfCourseSort implements InterfaceOfCourseSort {
     private final CourseRepository repository;
 
     @Autowired

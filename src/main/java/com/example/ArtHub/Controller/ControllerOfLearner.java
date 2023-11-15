@@ -6,8 +6,7 @@ import com.example.ArtHub.DTO.CreateLearnerDTO;
 import com.example.ArtHub.DTO.ResponseLearnerDTO;
 import com.example.ArtHub.Entity.Account;
 import com.example.ArtHub.Entity.Learner;
-import com.example.ArtHub.InterfaceOfControllers.ILearnerController;
-import com.example.ArtHub.InterfaceOfControllers.ILearnerController;
+import com.example.ArtHub.InterfaceOfControllers.InterfaceOfLearnerController;
 import com.example.ArtHub.Repository.AccountRepository;
 import com.example.ArtHub.Repository.CourseRepository;
 import com.example.ArtHub.Repository.LearnerRepository;
@@ -28,7 +27,7 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-public class ControllerOfLearner implements ILearnerController {
+public class ControllerOfLearner implements InterfaceOfLearnerController {
     @Autowired
     LearnerRepository learnerRepository;
 
@@ -61,9 +60,9 @@ public class ControllerOfLearner implements ILearnerController {
     public ResponseLearnerDTO fromLearnerToResponseLearnerDTO (Learner learner) {
         ResponseLearnerDTO learnerDTO = new ResponseLearnerDTO();
         learnerDTO.setId(learner.getId());
-        learnerDTO.setAccountId(learner.getAccount().getId());
-        learnerDTO.setCourseId(learner.getCourse().getId());
-        learnerDTO.setOwnerCourse(courseRepository.findById(learner.getCourse().getId()).get().getAccount().getId());
+        learnerDTO.setAccountId(learner.getAccountId());
+        learnerDTO.setCourseId(learner.getCourseId());
+        learnerDTO.setOwnerCourse(courseRepository.findById(learner.getCourseId()).get().getAccountId());
         learnerDTO.setDate(learner.getDate());
         learnerDTO.setPrice(learner.getPrice());
         learnerDTO.setStatus(learner.getStatus());

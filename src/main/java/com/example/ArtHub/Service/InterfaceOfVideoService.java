@@ -6,7 +6,7 @@ import com.example.ArtHub.Entity.Video;
 
 import java.util.List;
 
-public interface IVideoService {
+public interface InterfaceOfVideoService {
 
     Video saveVideo(CreateVideoDTO dto) throws AppServiceExeption;
 

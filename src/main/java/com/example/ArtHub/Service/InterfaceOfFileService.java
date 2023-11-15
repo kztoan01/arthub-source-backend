@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
-public interface IFileService {
+public interface InterfaceOfFileService {
 
     List<String> listOfFiles();
     ByteArrayResource downloadFile(String fileName);

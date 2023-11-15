@@ -14,19 +14,8 @@ public class Section {
     @Column(name = "accountId")
     private Integer accountId;
 
-
-    @ManyToOne
-    @JoinColumn(name = "courseId", nullable = false)
-    private Course course;
-
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
+    @Column(name = "courseId")
+    private Integer courseId;
 
     public Integer getId() {
         return id;
@@ -52,4 +41,11 @@ public class Section {
         this.accountId = accountId;
     }
 
+    public Integer getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
+    }
 }

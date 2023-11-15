@@ -1,6 +1,7 @@
 package com.example.ArtHub.Service;
 
 import com.example.ArtHub.AccountNotFoundException;
+import com.example.ArtHub.CourseNotFoundException;
 import com.example.ArtHub.DTO.CreateAccountDTO;
 import com.example.ArtHub.AppServiceExeption;
 import com.example.ArtHub.Entity.Account;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ServiceOfAccount implements IAccountService {
+public class ServiceOfAccount implements InterfaceOfAccountService {
     @Autowired
     AccountRepository accountRepository;
 

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ServiceOfPayout implements IPayoutService {
+public class ServiceOfPayout implements InterfaceOfPayoutService {
 
     @Autowired
     ModelMapperObject mapperObject;

@@ -8,21 +8,45 @@ import java.util.Date;
 import java.util.List;
 
 public class ResponeCourseDTO {
+    ServiceOfSection sectionService = new ServiceOfSection();
+
+    public void removeNullProperties() {
+        Field[] fields = this.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+            try {
+                Object value = field.get(this);
+                if (value == null) {
+                    // Remove field from the output
+                    field.setAccessible(true);
+                    field.set(this, null);
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     private Integer id;
 
     private String  name;
+
+    private String image;
+
 
     private String description;
 
 
     private String introduction;
 
+
     private String level;
 
 
 
     private String language;
+
 
 
     private Float price;
@@ -35,28 +59,8 @@ public class ResponeCourseDTO {
 
     private Boolean isPassed;
 
+
     private Integer Status;
-
-
-    private String image;
-
-
-    private Date date;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     private Integer accountId;
@@ -65,13 +69,17 @@ public class ResponeCourseDTO {
     private Integer categoryId;
 
     private List<ResponeSectionDTO> sections;
-
-
-    private ResponeLearningObjectiveDTO learningObjective;
+    private LearningObjective learningObjective;
 
     private List<ResponeCategoryNameDTO> categories;
 
+
     private List<ResponeStudentInfor> Students;
+
+
+
+
+    private Date date;
 
     private String instructorName;
 
@@ -87,7 +95,7 @@ public class ResponeCourseDTO {
 
     private String instructorFacebook;
 
-    private ResponeImageDTO images;
+    private Image images;
 
     private int count;
     private Float avg;
@@ -108,12 +116,11 @@ public class ResponeCourseDTO {
         this.avg = avg;
     }
 
-
-    public ResponeImageDTO getImages() {
+    public Image getImages() {
         return images;
     }
 
-    public void setImages(ResponeImageDTO images) {
+    public void setImages(Image images) {
         this.images = images;
     }
 
@@ -222,6 +229,7 @@ public class ResponeCourseDTO {
     }
 
 
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -323,12 +331,11 @@ public class ResponeCourseDTO {
         this.sections = sections;
     }
 
-
-    public ResponeLearningObjectiveDTO getLearningObjective() {
+    public LearningObjective getLearningObjective() {
         return learningObjective;
     }
 
-    public void setLearningObjective(ResponeLearningObjectiveDTO learningObjective) {
+    public void setLearningObjective(LearningObjective learningObjective) {
         this.learningObjective = learningObjective;
     }
 }

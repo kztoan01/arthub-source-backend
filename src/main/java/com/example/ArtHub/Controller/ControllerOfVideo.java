@@ -3,7 +3,7 @@ package com.example.ArtHub.Controller;
 import com.example.ArtHub.DTO.CreateVideoDTO;
 import com.example.ArtHub.DTO.ResponeVideoDTO;
 import com.example.ArtHub.Entity.Video;
-import com.example.ArtHub.InterfaceOfControllers.IVideoController;
+import com.example.ArtHub.InterfaceOfControllers.InterfaceOfVideoController;
 import com.example.ArtHub.Repository.VideoRepository;
 import com.example.ArtHub.Service.ServiceOfFile;
 import com.example.ArtHub.Service.ServiceOfVideo;
@@ -19,7 +19,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-public class ControllerOfVideo implements IVideoController {
+public class ControllerOfVideo implements InterfaceOfVideoController {
     Path staticPath = Paths.get("static");
     Path videoPath = Paths.get("videos");
 

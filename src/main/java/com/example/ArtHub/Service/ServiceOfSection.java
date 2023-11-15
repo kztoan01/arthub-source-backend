@@ -2,9 +2,7 @@ package com.example.ArtHub.Service;
 
 import com.example.ArtHub.AppServiceExeption;
 import com.example.ArtHub.DTO.ResponeSectionDTO;
-import com.example.ArtHub.Entity.Course;
 import com.example.ArtHub.Entity.Section;
-import com.example.ArtHub.Repository.CourseRepository;
 import com.example.ArtHub.Repository.SectionRepository;
 import com.example.ArtHub.DTO.CreateSectionDTO;
 import com.example.ArtHub.Repository.VideoRepository;
@@ -15,25 +13,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class ServiceOfSection implements ISectionService {
+public class ServiceOfSection implements InterfaceOfSectionService {
     @Autowired
     SectionRepository sectionRepository ;
-
-    @Autowired
-    CourseRepository courseRepository;
 
     @Autowired
     VideoRepository videoRepository;
 
     @Override
-    public ResponeSectionDTO fromSectionIntoResponeSectionDTO(Section section,int id)
+    public ResponeSectionDTO fromSectionIntoResponeSectionDTO(Section section)
     {
         ResponeSectionDTO sectionDTO = new ResponeSectionDTO();
         sectionDTO.setSection_id(section.getId());
         sectionDTO.setSection_name(section.getName());
-        sectionDTO.setCourse(id);
+        sectionDTO.setCourse(section.getCourseId());
         sectionDTO.setAccount_id(section.getAccountId());
         sectionDTO.setVideos(videoRepository.findAllBySectionId(section.getId()));
         return sectionDTO;
@@ -41,11 +37,11 @@ public class ServiceOfSection implements ISectionService {
 
 
     @Override
-    public Section createSection(Section dto, int id, Course course) throws AppServiceExeption {
+    public Section createSection(CreateSectionDTO dto, int courseID , int accountID) throws AppServiceExeption {
         Section section = new Section();
         section.setName(dto.getName());
-        section.setAccountId(id);
-        section.setCourse(course);
+        section.setAccountId(accountID);
+        section.setCourseId(courseID);
         return sectionRepository.save(section);
     }
 

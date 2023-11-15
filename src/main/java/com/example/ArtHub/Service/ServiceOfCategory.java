@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 
 @Service
-public class ServiceOfCategory implements ICategoryService {
+public class ServiceOfCategory implements InterfaceOfCategoryService {
 
     @Autowired
     CategoryRepository categoryRepository;

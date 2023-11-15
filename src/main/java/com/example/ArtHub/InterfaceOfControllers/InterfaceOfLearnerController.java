@@ -14,10 +14,10 @@ import java.io.IOException;
 import java.util.List;
 
 @RequestMapping("/learner")
-public interface ILearnerController {
+public interface InterfaceOfLearnerController {
 
     @PostMapping("/showStudentPurchase")
-    ResponseEntity<List<Learner>> showStudentPurchase(@RequestParam int accountId);
+    ResponseEntity<List<Learner>> showStudentPurchase(@RequestParam Integer accountId);
 
     @PostMapping("/addLearner")
     @ResponseStatus(HttpStatus.CREATED)

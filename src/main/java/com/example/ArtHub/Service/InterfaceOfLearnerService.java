@@ -4,7 +4,7 @@ import com.example.ArtHub.AppServiceExeption;
 import com.example.ArtHub.DTO.CreateLearnerDTO;
 import com.example.ArtHub.Entity.Learner;
 
-public interface ILearnerService {
+public interface InterfaceOfLearnerService {
     Learner createLearner(CreateLearnerDTO dto) throws AppServiceExeption;
 
     Double getProfitByOwnerID(int id);

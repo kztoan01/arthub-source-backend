@@ -2,7 +2,6 @@ package com.example.ArtHub.DTO;
 
 
 import com.example.ArtHub.Entity.CategoryCourse;
-import com.example.ArtHub.Entity.Section;
 
 import java.util.Date;
 import java.util.List;
@@ -51,8 +50,6 @@ public class CreateCourseDTO {
     private Date date;
 
 
-
-
     public Date getDate() {
         return date;
     }
@@ -62,30 +59,11 @@ public class CreateCourseDTO {
     }
 
 
-    private List<CategoryCourse> categories;
+    private List<CreateCategoryCourseDTO> categories;
 
-    private List<Section> sections;
+    private List<CreateSectionDTO> sections;
     private CreateLearningObjectiveDTO learningObjective;
 
-
-    public CreateCourseDTO(Integer id, String name, String description, String introduction, String level, String language, Float price, Float coupon, boolean isPassed, boolean isApproved, Integer accountId, String image, Date date, List<CategoryCourse> categories, List<Section> sections, CreateLearningObjectiveDTO learningObjective) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.introduction = introduction;
-        this.level = level;
-        this.language = language;
-        this.price = price;
-        this.coupon = coupon;
-        this.isPassed = isPassed;
-        this.isApproved = isApproved;
-        this.accountId = accountId;
-        this.image = image;
-        this.date = date;
-        this.categories = categories;
-        this.sections = sections;
-        this.learningObjective = learningObjective;
-    }
 
     public Integer getId() {
         return id;
@@ -183,11 +161,11 @@ public class CreateCourseDTO {
         this.accountId = accountId;
     }
 
-    public List<CategoryCourse> getCategories() {
+    public List<CreateCategoryCourseDTO> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<CategoryCourse> categories) {
+    public void setCategories(List<CreateCategoryCourseDTO> categories) {
         this.categories = categories;
     }
 
@@ -199,11 +177,11 @@ public class CreateCourseDTO {
         this.learningObjective = learningObjective;
     }
 
-    public List<Section> getSections() {
+    public List<CreateSectionDTO> getSections() {
         return sections;
     }
 
-    public void setSections(List<Section> sections) {
+    public void setSections(List<CreateSectionDTO> sections) {
         this.sections = sections;
     }
 

@@ -9,7 +9,7 @@ import com.example.ArtHub.Entity.Course;
 
 import java.util.List;
 
-public interface ICourseService {
+public interface InterfaceOfCourseService {
     Course createCourse(CreateCourseDTO dto) throws AppServiceExeption;
 
 //    List<ResponeCourseDTO> getCourseList(CourseRepository courseRepository);

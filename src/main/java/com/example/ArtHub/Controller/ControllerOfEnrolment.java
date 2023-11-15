@@ -61,7 +61,7 @@ public class ControllerOfEnrolment {
             if(existingEnrolment.isPresent()){
                 return ResponseEntity.status(HttpStatus.OK).body("Course is already Enrolled");
             }
-            Integer id=courseOptional.get().getAccount().getId();
+            Integer id=courseOptional.get().getAccountId();
             Learner learner=new Learner();
             learner.setCourse(courseOptional.get());
             learner.setAccount(accountOptional.get());

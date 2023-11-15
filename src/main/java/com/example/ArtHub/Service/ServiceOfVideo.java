@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class ServiceOfVideo implements IVideoService {
+public class ServiceOfVideo implements InterfaceOfVideoService {
 
 
     @Autowired

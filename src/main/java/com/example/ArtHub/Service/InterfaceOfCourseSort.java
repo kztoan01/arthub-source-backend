@@ -4,7 +4,7 @@ import com.example.ArtHub.Entity.Course;
 
 import java.util.List;
 
-public interface ICourseSort {
+public interface InterfaceOfCourseSort {
     List<Course> findAllByOrderByPriceDesc();
     List<Course> findAllByOrderByPriceAsc();
     List<Course> findAllByOrderByDateDesc();

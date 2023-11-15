@@ -4,7 +4,7 @@ import com.example.ArtHub.AppServiceExeption;
 import com.example.ArtHub.CourseNotFoundException;
 import com.example.ArtHub.DTO.*;
 import com.example.ArtHub.Entity.*;
-import com.example.ArtHub.InterfaceOfControllers.ICourseController;
+import com.example.ArtHub.InterfaceOfControllers.InterfaceOfCourseController;
 import com.example.ArtHub.MailConfig.MailDetail;
 import com.example.ArtHub.MailConfig.InterfaceOfMailService;
 import com.example.ArtHub.Repository.*;
@@ -20,12 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-public class ControllerOfCourse implements ICourseController {
+public class ControllerOfCourse implements InterfaceOfCourseController {
 
     private static final Logger logger = LoggerFactory.getLogger(ControllerOfCourse.class);
 
@@ -71,30 +70,19 @@ public class ControllerOfCourse implements ICourseController {
     }
 
     @Override
-    public List<ResponeCourseProfitDTO> displayProfitsOFCourses() {
-        return courseRepository.findAll().stream().map(course -> courseService.fromCourseToCourseProfitDTO(course)).toList();
-    }
-
-    @Override
     public ResponeCourseDTO createCourse(CreateCourseDTO dto) throws AppServiceExeption {
         Course course = courseService.createCourse(dto);
 
-        List<Section> sections = dto.getSections();
-        List<Section> sectionList = new ArrayList<>();
-        for (Section createSectionDTO: sections) {
-            sectionList.add(sectionService.createSection(createSectionDTO,dto.getAccountId(),course));
-        }
-        course.setSections(sectionList);
-
-        course.setLearningObjective(serviceOfLearningObjective.createLearningObjective(dto.getLearningObjective(), course));
-
-
-        List<CategoryCourse> categoryCourses = new ArrayList<>();
-        for(CategoryCourse category : dto.getCategories()) {
-            categoryCourses.add(serviceOfCategory.createCategoryCourse(category, course.getId()));
+        List<CreateSectionDTO> sections = dto.getSections();
+        for (CreateSectionDTO createSectionDTO: sections) {
+            sectionService.createSection(createSectionDTO, course.getId(),course.getAccountId());
         }
 
-        course.setCategoryCourse(categoryCourses);
+        serviceOfLearningObjective.createLearningObjective(dto.getLearningObjective(), course.getId());
+
+        for(CreateCategoryCourseDTO categoryDTO : dto.getCategories()) {
+            serviceOfCategory.createCategoryCourse(categoryDTO, course.getId());
+        }
 
         return courseService.fromCourseToResponeCourseDTO(course);
     }
@@ -216,8 +204,8 @@ public class ControllerOfCourse implements ICourseController {
     public ResponseEntity<ResponeObject> sendMailToReceiver(@RequestParam int courseId, String receiverEmail,String SenderMessages, String receiverName,String receiverPassword,String senderName, @RequestParam int action) throws AppServiceExeption, IOException {
         String messageBody = "";
         String subject = "";
-        String courseName = courseRepository.findById(courseId).get().getName();
-        Float coursePrice = courseRepository.findById(courseId).get().getPrice();
+        String courseName = courseRepository.findById(courseId).getName();
+        Float coursePrice = courseRepository.findById(courseId).getPrice();
         if(action == 1) // receiver dont have arthub account
         {
             messageBody = "Hello " + receiverName +", you are given a drawing course named " + courseName +" on the online teaching and learning platform ArtHub that worth " +coursePrice+"$\n\n" +
@@ -277,10 +265,10 @@ public class ControllerOfCourse implements ICourseController {
     }
 
     @Autowired
-    public ControllerOfCourse(ICourseSort courseSort) {
+    public ControllerOfCourse(InterfaceOfCourseSort courseSort) {
         this.courseSort = courseSort;
     }
-    private final ICourseSort courseSort;
+    private final InterfaceOfCourseSort courseSort;
     @Override
     public List<ResponeCourseDTO> getCoursesByPriceHigher(){
         List<Course> courses=courseRepository.findAllByOrderByPriceDesc();
@@ -312,7 +300,7 @@ public class ControllerOfCourse implements ICourseController {
     }
 
     public ResponeCourseDTO showSectionAndVideo(@RequestParam int id) {
-        Course course = courseRepository.findById(id).orElseThrow();
+        Course course = courseRepository.findById(id);
         return courseService.fromCourseToResponeCourseDTO(course);
     }
 
