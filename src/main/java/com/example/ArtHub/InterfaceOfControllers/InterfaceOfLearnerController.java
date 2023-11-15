@@ -17,7 +17,7 @@ import java.util.List;
 public interface ILearnerController {
 
     @PostMapping("/showStudentPurchase")
-    ResponseEntity<List<Learner>> showStudentPurchase(@RequestParam Integer accountId);
+    ResponseEntity<List<Learner>> showStudentPurchase(@RequestParam int accountId);
 
     @PostMapping("/addLearner")
     @ResponseStatus(HttpStatus.CREATED)
