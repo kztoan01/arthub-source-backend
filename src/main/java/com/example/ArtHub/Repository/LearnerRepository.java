@@ -28,8 +28,8 @@ public interface LearnerRepository extends JpaRepository<Learner, Integer> {
     @Query("SELECT COUNT(DISTINCT l.account.id) FROM Learner l WHERE l.ownerCourse = :owner GROUP BY l.ownerCourse")
     Integer countDistinctAccountIdByOwner(@Param("owner") int owner);
 
-    @Query("SELECT SUM(l.price) FROM Learner l WHERE l.ownerCourse = :owner")
-    Double sumOfProfit(@Param("owner") int owner);
+    @Query(value = "SELECT SUM(CASE WHEN MONTH(Learner.[date]) = MONTH(DATEADD(month, -1, getdate()))THEN Course.price ELSE 0 END) as lastMonthProfit FROM Course JOIN Learner ON Course.id = Learner.courseId where Learner.ownerCourse = ?1",nativeQuery = true)
+    Double sumOfProfit(int owner);
 
     @Query("SELECT l from Learner l where l.account.id = ?1 and l.course.id = ?2")
     Learner findById(int id,int courseId);
