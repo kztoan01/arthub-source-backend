@@ -9,10 +9,15 @@ import com.example.ArtHub.Entity.Course;
 
 import java.util.List;
 
-public interface InterfaceOfCourseService {
+public interface ICourseService {
     Course createCourse(CreateCourseDTO dto) throws AppServiceExeption;
 
+//    List<ResponeCourseDTO> getCourseList(CourseRepository courseRepository);
+
+
     List<ResponeCourseDTO> getCourseList();
+
+
 
     public int updateMainImage(int id, String imageName);
 

@@ -13,10 +13,6 @@ public class Learner {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "accountId", insertable = false, updatable = false)
-    private Integer accountId;
-    @Column(name = "courseId", insertable = false, updatable = false)
-    private Integer courseId;
     @Column(name = "ownerCourse")
     private Integer ownerCourse;
     @Column(name = "date")
@@ -24,12 +20,16 @@ public class Learner {
     private Date date;
     @Column(name = "price")
     private Float price;
+
     @ManyToOne
     @JoinColumn(name = "courseId")
     private Course course;
-    @ManyToOne
-    @JoinColumn(name = "accountId")
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "accountId", referencedColumnName = "id")
     private Account account;
+
+
     @Column(name = "status")
     private Integer status;
     @Column(name = "senderId")
@@ -85,21 +85,7 @@ public class Learner {
         this.id = id;
     }
 
-    public Integer getAccountId() {
-        return accountId;
-    }
 
-    public void setAccountId(Integer accountId) {
-        this.accountId = accountId;
-    }
-
-    public Integer getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(Integer courseId) {
-        this.courseId = courseId;
-    }
 
     public Integer getOwnerCourse() {
         return ownerCourse;

@@ -2,24 +2,30 @@ package com.example.ArtHub.Service;
 import com.example.ArtHub.CourseNotFoundException;
 import com.example.ArtHub.DTO.CreateCourseDTO;
 import com.example.ArtHub.DTO.ResponeCourseDTO;
+import com.example.ArtHub.DTO.ResponeCourseProfitDTO;
 import com.example.ArtHub.DTO.ResponeStudentInfor;
 import com.example.ArtHub.Entity.Account;
 import com.example.ArtHub.Entity.Course;
 import com.example.ArtHub.Repository.*;
 import com.example.ArtHub.utils.ModelMapperObject;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ServiceOfCourse implements InterfaceOfCourseService {
+@AllArgsConstructor
+public class ServiceOfCourse implements ICourseService {
 
     @Autowired
     CourseRateRepository courseRateRepository;
 
     @Autowired
-    CourseRepository courseRepository;
+    private CourseRepository courseRepository;
+
+    @Autowired
+    private AccountRepository accountRepository;
 
     @Autowired
     LearnerRepository learnerRepository;
@@ -47,14 +53,21 @@ public class ServiceOfCourse implements InterfaceOfCourseService {
     @Autowired
     ServiceOfLearningObjective serviceOfLearningObjective;
 
-    @Autowired
-    AccountRepository accountRepository;
+
 
     @Autowired
     ServiceOfImage serviceOfImage;
 
     @Autowired
     CategoryRepository categoryRepository;
+
+    public ServiceOfCourse(CourseRepository courseRepository, AccountRepository accountRepository) {
+        this.courseRepository = courseRepository;
+        this.accountRepository = accountRepository;
+    }
+
+    public ServiceOfCourse() {
+    }
 
     @Override
     public Course createCourse(CreateCourseDTO dto) {
@@ -65,7 +78,7 @@ public class ServiceOfCourse implements InterfaceOfCourseService {
         course.setLanguage(dto.getLanguage());
         course.setLevel(dto.getLevel());
         course.setPrice(dto.getPrice());
-        course.setAccountId(dto.getAccountId());
+        course.setAccount(accountRepository.findById(dto.getAccountId()).orElseThrow());
         course.setName(dto.getName());
         course.setPassed(dto.isPassed());
         return courseRepository.save(course);
@@ -78,7 +91,7 @@ public class ServiceOfCourse implements InterfaceOfCourseService {
     @Override
     public String getNameByID(int id)
     {
-       return courseRepository.findById(id).getName();
+        return courseRepository.findById(id).get().getName();
     }
 
     @Override
@@ -110,7 +123,7 @@ public class ServiceOfCourse implements InterfaceOfCourseService {
 
     @Override
     public Double getSumPriceCourseByAccountID(int id) {
-        return courseRepository.findSumCoursesPriceTotalByAccountID(id);
+        return null;
     }
 
 
@@ -132,7 +145,7 @@ public class ServiceOfCourse implements InterfaceOfCourseService {
         ResponeCourseDTO courseDTO = new ResponeCourseDTO();
         courseDTO.setName(course.getName());
         courseDTO.setPrice(course.getPrice());
-        courseDTO.setInstructorName(accountRepository.findById(course.getAccountId()).get().getFirstname()+" "+accountRepository.findById(course.getAccountId()).get().getLastname());
+        courseDTO.setInstructorName(course.getAccount().getFirstname()+" "+course.getAccount().getLastname());
         courseDTO.setImage(course.getImage());
         courseDTO.setStudents(learnerRepository.findLeanerOfCourse(course.getId()).stream().map(account -> fromAccountToResponeStudentDTO(account,course.getId())).toList());
         return courseDTO;
@@ -140,29 +153,54 @@ public class ServiceOfCourse implements InterfaceOfCourseService {
 
 
     @Override
-    public  ResponeCourseDTO fromCourseToResponeCourseDTO(Course course) { //This function use to convert courseEntity to ResponeCourseDTO
-        ResponeCourseDTO courseDTO = modelMapper.modelMapper().map(course, ResponeCourseDTO.class);
-        courseDTO.setSections(sectionService.getSectionList(course.getId()).stream().map(section -> sectionService.fromSectionIntoResponeSectionDTO(section)).toList());
-        courseDTO.setImages(serviceOfImage.getImageByCourseID(course.getId()));
-        courseDTO.setBio(serviceOfAccount.getAccountByCourseID(course.getAccountId()).get().getBio());
-        courseDTO.setInstructorName(serviceOfAccount.getAccountByCourseID(course.getAccountId()).get().getFirstname()+" "+serviceOfAccount.getAccountByCourseID(course.getAccountId()).get().getLastname());
-        courseDTO.setInstructorImage(serviceOfAccount.getAccountByCourseID(course.getAccountId()).get().getImage());
-        courseDTO.setInstructorAddress(serviceOfAccount.getAccountByCourseID(course.getAccountId()).get().getAddress());
-        courseDTO.setInstructorEmail(serviceOfAccount.getAccountByCourseID(course.getAccountId()).get().getEmail());
-        courseDTO.setInstructorFacebook(serviceOfAccount.getAccountByCourseID(course.getAccountId()).get().getFacebook());
-        courseDTO.setInstructorPhone(serviceOfAccount.getAccountByCourseID(course.getAccountId()).get().getPhone());
-        courseDTO.setInstructorTwitter(serviceOfAccount.getAccountByCourseID(course.getAccountId()).get().getTwitter());
-        courseDTO.setCategories(serviceOfCategoryCourse.getCategoriesByCourseID(course.getId()).stream().map(categoryCourse -> serviceOfCategory.fromCategoryToCategotyResponeNameDTO(categoryCourse)).toList());
-        courseDTO.setLearningObjective(serviceOfLearningObjective.getLearningObjectiveByCourseId(course.getId()));
+    public  ResponeCourseDTO fromCourseToResponeCourseDTO(Course course) {
+        ResponeCourseDTO courseDTO = new ResponeCourseDTO();
+        courseDTO.setId(course.getId());
+        courseDTO.setName(course.getName());
+        courseDTO.setDescription(course.getDescription());
+        courseDTO.setIntroduction(course.getIntroduction());
+        courseDTO.setLevel(course.getLevel());
+        courseDTO.setLanguage(course.getLanguage());
+        courseDTO.setPrice(course.getPrice());
+        courseDTO.setCoupon(course.getCoupon());
+        courseDTO.setPassed(course.getPassed());
+        courseDTO.setStatus(course.getStatus());
+        courseDTO.setImage(course.getImage());
+        courseDTO.setDate(course.getDate());
+        courseDTO.setBio(course.getAccount().getBio());
+        courseDTO.setAccountId(course.getAccount().getId());
+        courseDTO.setInstructorName(course.getAccount().getFirstname()+" "+course.getAccount().getLastname());
+        courseDTO.setInstructorImage(course.getAccount().getImage());
+        courseDTO.setInstructorAddress(course.getAccount().getAddress());
+        courseDTO.setInstructorEmail(course.getAccount().getEmail());
+        courseDTO.setInstructorFacebook(course.getAccount().getFacebook());
+        courseDTO.setInstructorPhone(course.getAccount().getPhone());
+        courseDTO.setInstructorTwitter(course.getAccount().getTwitter());
+        courseDTO.setCategories(course.getCategoryCourse().stream().map(categoryCourse -> serviceOfCategory.fromCategoryToCategotyResponeNameDTO(categoryCourse)).toList());
+        courseDTO.setLearningObjective(serviceOfLearningObjective.fromLearningObjectiveToResponeLearningObjectiveDTO(course.getLearningObjective() != null ? course.getLearningObjective() : null));
+        courseDTO.setSections(course.getSections().stream().map(section -> sectionService.fromSectionIntoResponeSectionDTO(section,course.getId())).toList());
         courseDTO.setCount(courseRateRepository.countCourseRateByCourseId(course.getId()));
+        courseDTO.setImages(serviceOfImage.fromImagetoResponeImageDTO(course.getImages() != null ? course.getImages() : null));
         courseDTO.setAvg(courseRateRepository.avgCourseRateByCourseId(course.getId()));
         return courseDTO;
     }
 
 
+    public ResponeCourseProfitDTO fromCourseToCourseProfitDTO(Course course)
+    {
+        ResponeCourseProfitDTO responeCourseProfitDTO = new ResponeCourseProfitDTO();
+        responeCourseProfitDTO.setSumProfit(learnerRepository.getCourseProfitsByCourseID(course.getId()) != null ?  learnerRepository.getCourseProfitsByCourseID(course.getId()) : 0);
+        responeCourseProfitDTO.setLastMonthProfit(learnerRepository.getCourseLastMonthProfitsByCourseID(course.getId()) != null ? learnerRepository.getCourseLastMonthProfitsByCourseID(course.getId()) : 0 );
+        responeCourseProfitDTO.setName(course.getName());
+        responeCourseProfitDTO.setImage(course.getImage());
+        responeCourseProfitDTO.setCourseId(course.getId());
+        return  responeCourseProfitDTO;
+    }
 
-@Override
-    public  List<ResponeCourseDTO> fromCourseListToResponeCourseDTOList(List<Course> CourseList) { //This fucntion use to convert courseList into ResponeCourseDTO list
+
+
+    @Override
+    public  List<ResponeCourseDTO> fromCourseListToResponeCourseDTOList(List<Course> CourseList) {
         List<ResponeCourseDTO> ResponeCourseDTOList = new ArrayList<>();
         for (Course course : CourseList) {
 
@@ -171,9 +209,19 @@ public class ServiceOfCourse implements InterfaceOfCourseService {
         return ResponeCourseDTOList;
     }
 
+
+
+
     @Override
     public List<ResponeCourseDTO> getCourseList() {
+
         return courseRepository.findAll().stream().map(course -> fromCourseToResponeCourseDTO(course)).toList();
+
+    }
+
+
+    public List<Course> getCourseList2() {
+        return courseRepository.findAll();
     }
 
 }

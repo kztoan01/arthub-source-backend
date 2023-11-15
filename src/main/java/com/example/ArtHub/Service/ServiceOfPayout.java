@@ -2,17 +2,15 @@ package com.example.ArtHub.Service;
 
 import com.example.ArtHub.DTO.PayoutDTO;
 import com.example.ArtHub.Entity.Payout;
-import com.example.ArtHub.Repository.CourseRepository;
 import com.example.ArtHub.Repository.PayoutRepository;
 import com.example.ArtHub.utils.ModelMapperObject;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ServiceOfPayout implements InterfaceOfPayoutService {
+public class ServiceOfPayout implements IPayoutService {
 
     @Autowired
     ModelMapperObject mapperObject;
@@ -34,13 +32,13 @@ public class ServiceOfPayout implements InterfaceOfPayoutService {
 
     @Override
     public PayoutDTO getPayoutInformationByInstructorID(int id) {
-       PayoutDTO payoutDTO = mapperObject.modelMapper().map(payoutRepository.findPayoutByAccountId(id), PayoutDTO.class);
-       payoutDTO.setFirstname(serviceOfAccount.getAccountByID(id).getFirstname());
-       payoutDTO.setLastname(serviceOfAccount.getAccountByID(id).getLastname());
-       payoutDTO.setEmail(serviceOfAccount.getAccountByID(id).getEmail());
-       payoutDTO.setPhone(serviceOfAccount.getAccountByID(id).getPhone());
-       payoutDTO.setImage(serviceOfAccount.getAccountByID(id).getImage());
-       return payoutDTO;
+        PayoutDTO payoutDTO = mapperObject.modelMapper().map(payoutRepository.findPayoutByAccountId(id), PayoutDTO.class);
+        payoutDTO.setFirstname(serviceOfAccount.getAccountByID(id).getFirstname());
+        payoutDTO.setLastname(serviceOfAccount.getAccountByID(id).getLastname());
+        payoutDTO.setEmail(serviceOfAccount.getAccountByID(id).getEmail());
+        payoutDTO.setPhone(serviceOfAccount.getAccountByID(id).getPhone());
+        payoutDTO.setImage(serviceOfAccount.getAccountByID(id).getImage());
+        return payoutDTO;
     }
 
     public PayoutDTO fromPayoutToPayoutDTO(Payout payout) {

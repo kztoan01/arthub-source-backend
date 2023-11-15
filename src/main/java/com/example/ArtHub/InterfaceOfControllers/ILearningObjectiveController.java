@@ -1,9 +1,7 @@
 package com.example.ArtHub.InterfaceOfControllers;
 
 import com.example.ArtHub.AppServiceExeption;
-import com.example.ArtHub.DTO.CreateCourseDTO;
 import com.example.ArtHub.DTO.CreateLearningObjectiveDTO;
-import com.example.ArtHub.DTO.ResponeCourseDTO;
 import com.example.ArtHub.DTO.ResponeLearningObjectiveDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -13,7 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RequestMapping("/learningObjective")
-public interface InterfaceOfLearningObjectiveController {
+public interface ILearningObjectiveController {
 
     @PostMapping("/addLearningObjective")
     @ResponseStatus(HttpStatus.CREATED)

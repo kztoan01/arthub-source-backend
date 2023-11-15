@@ -4,6 +4,7 @@ import com.example.ArtHub.AppServiceExeption;
 import com.example.ArtHub.Controller.ControllerOfCourse;
 import com.example.ArtHub.DTO.CreateLearningObjectiveDTO;
 import com.example.ArtHub.DTO.ResponeLearningObjectiveDTO;
+import com.example.ArtHub.Entity.Course;
 import com.example.ArtHub.Entity.LearningObjective;
 import com.example.ArtHub.Repository.LearningObjectiveRepository;
 import org.slf4j.Logger;
@@ -12,17 +13,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class ServiceOfLearningObjective implements InterfaceOfLearningObjectiveService {
+public class ServiceOfLearningObjective implements ILearningObjectiveService {
     private static final Logger logger = LoggerFactory.getLogger(ControllerOfCourse.class);
     @Autowired
     LearningObjectiveRepository learningObjectiveRepository;
     @Override
-    public LearningObjective createLearningObjective(CreateLearningObjectiveDTO dto,int ID) throws AppServiceExeption {
+    public LearningObjective createLearningObjective(CreateLearningObjectiveDTO dto, Course course) throws AppServiceExeption {
         LearningObjective learningObjective = new LearningObjective();
-        learningObjective.setCourseId(ID);
+        learningObjective.setCourse(course);
         learningObjective.setOne(dto.getOne());
         learningObjective.setTwo(dto.getTwo());
         learningObjective.setThree(dto.getThree());
@@ -31,9 +31,25 @@ public class ServiceOfLearningObjective implements InterfaceOfLearningObjectiveS
         return learningObjectiveRepository.save(learningObjective);
     }
 
+
+    public ResponeLearningObjectiveDTO fromLearningObjectiveToResponeLearningObjectiveDTO(LearningObjective lo)
+    {
+        ResponeLearningObjectiveDTO responeLearningObjectiveDTO = new ResponeLearningObjectiveDTO();
+        if(lo != null)
+        {
+            responeLearningObjectiveDTO.setId(lo.getId());
+            responeLearningObjectiveDTO.setOne(lo.getOne());
+            responeLearningObjectiveDTO.setTwo(lo.getTwo());
+            responeLearningObjectiveDTO.setThree(lo.getThree());
+            responeLearningObjectiveDTO.setFour(lo.getFour());
+            responeLearningObjectiveDTO.setCourseId(lo.getCourse().getId());
+        }
+        return  responeLearningObjectiveDTO;
+    }
+
     @Override
     public List<LearningObjective> getLearningObjectiveList() {
-              List<LearningObjective> learningObjectives = learningObjectiveRepository.findAll();
+        List<LearningObjective> learningObjectives = learningObjectiveRepository.findAll();
         return learningObjectives ;
     }
 

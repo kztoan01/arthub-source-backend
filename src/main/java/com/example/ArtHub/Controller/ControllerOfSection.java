@@ -3,7 +3,7 @@ package com.example.ArtHub.Controller;
 import com.example.ArtHub.AppServiceExeption;
 import com.example.ArtHub.DTO.CreateSectionDTO;
 import com.example.ArtHub.DTO.ResponeSectionDTO;
-import com.example.ArtHub.InterfaceOfControllers.InterafceOfSectionController;
+import com.example.ArtHub.InterfaceOfControllers.ISectionController;
 import com.example.ArtHub.ResponeObject.ResponeObject;
 import com.example.ArtHub.Service.ServiceOfSection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.List;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-public class ControllerOfSection implements InterafceOfSectionController {
+public class ControllerOfSection implements ISectionController {
 
     @Autowired
     ServiceOfSection sectionService;

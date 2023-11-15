@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RequestMapping("/learner")
-public interface InterfaceOfLearnerController {
+public interface ILearnerController {
 
     @PostMapping("/showStudentPurchase")
     ResponseEntity<List<Learner>> showStudentPurchase(@RequestParam Integer accountId);

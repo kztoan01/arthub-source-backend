@@ -14,7 +14,7 @@ public interface LearningObjectiveRepository extends JpaRepository<LearningObjec
 
     @Modifying
     @Transactional
-    @Query(value = "delete from LearningObjectives where courseId = ?1" , nativeQuery = true)
+    @Query(value = "delete from LearningObjective l where l.course.id = ?1")
     int deleteLearningObjectivesByCourseID(int courseID);
 
 }

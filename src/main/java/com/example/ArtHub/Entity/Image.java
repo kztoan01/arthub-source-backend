@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class Image {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
     @Column(name = "one")
@@ -20,9 +20,19 @@ public class Image {
     @Column(name = "four")
 
     private String four;
-    @Column(name = "courseId")
-    private Integer courseId;
 
+
+    @OneToOne()
+    @JoinColumn(name = "courseId", referencedColumnName = "id")
+    private Course course;
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
 
     public Integer getId() {
         return id;
@@ -63,12 +73,6 @@ public class Image {
     public void setFour(String four) {
         this.four = four;
     }
-
-    public Integer getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(Integer courseId) {
-        this.courseId = courseId;
-    }
 }
+
+

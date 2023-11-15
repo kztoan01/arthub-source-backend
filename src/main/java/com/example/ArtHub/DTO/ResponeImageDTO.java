@@ -1,33 +1,27 @@
 package com.example.ArtHub.DTO;
 
-import com.example.ArtHub.Entity.Account;
-import com.example.ArtHub.Entity.LearningObjective;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class ResponeLearningObjectiveDTO {
+public class ResponeImageDTO {
 
 
-    private int id;
+    private Integer id;
+
     private String one;
+
 
     private String two;
 
     private String three;
 
+
     private String four;
 
+    private int courseId;
 
-
-    private Integer courseId;
-
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -63,11 +57,11 @@ public class ResponeLearningObjectiveDTO {
         this.four = four;
     }
 
-    public Integer getCourseId() {
+    public int getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(Integer courseId) {
+    public void setCourseId(int courseId) {
         this.courseId = courseId;
     }
 }

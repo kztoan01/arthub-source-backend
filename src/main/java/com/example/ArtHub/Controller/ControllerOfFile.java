@@ -3,7 +3,7 @@ package com.example.ArtHub.Controller;
 import java.io.IOException;
 import java.util.List;
 
-import com.example.ArtHub.Service.InterfaceOfFileService;
+import com.example.ArtHub.Service.IFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ControllerOfFile {
 
     @Autowired
-    InterfaceOfFileService interfaceOfFileService;
+    IFileService interfaceOfFileService;
 
     //List all file name
     @GetMapping

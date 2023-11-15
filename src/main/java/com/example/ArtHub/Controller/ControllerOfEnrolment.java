@@ -27,7 +27,7 @@ public class ControllerOfEnrolment {
     private CourseRepository courseRepository;
     @Autowired
     private AccountRepository accountRepository;
-//    @PostMapping("/enrollCheckout")
+    //    @PostMapping("/enrollCheckout")
 //    public ResponseEntity<String> enrolCourseCheckout(@RequestBody CheckoutDTO dto){
 //        try{
 //            List<CartDTO> cart = dto.getCartItems();
@@ -48,7 +48,7 @@ public class ControllerOfEnrolment {
 //        }
 //    }
     @PostMapping("/enrol")
-        public ResponseEntity<String> enrolCourse(@RequestParam(value = "courseId", required = false) Integer courseId,@RequestParam(value = "accountId", required = false)  Integer accountId,@RequestParam  Integer status,@RequestParam  Integer senderId,@RequestParam  String message){
+    public ResponseEntity<String> enrolCourse(@RequestParam(value = "courseId", required = false) Integer courseId,@RequestParam(value = "accountId", required = false)  Integer accountId,@RequestParam  Integer status,@RequestParam  Integer senderId,@RequestParam  String message){
         try{
 
             Optional<Course> courseOptional=courseRepository.findById(courseId);
@@ -61,7 +61,7 @@ public class ControllerOfEnrolment {
             if(existingEnrolment.isPresent()){
                 return ResponseEntity.status(HttpStatus.OK).body("Course is already Enrolled");
             }
-            Integer id=courseOptional.get().getAccountId();
+            Integer id=courseOptional.get().getAccount().getId();
             Learner learner=new Learner();
             learner.setCourse(courseOptional.get());
             learner.setAccount(accountOptional.get());

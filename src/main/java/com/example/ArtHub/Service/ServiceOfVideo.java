@@ -1,6 +1,5 @@
 package com.example.ArtHub.Service;
 
-import com.example.ArtHub.AppServiceExeption;
 import com.example.ArtHub.DTO.CreateVideoDTO;
 import com.example.ArtHub.Entity.Video;
 import com.example.ArtHub.Repository.VideoRepository;
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class ServiceOfVideo implements InterfaceOfVideoService {
+public class ServiceOfVideo implements IVideoService {
 
 
     @Autowired
@@ -30,7 +29,7 @@ public class ServiceOfVideo implements InterfaceOfVideoService {
 
     public int DeleteVideoByCourseID(int id)
     {
-      return videoRepository.deleteVideosBySectionID(id);
+        return videoRepository.deleteVideosBySectionID(id);
     }
 
 

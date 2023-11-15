@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import  java.util.List;
 import java.util.Optional;
 
-public interface InterfaceOfAccountService {
+public interface IAccountService {
     Account createAccount(CreateAccountDTO dto) throws AppServiceExeption;
 
     List<Account> getAccounts();

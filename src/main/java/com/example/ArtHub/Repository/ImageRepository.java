@@ -12,14 +12,14 @@ public interface ImageRepository extends JpaRepository<Image,Integer> {
     Image  findByCourseId(int CourseId);
     @Modifying
     @Transactional
-    @Query("delete from Image i where i.courseId = ?1")
+    @Query("delete from Image i where i.course.id = ?1")
     int deleteImageByCourseId(int courseId);
 
 
 
     @Modifying
     @Transactional
-    @Query("UPDATE Image i SET i.one = ?1, i.two = ?2, i.three = ?3, i.four = ?4 WHERE i.courseId = ?5")
+    @Query("UPDATE Image i SET i.one = ?1, i.two = ?2, i.three = ?3, i.four = ?4 WHERE i.course.id = ?5")
     int updateImages(String one, String two, String three, String four, int courseId);
 
     boolean existsByCourseId(int courseId);

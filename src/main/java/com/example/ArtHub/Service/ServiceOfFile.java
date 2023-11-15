@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ServiceOfFile implements InterfaceOfFileService {
+public class ServiceOfFile implements IFileService {
 
     @Value("${gcp.bucket.name}")
     private String bucketName;

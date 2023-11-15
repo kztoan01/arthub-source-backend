@@ -1,33 +1,34 @@
 
-        package com.example.ArtHub.Controller;
+package com.example.ArtHub.Controller;
 
-        import com.example.ArtHub.AppServiceExeption;
-        import com.example.ArtHub.DTO.CreateLearnerDTO;
-        import com.example.ArtHub.DTO.ResponseLearnerDTO;
-        import com.example.ArtHub.Entity.Account;
-        import com.example.ArtHub.Entity.Learner;
-        import com.example.ArtHub.InterfaceOfControllers.InterfaceOfLearnerController;
-        import com.example.ArtHub.Repository.AccountRepository;
-        import com.example.ArtHub.Repository.CourseRepository;
-        import com.example.ArtHub.Repository.LearnerRepository;
-        import com.example.ArtHub.Service.ServiceOfCourse;
-        import com.example.ArtHub.Service.ServiceOfLearner;
-        import org.springframework.beans.factory.annotation.Autowired;
-        import org.springframework.http.HttpStatus;
-        import org.springframework.http.ResponseEntity;
-        import org.springframework.web.bind.annotation.CrossOrigin;
-        import org.springframework.web.bind.annotation.RequestParam;
-        import org.springframework.web.bind.annotation.RestController;
+import com.example.ArtHub.AppServiceExeption;
+import com.example.ArtHub.DTO.CreateLearnerDTO;
+import com.example.ArtHub.DTO.ResponseLearnerDTO;
+import com.example.ArtHub.Entity.Account;
+import com.example.ArtHub.Entity.Learner;
+import com.example.ArtHub.InterfaceOfControllers.ILearnerController;
+import com.example.ArtHub.InterfaceOfControllers.ILearnerController;
+import com.example.ArtHub.Repository.AccountRepository;
+import com.example.ArtHub.Repository.CourseRepository;
+import com.example.ArtHub.Repository.LearnerRepository;
+import com.example.ArtHub.Service.ServiceOfCourse;
+import com.example.ArtHub.Service.ServiceOfLearner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-        import javax.swing.text.html.Option;
-        import java.io.IOException;
-        import java.util.ArrayList;
-        import java.util.List;
-        import java.util.Optional;
+import javax.swing.text.html.Option;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
-        @CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-public class ControllerOfLearner implements InterfaceOfLearnerController {
+public class ControllerOfLearner implements ILearnerController {
     @Autowired
     LearnerRepository learnerRepository;
 
@@ -60,9 +61,9 @@ public class ControllerOfLearner implements InterfaceOfLearnerController {
     public ResponseLearnerDTO fromLearnerToResponseLearnerDTO (Learner learner) {
         ResponseLearnerDTO learnerDTO = new ResponseLearnerDTO();
         learnerDTO.setId(learner.getId());
-        learnerDTO.setAccountId(learner.getAccountId());
-        learnerDTO.setCourseId(learner.getCourseId());
-        learnerDTO.setOwnerCourse(courseRepository.findById(learner.getCourseId()).get().getAccountId());
+        learnerDTO.setAccountId(learner.getAccount().getId());
+        learnerDTO.setCourseId(learner.getCourse().getId());
+        learnerDTO.setOwnerCourse(courseRepository.findById(learner.getCourse().getId()).get().getAccount().getId());
         learnerDTO.setDate(learner.getDate());
         learnerDTO.setPrice(learner.getPrice());
         learnerDTO.setStatus(learner.getStatus());

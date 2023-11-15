@@ -27,12 +27,10 @@ public interface CourseRepository extends JpaRepository<Course,Integer> {
 
 
 
-    @Query("SELECT c FROM Course c WHERE c.accountId = ?1")
+    @Query("SELECT c FROM Course c JOIN c.account a WHERE a.id = ?1")
     List<Course> findCoursesByInstructorId(int id);
 
 
-    @Query("select SUM(c.price) from Course c group by c.accountId having c.accountId = ?1")
-    Double findSumCoursesPriceTotalByAccountID(int id);
 
 
 
@@ -66,10 +64,6 @@ public interface CourseRepository extends JpaRepository<Course,Integer> {
     int deleteViolatedCourse(int courseId);
 
 
-
-
-
-    Course findById(int courseId);
 
     @Query("SELECT c FROM Course c WHERE c.Status = 1")
     List<Course> displayIsNotApprovedCourses();

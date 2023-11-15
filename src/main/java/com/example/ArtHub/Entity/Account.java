@@ -2,6 +2,8 @@ package com.example.ArtHub.Entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "Account")
 public class Account {
@@ -50,6 +52,16 @@ public class Account {
     private  String token;
     @Column(nullable = false,name = "isPremium")
     private  String isPremium;
+
+    @OneToMany(mappedBy = "account")
+    private List<Course> courses;
+
+
+    @OneToOne(mappedBy = "account")
+    private Learner learner;
+
+
+
     public Account() {
     }
 
@@ -71,6 +83,9 @@ public class Account {
         this.token = token;
         this.isPremium = isPremium;
     }
+
+
+
 
     public String getIsPremium() {
         return isPremium;

@@ -1,11 +1,10 @@
 package com.example.ArtHub.Controller;
 
-import com.cloudinary.Cloudinary;
 import com.example.ArtHub.CloudinaryConfig;
 import com.example.ArtHub.DTO.ResponeAccountDTO;
 import com.example.ArtHub.DTO.CreateAccountDTO;
-import com.example.ArtHub.InterfaceOfControllers.InterfaceOfAccountController;
-import com.example.ArtHub.Service.InterfaceOfAccountService;
+import com.example.ArtHub.InterfaceOfControllers.IAccountController;
+import com.example.ArtHub.Service.IAccountService;
 import com.example.ArtHub.AppServiceExeption;
 import com.example.ArtHub.Entity.Account;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -23,10 +20,10 @@ import java.util.UUID;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-public class ControllerOfAccount implements InterfaceOfAccountController {
+public class ControllerOfAccount implements IAccountController {
     private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
     @Autowired
-    InterfaceOfAccountService accountsService;
+    IAccountService accountsService;
 
     @Autowired
     CloudinaryConfig cloudinaryConfig;

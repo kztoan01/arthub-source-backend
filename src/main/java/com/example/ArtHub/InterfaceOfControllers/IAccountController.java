@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RequestMapping("/accounts")
-public interface InterfaceOfAccountController {
+public interface IAccountController {
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     ResponeAccountDTO createAccount(String username, String firstname, String lastname, MultipartFile image, String pass) throws AppServiceExeption, IOException;

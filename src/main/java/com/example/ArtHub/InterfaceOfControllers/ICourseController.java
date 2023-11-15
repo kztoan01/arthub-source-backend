@@ -3,7 +3,7 @@ package com.example.ArtHub.InterfaceOfControllers;
 import com.example.ArtHub.AppServiceExeption;
 import com.example.ArtHub.DTO.CreateCourseDTO;
 import com.example.ArtHub.DTO.ResponeCourseDTO;
-import com.example.ArtHub.Entity.Course;
+import com.example.ArtHub.DTO.ResponeCourseProfitDTO;
 import com.example.ArtHub.ResponeObject.ResponeObject;
 import jakarta.validation.Valid;
 //import org.springframework.hateoas.CollectionModel;
@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.List;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/course")
-public interface InterfaceOfCourseController {
+public interface ICourseController {
 
     @GetMapping("/displayIsNotApprovedCourses")
     List<ResponeCourseDTO> displayIsNotApprovedCourses();
@@ -28,6 +28,10 @@ public interface InterfaceOfCourseController {
     // http://localhost:8080/course/thailan/5000
     @GetMapping("/{language}/{price}")
     List<ResponeCourseDTO> findAllCourseByLanguageAndPrice(@PathVariable String language, @PathVariable float price);
+
+    @GetMapping("/displayProfitsOFCourses")
+    List<ResponeCourseProfitDTO> displayProfitsOFCourses();
+
 
     @PostMapping("/addCourse")
     @ResponseStatus(HttpStatus.CREATED)
