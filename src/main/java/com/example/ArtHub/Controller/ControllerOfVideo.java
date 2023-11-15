@@ -9,14 +9,18 @@ import com.example.ArtHub.Service.ServiceOfFile;
 import com.example.ArtHub.Service.ServiceOfVideo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-
+import java.util.UUID;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class ControllerOfVideo implements InterfaceOfVideoController {

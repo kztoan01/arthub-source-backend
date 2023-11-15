@@ -29,6 +29,11 @@ public class ServiceOfLearner implements InterfaceOfLearnerService{
     }
 
     @Override
+    public int DeleteLearnerByCourseId(int courseId) {
+        return learnerRepository.DeleteLearnerByCourseId(courseId);
+    }
+
+    @Override
     public Double getProfitByOwnerID(int id) {
         return learnerRepository.sumOfProfit(id);
     }

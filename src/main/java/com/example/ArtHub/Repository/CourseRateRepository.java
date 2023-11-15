@@ -24,6 +24,12 @@ public interface CourseRateRepository extends JpaRepository<CourseRate,Integer> 
     @Transactional
     @Query("DELETE CourseRate cr WHERE cr.id=?1")
     int deleteAnn(int id);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE CourseRate cr WHERE cr.courseId= ?1")
+    int deleteCourseRateByCourseId(int id);
+
     @Query("SELECT c FROM CourseRate c WHERE c.courseId = ?1")
     List<CourseRate> showCourseRateByCourseId(Integer courseId);
     @Query("SELECT COUNT(c.courseId) FROM CourseRate c WHERE c.courseId = ?1 AND c.rate > 0")

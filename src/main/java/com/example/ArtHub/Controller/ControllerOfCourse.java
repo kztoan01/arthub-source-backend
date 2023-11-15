@@ -62,6 +62,12 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
     @Autowired
     private InterfaceOfMailService mailService;
 
+    @Autowired
+    private ServiceOfCourseRate serviceOfCourseRate;
+
+    @Autowired
+    private ServiceOfLearner serviceOfLearner;
+
 
     @Override
     public List<ResponeCourseDTO> findAllCourseByLanguageAndPrice(String language, float price) {
@@ -152,6 +158,16 @@ public class ControllerOfCourse implements InterfaceOfCourseController {
             if(serviceOfLearningObjective.DeleteLearningObjectivesByCourseID(courseId)!= 0)
             {
                 logger.info("Deleted learningObjective;");
+            }
+
+            if(serviceOfLearner.DeleteLearnerByCourseId(courseId) != 0)
+            {
+                logger.info("Deleted Course learner!;");
+            }
+
+            if( serviceOfCourseRate.deleteCourseRateByCourseId(courseId) != 0)
+            {
+                logger.info("Deleted Course rate!;");
             }
 
 
