@@ -20,6 +20,10 @@ public interface PayoutRepository extends JpaRepository<Payout, Integer> {
     List<Payout> displayAllAccountAndPrice();
 
 
+    @Query("update Payout p set p.recipient = ?1 where p.accountId = ?2")
+    Payout updatePayout(String recipient, int id);
+
+
 
 
 //    @Query("SELECT  Payout.accountId, SUM(Learner.price) as TotalPayout, Payout.platform, Payout.recipientName, Payout.recipientUsername, Payout.recipientEmail, Payout.recipientPhone\n" +

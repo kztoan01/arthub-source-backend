@@ -57,7 +57,8 @@ public class Account {
     private List<Course> courses;
 
 
-    @OneToOne(mappedBy = "account")
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
     private Learner learner;
 
 

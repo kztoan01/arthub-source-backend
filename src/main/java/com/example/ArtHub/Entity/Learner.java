@@ -25,8 +25,9 @@ public class Learner {
     @JoinColumn(name = "courseId")
     private Course course;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "accountId", referencedColumnName = "id")
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "accountId")
     private Account account;
 
 

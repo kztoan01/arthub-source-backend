@@ -57,6 +57,14 @@ public class PayoutController {
     }
 
 
+//    @PostMapping("/updatePayout")
+//    public PayoutDTO updatePayout(@PathVariable("id") int id) {
+//
+//        return serviceOfPayout.
+//
+//    }
+
+
     @GetMapping("/getPayoutInformations")
     public List<PayoutDTO> getAllPayouts() {
 
